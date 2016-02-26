@@ -12,6 +12,7 @@ Plug 'luochen1990/rainbow'
 Plug 'benekastah/neomake'
 Plug 'godlygeek/tabular'
 Plug 'itchyny/lightline.vim'
+Plug 'Glench/Vim-Jinja2-Syntax'
 call plug#end()
 
 let g:lightline = {
