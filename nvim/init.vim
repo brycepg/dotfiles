@@ -13,6 +13,7 @@ Plug 'benekastah/neomake'
 Plug 'godlygeek/tabular'
 Plug 'itchyny/lightline.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'tpope/vim-haml'
 call plug#end()
 
 let g:lightline = {
