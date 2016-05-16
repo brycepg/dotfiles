@@ -1,10 +1,48 @@
 syntax on
 colorscheme wombat256
 filetype plugin indent on
-set colorcolumn=80
+set colorcolumn=93
 set expandtab
 set number
-set shiftwidth=4 tabstop=4 softtabstop=4
+" gg and G will keep column
+set nostartofline
+" Do not autowrap lines ever
+set textwidth=0
+" Change split behavior(move cursor on split)
+set splitbelow
+set splitright
+" Show next 3 lines while scrolling
+set scrolloff=3 
+" Show next 5 columns while side-scrolling.
+set sidescrolloff=5   
+" Global default sed
+set gdefault
+
+" Set tags dir
+set tags=~/mytags
+
+
+" ------------------------ <Leader> key(SPACE) ------------------------
+" Map the leader key to SPACE
+map <SPACE> <Nop>
+let mapleader="\<SPACE>"
+" nohl shortcut
+map <Leader>h :nohl<CR>
+" Paste from clipboard
+map <Leader>p "+p<CR>
+" Yank line to clipboard
+map <Leader>y "+yy<CR>
+" Swap expressions between equals sign
+map <Leader>s :s/\( \+\)\(.\+\)\(.=.\)\(.\+\)/\1\4\3\2<CR>:nohl<CR>
+" ------------------ CtrlP plugin ---------------
+" Open file menu
+nnoremap <Leader>o :CtrlP<CR>
+" Open buffer menu
+nnoremap <Leader>B :CtrlPBuffer<CR>
+" Open most recently used files
+nnoremap <Leader>f :CtrlPMRUFiles<CR>
+map <F5> :Neomake<CR>
+
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-surround'
@@ -14,6 +52,8 @@ Plug 'godlygeek/tabular'
 Plug 'itchyny/lightline.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'tpope/vim-haml'
+Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'klen/python-mode', {'for': 'python'}
 call plug#end()
 
 let g:lightline = {
@@ -21,3 +61,7 @@ let g:lightline = {
       \ }
 
 let g:rainbow_active = 1
+
+set shiftwidth=4 tabstop=4 softtabstop=4
+"let g:pymode_lint_cwindow = 0
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
