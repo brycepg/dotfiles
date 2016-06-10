@@ -53,8 +53,14 @@ Plug 'itchyny/lightline.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'tpope/vim-haml'
 Plug 'ctrlpvim/ctrlp.vim'
+function! DoRemote(arg)
+    UpdateRemotePlugins
+endfunction
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 "Plug 'klen/python-mode', {'for': 'python'}
 call plug#end()
+
+let g:deoplete#enable_at_startup = 1
 
 let g:lightline = {
       \ 'colorscheme': 'wombat',
