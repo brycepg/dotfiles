@@ -1,0 +1,36 @@
+z-fish is a fork of z (http://github.com/rupa/z) that works with the fish shell.
+
+z's original readme with modified install instructions follows.
+
+---------------------------------------------------------------------------------
+
+z is the new j
+
+First, there was j: http://github.com/rupa/j/.
+
+Then, there was j2: http://github.com/rupa/j2/, with some python added. Made
+it easier to experiment with some stuff I'd been thinking about.
+
+Now there's this, where I rewrote j2 back in bash. I like it. Sorry about all
+the repos , but it kind of grew this way.
+
+The biggest change from j is the use of 'frecency' for weighting. Directories
+that have low ranking but were accessed recently, will quickly have higher rank.
+
+The -r switch preserves the old behavior.
+
+# maintains a jump-list of the directories you actually use
+#
+# INSTALL:
+#   * put something like this in your config.fish:
+#     source /path/to/z.fish
+#   * cd around for a while to build up the db
+#   * PROFIT!!
+#
+# USE:
+#   * z foo     # cd to most frecent dir matching foo
+#   * z foo bar # cd to most frecent dir matching foo and bar
+#   * z -r foo  # cd to highest ranked dir matching foo
+#   * z -t foo  # cd to most recently accessed dir matching foo
+#   * z -l foo  # list matches instead of cd
+#   * z -c foo  # restrict matches to subdirs of $PWD
