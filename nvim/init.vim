@@ -24,6 +24,9 @@ set tags=~/mytags
 " Long history
 set history=1000
 
+" No highligting during replace
+autocmd cursorhold * set nohlsearch
+autocmd cursormoved * set hlsearch
 
 " ------------------------ <Leader> key(SPACE) ------------------------
 " Map the leader key to SPACE
