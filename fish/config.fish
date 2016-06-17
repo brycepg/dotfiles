@@ -1,3 +1,6 @@
+# pip install virtualfish
+# vf create p3k
+# link z-fish dorectory into .config/fish
 source $HOME/.config/fish/z-fish/z.fish
 
 # Local bin in path
@@ -12,3 +15,4 @@ alias xclipc "xclip -select clipboard"
 set -x EDITOR nvim
 
 eval (python -m virtualfish)
+vf activate p3k
