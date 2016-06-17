@@ -21,6 +21,9 @@ set gdefault
 " Set tags dir
 set tags=~/mytags
 
+" Long history
+set history=1000
+
 
 " ------------------------ <Leader> key(SPACE) ------------------------
 " Map the leader key to SPACE
