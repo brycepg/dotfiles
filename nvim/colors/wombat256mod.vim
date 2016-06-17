@@ -94,3 +94,5 @@ hi! link CursorColumn	CursorLine
 hi! link NonText		LineNr
 
 " vim:set ts=4 sw=4 noet:
+" Color Column blue
+hi ColorColumn                  ctermbg=233
