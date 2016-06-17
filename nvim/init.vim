@@ -1,5 +1,5 @@
 syntax on
-colorscheme wombat256
+colorscheme wombat256mod
 filetype plugin indent on
 set colorcolumn=93
 set expandtab
@@ -12,9 +12,9 @@ set textwidth=0
 set splitbelow
 set splitright
 " Show next 3 lines while scrolling
-set scrolloff=3 
+set scrolloff=3
 " Show next 5 columns while side-scrolling.
-set sidescrolloff=5   
+set sidescrolloff=5
 " Global default sed
 set gdefault
 
