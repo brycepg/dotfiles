@@ -62,6 +62,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
+Plug 'qpkorr/vim-bufkill'
+Plug 'mbbill/undotree'
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 "Plug 'klen/python-mode', {'for': 'python'}
 call plug#end()
