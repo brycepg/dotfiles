@@ -50,23 +50,40 @@ nnoremap <Leader>f :CtrlPMRUFiles<CR>
 map <F5> :Neomake<CR>
 
 
-call plug#begin('~/.config/nvim/plugged')
-Plug 'tpope/vim-surround'
-Plug 'luochen1990/rainbow'
-Plug 'benekastah/neomake'
-Plug 'godlygeek/tabular'
-Plug 'itchyny/lightline.vim'
-Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'tpope/vim-haml'
-Plug 'ctrlpvim/ctrlp.vim'
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
-Plug 'qpkorr/vim-bufkill'
-Plug 'mbbill/undotree'
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+call plug#begin('~/.config/nvim/plugged')
+" I use these all the time
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'itchyny/lightline.vim'
+
+" These should be default functionality/nvim option
+Plug 'tpope/vim-surround'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'arnar/vim-matchopen'
+Plug 'tpope/vim-unimpaired'
+Plug 'luochen1990/rainbow'
+
+" I haven't used this very much
+Plug 'mbbill/undotree'
+Plug 'benekastah/neomake'
+Plug 'qpkorr/vim-bufkill'
+
+" Refresh memory on usefulenss
+Plug 'godlygeek/tabular'
+
+" Do I still want these
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'tpope/vim-haml'
+
+" Why does this intermittently work?
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+
+" Too slow
 "Plug 'klen/python-mode', {'for': 'python'}
+
+" To be determined area
 call plug#end()
 
 let g:deoplete#enable_at_startup = 1
