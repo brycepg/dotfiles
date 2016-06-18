@@ -25,7 +25,7 @@ au BufRead,BufNewFile *.pde set filetype=arduino
 au BufRead,BufNewFile *.ino set filetype=arduino
 
 " Show good column limit
-set colorcolumn=80
+set colorcolumn=100
 
 " Explore file tree better
 " Using :Explore

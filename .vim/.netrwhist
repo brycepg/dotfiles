@@ -1,3 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
-let g:netrw_dirhist_1='/home/bguinta/fedora/home/bguinta/Documents/uccs/software_engineering/assignments/hw2/app/helpers'
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/work-bryce/vdbench/output'
+let g:netrw_dirhist_2='/home/work-bryce/vdbench/BG_0001/flatfile'
+let g:netrw_dirhist_3='/home/work-bryce/noise/build/lib.linux-x86_64-2.7'
+let g:netrw_dirhist_4='/home/work-bryce/noise/build/lib.linux-x86_64-2.7/noise'
+let g:netrw_dirhist_5='/home/work-bryce/noise/build/lib.linux-x86_64-2.7'
+let g:netrw_dirhist_6='/home/work-bryce/noise/build/lib.linux-x86_64-2.7/noise'
+let g:netrw_dirhist_7='/home/work-bryce/cave-dweller/cave_dweller/my_test'
