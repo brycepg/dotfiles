@@ -15,4 +15,6 @@ alias xclipc "xclip -select clipboard"
 set -x EDITOR nvim
 
 eval (python -m virtualfish)
+
+# Default virtualenv
 vf activate p3k
