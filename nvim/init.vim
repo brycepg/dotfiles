@@ -113,3 +113,9 @@ if !isdirectory(undodir_path)
 endif
 set undofile
 set undodir=~/.undodir
+
+" Enable project specific configuration files
+set exrc
+
+" Disable unsafe config injection for exrc
+set secure
