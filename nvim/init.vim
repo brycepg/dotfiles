@@ -81,13 +81,18 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'tpope/vim-haml'
 
 " Why does this intermittently work?
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote'), 'for': 'vim,c'}
 
 " Too slow
-"Plug 'klen/python-mode', {'for': 'python'}
+Plug 'klen/python-mode', {'for': 'python,vim'}
 
 " To be determined area
 call plug#end()
+
+" pymode enabled auto textwidth chopping. Destroys my concentration
+let g:pymode_options=0
+" pymode indent documentation is wonky.
+let g:pymode_indent=1
 
 let g:deoplete#enable_at_startup = 1
 
@@ -98,7 +103,6 @@ let g:lightline = {
 let g:rainbow_active = 1
 
 set shiftwidth=4 tabstop=4 softtabstop=4
-"let g:pymode_lint_cwindow = 0
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 
 " Persistent undo directory
