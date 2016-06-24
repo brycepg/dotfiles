@@ -47,6 +47,9 @@ nnoremap <Leader>o :CtrlP<CR>
 nnoremap <Leader>B :CtrlPBuffer<CR>
 " Open most recently used files
 nnoremap <Leader>f :CtrlPMRUFiles<CR>
+
+map <F2> :so $MYVIMRC
+map <F4> :UndotreeToggle<CR>
 map <F5> :Neomake<CR>
 
 
