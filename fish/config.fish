@@ -6,16 +6,32 @@ source $HOME/.config/fish/z-fish/z.fish
 # Local bin in path
 set -gx PATH $PATH $HOME/bin
 # Anaconda Python3 in path
-set -gx PATH $HOME/anaconda3/bin $PATH 
+set -gx PATH $HOME/anaconda3/bin $PATH
 
 # xclipc -- use clipboard by default
-alias xclipc "xclip -select clipboard"
+if which xclip > /dev/null
+    alias xclipc "xclip -select clipboard"
+else
+    echo "xclip is not installed"
+end
 
 # Neovim as default editor for git, etc
-set -x EDITOR nvim
+if which nvim > /dev/null
+    set -x EDITOR nvim
+else
+    echo "nvim is not installed"
+end
 
-eval (python -m virtualfish)
+if which python > /dev/null
+    eval (python -m virtualfish)
+    # Default virtualenv
+    vf activate p3k
+else
+    echo "python is not installed"
+end
 
-# Default virtualenv
-vf activate p3k
-eval (thefuck --alias | tr '\n' ';')
+if which thefuck > /dev/null
+    eval (thefuck --alias | tr '\n' ';')
+else
+    echo "thefuck not installed"
+end
