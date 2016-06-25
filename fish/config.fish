@@ -18,3 +18,4 @@ eval (python -m virtualfish)
 
 # Default virtualenv
 vf activate p3k
+eval (thefuck --alias | tr '\n' ';')
