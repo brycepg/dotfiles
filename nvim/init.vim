@@ -78,6 +78,7 @@ Plug 'qpkorr/vim-bufkill'
 
 " Refresh memory on usefulenss
 Plug 'godlygeek/tabular'
+Plug 'tpope/vim-abolish'
 
 " Do I still want these
 Plug 'Glench/Vim-Jinja2-Syntax'
