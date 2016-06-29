@@ -24,6 +24,9 @@ set tags=~/mytags
 " Long history
 set history=1000
 
+" Allow buffers to be hidden
+set hidden
+
 " No highligting during replace
 autocmd cursorhold * set nohlsearch
 autocmd cursormoved * set hlsearch
