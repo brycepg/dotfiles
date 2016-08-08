@@ -5,6 +5,7 @@ source $HOME/.config/fish/z-fish/z.fish
 
 # Local bin in path
 set -gx PATH $PATH $HOME/bin
+set -gx PATH $PATH /usr/local/bin
 # Anaconda Python3 in path
 set -gx PATH $HOME/anaconda3/bin $PATH
 
