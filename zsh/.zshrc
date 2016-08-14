@@ -92,7 +92,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-if which nvim; then
+if which nvim > /dev/null; then
     alias vim="nvim"
 fi
 
