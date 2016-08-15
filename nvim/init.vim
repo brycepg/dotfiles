@@ -91,6 +91,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote'), 'for': 'vim,c'}
 Plug 'klen/python-mode', {'for': 'python,vim'}
 
 " To be determined area
+Plug 'hynek/vim-python-pep8-indent'
 call plug#end()
 
 " pymode enabled auto textwidth chopping. Destroys my concentration
