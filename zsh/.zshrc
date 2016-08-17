@@ -106,3 +106,4 @@ PROMPT="$USER $PROMPT"
 agp() {
     ag -G ".*\.py" "$@"
 }
+export EDITOR="nvim"
