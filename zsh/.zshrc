@@ -101,6 +101,7 @@ fi
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 PROMPT='$(check_last_exit_code)'$PROMPT
+PROMPT="$USER $PROMPT"
 
 agp() {
     ag -G ".*\.py" "$@"
