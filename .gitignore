@@ -1,6 +1,9 @@
 nvim/autoload/plug.vim.old
 .init.vim-rplugin*
 .vim/.netrwhist
+<<<<<<< HEAD
 fish_history
 .vim/.netrwhist
 *fishd*
+=======
+>>>>>>> 39014f5... EDITOR not working
