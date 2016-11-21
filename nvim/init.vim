@@ -92,8 +92,6 @@ Plug 'godlygeek/tabular'
 " Too slow
 Plug 'klen/python-mode', {'for': 'python,vim'}
 
-" To be determined area
-
 if !has('nvim')
   Plug 'noahfrederick/vim-neovim-defaults'
 else
@@ -102,6 +100,10 @@ else
 endif
 
 call plug#end()
+
+
+" Do not auotmatically insert comments.
+set formatoptions-=r formatoptions-=o formatoptions-=c
 
 " pymode enabled auto textwidth chopping. Destroys my concentration
 let g:pymode_options=0
