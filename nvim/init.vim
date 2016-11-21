@@ -92,6 +92,9 @@ Plug 'godlygeek/tabular'
 " Too slow
 Plug 'klen/python-mode', {'for': 'python,vim'}
 
+" To be determined area
+Plug 'justinmk/vim-sneak'
+
 if !has('nvim')
   Plug 'noahfrederick/vim-neovim-defaults'
 else
