@@ -41,4 +41,8 @@ map <F5> :!make<CR>
 set backupdir=~/.vim_bak/backup
 set dir=~/.vim_bak/dir
 
+if has('win32')
+    highlight Normal ctermbg=NONE
+endif
+
 execute pathogen#infect()
