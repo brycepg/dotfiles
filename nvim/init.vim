@@ -70,28 +70,32 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'arnar/vim-matchopen'
 Plug 'tpope/vim-unimpaired'
 Plug 'luochen1990/rainbow'
+Plug 'tpope/vim-abolish'
 
 " I haven't used this very much
 Plug 'mbbill/undotree'
-Plug 'benekastah/neomake'
 Plug 'qpkorr/vim-bufkill'
 
 " Refresh memory on usefulenss
 Plug 'godlygeek/tabular'
-Plug 'tpope/vim-abolish'
 
 " Do I still want these
-Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'tpope/vim-haml'
-
-" Why does this intermittently work?
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote'), 'for': 'vim,c'}
+"Plug 'Glench/Vim-Jinja2-Syntax'
+"Plug 'tpope/vim-haml'
+"Plug 'hynek/vim-python-pep8-indent'
 
 " Too slow
 Plug 'klen/python-mode', {'for': 'python,vim'}
 
 " To be determined area
-Plug 'hynek/vim-python-pep8-indent'
+
+if !has('nvim')
+  Plug 'noahfrederick/vim-neovim-defaults'
+else
+    Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote'), 'for': 'vim,c'}
+    Plug 'benekastah/neomake'
+endif
+
 call plug#end()
 
 " pymode enabled auto textwidth chopping. Destroys my concentration
