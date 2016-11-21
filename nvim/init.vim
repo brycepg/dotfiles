@@ -1,5 +1,10 @@
 syntax on
-colorscheme wombat256mod
+if has('win32') && ! has('gui_running')
+    " 256 Colors do not work in cmd.exe and cmder
+    colorscheme wombat
+else
+    colorscheme wombat256mod
+endif
 filetype plugin indent on
 set colorcolumn=93
 set expandtab
