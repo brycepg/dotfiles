@@ -1,2 +1,3 @@
 altscreen on
+# Change control key from Ctrl-a to Ctrl-b to avoid emacs key conflict
 escape ^Bb
