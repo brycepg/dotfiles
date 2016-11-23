@@ -109,3 +109,14 @@ agp() {
 
 export EDITOR="nvim"
 . $HOME/.zshrc.local
+
+# Git alias
+untracked() {
+    # Get a list of untracked files
+    output=$(git status --porcelain) 2>/dev/null
+    if [[ "$?" == 128 ]]; then
+        echo "Not a git directory"
+    else
+        echo "$output" | grep -i '^??' | tr -d '^?? '
+    fi
+}

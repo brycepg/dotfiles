@@ -38,6 +38,7 @@ autocmd cursormoved * set hlsearch
 
 " ------------------------ <Leader> key(SPACE) ------------------------
 " Map the leader key to SPACE
+
 map <SPACE> <Nop>
 let mapleader="\<SPACE>"
 " nohl shortcut
