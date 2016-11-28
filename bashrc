@@ -62,3 +62,6 @@ fi
 if type thefuck >/dev/null; then
     eval $(thefuck --alias)
 fi
+
+# Auto jump
+[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
