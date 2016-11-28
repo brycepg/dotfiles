@@ -112,10 +112,6 @@ bindkey '^[[B' history-substring-search-down
 PROMPT='$(check_last_exit_code)'$PROMPT
 PROMPT="$USER $PROMPT"
 
-agp() {
-    ag -G ".*\.py" "$@"
-}
-
 export EDITOR="nvim"
 
 # Add a local rc file for configurations specific to this machine
@@ -133,4 +129,9 @@ untracked() {
     else
         echo "$output" | grep -i '^??' | tr -d '^?? '
     fi
+}
+
+agp() {
+    # Nice function to recursively search only python files
+    ag -G ".*\.py" "$@"
 }
