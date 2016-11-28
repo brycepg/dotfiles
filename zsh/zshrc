@@ -108,7 +108,12 @@ agp() {
 }
 
 export EDITOR="nvim"
-. $HOME/.zshrc.local
+
+# Add a local rc file for configurations specific to this machine
+local_rc_path = $HOME/.zshrc.local
+if [ -e $local_rc_path ]; then
+    . $local_rc_path
+fi
 
 # Git alias
 untracked() {
