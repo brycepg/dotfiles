@@ -8,8 +8,17 @@ function check_last_exit_code() {
     echo "$EXIT_CODE_PROMPT"
   fi
 }
+
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+# Prefer local installation over system installation if available
+system_ohmyzsh_path="/usr/share/oh-my-zsh/"
+local_ohmyzsh_path="$HOME/.oh-my-zsh/"
+if [ -d "$local_ohmyzsh_path" ]; then
+    export ZSH="$local_ohmyzsh_path"
+elif [ -d "$system_ohmyzsh_path" ]; then
+    export ZSH="$system_ohmyzsh_path"
+fi
+
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
