@@ -54,4 +54,6 @@ set_editor() {
 set_editor
 
 # Add user bin directory to path
-export PATH="$PATH:$HOME/bin"
+if [ -d ~/.local/bin ]; then
+    export PATH="$PATH:$HOME/.local/bin"
+fi
