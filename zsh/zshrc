@@ -1,4 +1,5 @@
 function check_last_exit_code() {
+  # Provides exit code in comand prompt
   local LAST_EXIT_CODE=$?
   if [[ $LAST_EXIT_CODE -ne 0 ]]; then
     local EXIT_CODE_PROMPT=''
@@ -72,7 +73,6 @@ plugins=(git, zsh-syntax-highlighting, zsh-history-substring-search, z)
 
 # User configuration
 
-export PATH="$HOME/.local/bin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -101,37 +101,23 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-if which nvim > /dev/null; then
-    alias vim="nvim"
-fi
 
 # put https://github.com/zsh-users/zsh-history-substring-search 
 # into ~/.oh-my-zsh/plugins
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+
 PROMPT='$(check_last_exit_code)'$PROMPT
 PROMPT="$USER $PROMPT"
 
-export EDITOR="nvim"
-
 # Add a local rc file for configurations specific to this machine
 local_rc_path=$HOME/.zshrc.local
-if [ -e $local_rc_path ]; then
+if [ -f $local_rc_path ]; then
     . $local_rc_path
 fi
 
-# Git alias
-untracked() {
-    # Get a list of untracked files
-    output=$(git status --porcelain) 2>/dev/null
-    if [[ "$?" == 128 ]]; then
-        echo "Not a git directory"
-    else
-        echo "$output" | grep -i '^??' | tr -d '^?? '
-    fi
-}
-
-agp() {
-    # Nice function to recursively search only python files
-    ag -G ".*\.py" "$@"
-}
+# Source file that contains directives that are common to both zshrc and bashrc
+common_source="$(dirname $0:A)/rc-common.sh"
+if [ -e $common_source ]; then
+    . "$common_source"
+fi
