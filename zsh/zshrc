@@ -119,7 +119,7 @@ agp() {
 export EDITOR="nvim"
 
 # Add a local rc file for configurations specific to this machine
-local_rc_path = $HOME/.zshrc.local
+local_rc_path=$HOME/.zshrc.local
 if [ -e $local_rc_path ]; then
     . $local_rc_path
 fi
