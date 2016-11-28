@@ -57,3 +57,8 @@ set_editor
 if [ -d ~/.local/bin ]; then
     export PATH="$PATH:$HOME/.local/bin"
 fi
+
+# autocorrection of errors
+if type thefuck >/dev/null; then
+    eval $(thefuck --alias)
+fi
