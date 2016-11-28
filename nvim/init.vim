@@ -134,6 +134,20 @@ endif
 set undofile
 set undodir=~/.undodir
 
+
+function! HeaderCreate(...)
+    " Create a rst header with the first character of the first argument.
+    " Defaults to '='
+    if a:0 < 1
+        let l:char = '='
+    else
+        " First character of the first argument
+        let l:char = a:1[0]
+    endif
+    normal yyp:s/./\=l:char/ | nohl
+endfunction
+command! -nargs=? Hrst call HeaderCreate('<args>')
+
 " Enable project specific configuration files
 set exrc
 
