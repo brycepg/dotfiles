@@ -35,7 +35,6 @@ set_editor() {
     # Yaourt env variable
     export VISUAL=$editor
 }
-set_editor
 # Git alias
 untracked() {
     # Get a list of untracked files
@@ -46,4 +45,4 @@ untracked() {
         echo "$output" | grep -i '^??' | tr -d '^?? '
     fi
 }
-
+set_editor

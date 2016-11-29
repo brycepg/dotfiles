@@ -117,7 +117,9 @@ if [ -f $local_rc_path ]; then
 fi
 
 # Source file that contains directives that are common to both zshrc and bashrc
-common_source="$(dirname $0:A)/rc-common.sh"
+dotfile_path=$(dirname $(dirname $(readlink -f ${(%):-%N})))
+common_source="${dotfile_path}/rc-common.sh"
+
 if [ -e $common_source ]; then
     . "$common_source"
 fi

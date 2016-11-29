@@ -97,7 +97,7 @@ Plug 'klen/python-mode', {'for': 'python,vim'}
 Plug 'justinmk/vim-sneak'
 
 if !has('nvim')
-  Plug 'noahfrederick/vim-neovim-defaults'
+    Plug 'noahfrederick/vim-neovim-defaults'
 else
     Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote'), 'for': 'vim,c'}
     Plug 'benekastah/neomake'
