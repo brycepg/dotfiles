@@ -43,3 +43,5 @@ common_source="$dotfiles_path/rc-common.sh"
 if [ -e "$common_source" ]; then
     . "$common_source"
 fi
+
+alias ls='ls --color=auto'

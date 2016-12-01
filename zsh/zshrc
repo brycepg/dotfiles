@@ -75,7 +75,11 @@ plugins=(git, zsh-syntax-highlighting, zsh-history-substring-search, z)
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
-source $ZSH/oh-my-zsh.sh
+if [ -e $ZSH/oh-my-zsh.sh ]; then
+    source $ZSH/oh-my-zsh.sh
+    PROMPT='$(check_last_exit_code)'$PROMPT
+    PROMPT="$USER $PROMPT"
+fi
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -106,9 +110,6 @@ source $ZSH/oh-my-zsh.sh
 # into ~/.oh-my-zsh/plugins
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-
-PROMPT='$(check_last_exit_code)'$PROMPT
-PROMPT="$USER $PROMPT"
 
 # Add a local rc file for configurations specific to this machine
 local_rc_path=$HOME/.zshrc.local
