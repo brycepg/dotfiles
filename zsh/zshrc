@@ -108,9 +108,6 @@ fi
 
 # put https://github.com/zsh-users/zsh-history-substring-search 
 # into ~/.oh-my-zsh/plugins
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-
 # Add a local rc file for configurations specific to this machine
 local_rc_path=$HOME/.zshrc.local
 if [ -f $local_rc_path ]; then
