@@ -122,3 +122,11 @@ if [ -e $common_source ]; then
 else
     echo common source $common_source not found
 fi
+
+# History
+unsetopt share_history
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+HISTSIZE=10000000
+SAVEHIST=10000000
