@@ -14,7 +14,7 @@ zsh
 
 For zsh::
 
-    ln -s ~/dotfiles/zsh/zshrc ~/.zshrc
+    ln -s ~/dotfiles/zshrc ~/.zshrc
 
 
 I recommend `thefuck` for autocorrection.

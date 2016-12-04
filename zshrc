@@ -115,9 +115,10 @@ if [ -f $local_rc_path ]; then
 fi
 
 # Source file that contains directives that are common to both zshrc and bashrc
-dotfile_path=$(dirname $(dirname $(readlink -f ${(%):-%N})))
+dotfile_path=$(dirname $(readlink -f ${(%):-%N}))
 common_source="${dotfile_path}/rc-common.sh"
-
 if [ -e $common_source ]; then
     . "$common_source"
+else
+    echo common source $common_source not found
 fi
