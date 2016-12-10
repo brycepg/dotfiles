@@ -1,11 +1,11 @@
-" Not compatible with vi
 set nocompatible
+" Not compatible with vi
 
 " Indenting - 4 spaces to a tab always
-set expandtab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+set expandtab
 
 " Indentatiton
 set autoindent
@@ -14,8 +14,8 @@ filetype plugin indent on
 " Syntax highlighting
 syntax on
 " Enable 256 colors Terminal -- TODO: check if available before setting
-set t_Co=256
-colorscheme wombat256
+"set t_Co=256
+"colorscheme wombat256
 
 " Enable line numbers
 set number
@@ -38,11 +38,9 @@ map <F5> :!make<CR>
 
 
 " Back Directories in centralized location to not pollute filesystem
-set backupdir=~/.vim_bak/backup
-set dir=~/.vim_bak/dir
+"set backupdir=~/.vim_bak/backup
+"set dir=~/.vim_bak/dir
 
-if has('win32')
-    highlight Normal ctermbg=NONE
-endif
-
-execute pathogen#infect()
+"if has('win32')
+"    highlight Normal ctermbg=NONE
+"endif
