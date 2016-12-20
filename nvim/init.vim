@@ -109,11 +109,6 @@ call plug#end()
 " Do not auotmatically insert comments.
 set formatoptions-=r formatoptions-=o formatoptions-=c
 
-" pymode enabled auto textwidth chopping. Destroys my concentration
-let g:pymode_options=0
-" pymode indent documentation is wonky.
-let g:pymode_indent=1
-
 let g:deoplete#enable_at_startup = 1
 
 let g:lightline = {

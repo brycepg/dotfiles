@@ -1,3 +1,9 @@
+" pymode enabled auto textwidth chopping. Destroys my concentration
+let g:pymode_options=0
+
+" pymode indent documentation is wonky.
+let g:pymode_indent=1
+
 " Override go-to.definition key shortcut to Ctrl-]
 let g:pymode_rope_goto_definition_bind = "<C-]>"
 
