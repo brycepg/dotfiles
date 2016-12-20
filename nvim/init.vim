@@ -73,6 +73,7 @@ Plug 'itchyny/lightline.vim'
 " These should be default functionality/nvim option
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'arnar/vim-matchopen'
 Plug 'tpope/vim-unimpaired'
