@@ -67,40 +67,32 @@ function! DoRemote(arg)
 endfunction
 call plug#begin('~/.config/nvim/plugged')
 " I use these all the time
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'itchyny/lightline.vim'
-
-" These should be default functionality/nvim option
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-fugitive'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'arnar/vim-matchopen'
-Plug 'tpope/vim-unimpaired'
-Plug 'luochen1990/rainbow'
-Plug 'tpope/vim-abolish'
-
+Plug 'python-mode/python-mode', {'for': 'python,vim', 'branch': 'develop'}
+Plug 'ctrlpvim/ctrlp.vim'             " Fuzzy search
+Plug 'itchyny/lightline.vim'          " Status bar
+Plug 'tpope/vim-surround'             " Surround motions
+Plug 'tpope/vim-repeat'               " Extending repeat to macros
+Plug 'tpope/vim-fugitive'             " Git from vim
+Plug 'luochen1990/rainbow'            " Rainbow parenthesis
+Plug 'tpope/vim-abolish'              " Case smart replace/change: via Subvert/cr[smcu]
+Plug 'arnar/vim-matchopen'            " Highlight last opened parenthesis
+Plug 'tpope/vim-unimpaired'           " Bracket shortcuts
+Plug 'ntpeters/vim-better-whitespace' " Highlight trailing whitespace
 " I haven't used this very much
 Plug 'mbbill/undotree'
-Plug 'qpkorr/vim-bufkill'
-
+Plug 'qpkorr/vim-bufkill' " :BD option to close buffer
 " Refresh memory on usefulenss
 Plug 'godlygeek/tabular'
 
 " Do I still want these
 "Plug 'Glench/Vim-Jinja2-Syntax'
 "Plug 'tpope/vim-haml'
-"Plug 'hynek/vim-python-pep8-indent'
-
-" Too slow
-Plug 'python-mode/python-mode', {'for': 'python,vim', 'branch': 'develop'}
-
-" To be determined area
-Plug 'justinmk/vim-sneak'
+" Plug 'justinmk/vim-sneak'
 
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
 else
+    " Neovim only plugins
     Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote'), 'for': 'vim,c'}
     Plug 'benekastah/neomake'
 endif
