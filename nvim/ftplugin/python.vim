@@ -46,3 +46,5 @@ setlocal define=^\s*\\(def\\\\|class\\)
 " Taken from pymode_options. XXX figure out what they do
 setlocal formatoptions-=t
 setlocal complete+=t
+
+let g:pymode_python = 'python3'
