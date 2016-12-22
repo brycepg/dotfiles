@@ -93,7 +93,7 @@ Plug 'godlygeek/tabular'
 "Plug 'hynek/vim-python-pep8-indent'
 
 " Too slow
-Plug 'klen/python-mode', {'for': 'python,vim'}
+Plug 'python-mode/python-mode', {'for': 'python,vim', 'branch': 'develop'}
 
 " To be determined area
 Plug 'justinmk/vim-sneak'
