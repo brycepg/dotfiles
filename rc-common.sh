@@ -22,10 +22,10 @@ set_editor() {
     # Prefer nvim over vim over vi
     # Alias vim to nvim if available
     editor=""
-    if type nvim > /dev/null; then
+    if type nvim &> /dev/null; then
         editor="nvim"
         alias vim="nvim"
-    elif type vim > /dev/null; then
+    elif type vim &> /dev/null; then
         editor="vim"
     else
         editor="vi"
