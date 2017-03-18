@@ -1,6 +1,12 @@
 # Do not source if not interactive
 [[ $- != *i* ]] && return
 
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+
 # Display terminal colors
 colors() {
 	local fgc bgc vals seq0
