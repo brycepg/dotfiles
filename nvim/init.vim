@@ -7,6 +7,11 @@ else
 endif
 filetype plugin indent on
 set colorcolumn=93
+
+" Override ftplugin/python.vim tabstop set to 8
+autocmd FileType python setlocal tabstop=4
+
+" Expand tabs into spaces
 set expandtab
 set number
 " gg and G will keep column
