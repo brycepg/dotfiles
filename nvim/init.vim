@@ -72,7 +72,7 @@ function! DoRemote(arg)
 endfunction
 call plug#begin('~/.config/nvim/plugged')
 " I use these all the time
-Plug 'python-mode/python-mode', {'for': 'python,vim', 'branch': 'develop'}
+"Plug 'python-mode/python-mode', {'for': 'python,vim', 'branch': 'develop'}
 Plug 'ctrlpvim/ctrlp.vim'             " Fuzzy search
 Plug 'itchyny/lightline.vim'          " Status bar
 Plug 'tpope/vim-surround'             " Surround motions
