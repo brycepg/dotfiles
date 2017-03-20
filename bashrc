@@ -51,3 +51,12 @@ if [ -e "$common_source" ]; then
 fi
 
 alias ls='ls --color=auto'
+
+# Unlimited history
+HISTSIZE= HISTFILESIZE= 
+
+# Change history file location because some programs truncate it
+export HISTIFLE=~/.bash_external_history
+
+# Immediately append history to file
+shopt -s histappend
