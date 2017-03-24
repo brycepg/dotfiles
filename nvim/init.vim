@@ -7,6 +7,11 @@ else
 endif
 filetype plugin indent on
 set colorcolumn=93
+
+" Override ftplugin/python.vim tabstop set to 8
+autocmd FileType python setlocal tabstop=4
+
+" Expand tabs into spaces
 set expandtab
 set number
 " gg and G will keep column
@@ -67,7 +72,7 @@ function! DoRemote(arg)
 endfunction
 call plug#begin('~/.config/nvim/plugged')
 " I use these all the time
-Plug 'python-mode/python-mode', {'for': 'python,vim', 'branch': 'develop'}
+"Plug 'python-mode/python-mode', {'for': 'python,vim', 'branch': 'develop'}
 Plug 'ctrlpvim/ctrlp.vim'             " Fuzzy search
 Plug 'itchyny/lightline.vim'          " Status bar
 Plug 'tpope/vim-surround'             " Surround motions
@@ -81,9 +86,10 @@ Plug 'ntpeters/vim-better-whitespace' " Highlight trailing whitespace
 " I haven't used this very much
 Plug 'mbbill/undotree'
 Plug 'qpkorr/vim-bufkill' " :BD option to close buffer
+" Better Python folding
+Plug 'tmhedberg/SimpylFold'
 " Refresh memory on usefulenss
 Plug 'godlygeek/tabular'
-
 " Do I still want these
 "Plug 'Glench/Vim-Jinja2-Syntax'
 "Plug 'tpope/vim-haml'
@@ -142,3 +148,9 @@ set exrc
 
 " Disable unsafe config injection for exrc
 set secure
+
+" Fold by default
+set foldmethod=indent
+set foldlevel=99
+" Enable folding with the spacebar
+nnoremap <space> za
