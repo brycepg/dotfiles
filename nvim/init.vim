@@ -86,9 +86,10 @@ Plug 'ntpeters/vim-better-whitespace' " Highlight trailing whitespace
 " I haven't used this very much
 Plug 'mbbill/undotree'
 Plug 'qpkorr/vim-bufkill' " :BD option to close buffer
+" Better Python folding
+Plug 'tmhedberg/SimpylFold'
 " Refresh memory on usefulenss
 Plug 'godlygeek/tabular'
-
 " Do I still want these
 "Plug 'Glench/Vim-Jinja2-Syntax'
 "Plug 'tpope/vim-haml'
@@ -147,3 +148,9 @@ set exrc
 
 " Disable unsafe config injection for exrc
 set secure
+
+" Fold by default
+set foldmethod=indent
+set foldlevel=99
+" Enable folding with the spacebar
+nnoremap <space> za

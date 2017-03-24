@@ -48,3 +48,7 @@ setlocal formatoptions-=t
 setlocal complete+=t
 
 let g:pymode_python = 'python3'
+
+" Docstring preview in folds
+let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_fold_docstring = 0
