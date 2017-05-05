@@ -154,3 +154,6 @@ set foldmethod=indent
 set foldlevel=99
 " Enable folding with the spacebar
 nnoremap <space> za
+
+" Look for ctags file in current directory
+set tags=./tags,tags;
