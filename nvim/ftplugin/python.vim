@@ -52,3 +52,8 @@ let g:pymode_python = 'python3'
 " Docstring preview in folds
 let g:SimpylFold_docstring_preview = 1
 let g:SimpylFold_fold_docstring = 0
+
+" Uot use one shiftwidth (4 spaces) for parenthesis indent
+" The default is 2*shiftwidth, which is not a valid hanging indent.
+let pyindent_nested_paren="&sw"
+let pyindent_open_paren="&sw"
