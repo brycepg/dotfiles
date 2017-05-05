@@ -57,3 +57,16 @@ let g:SimpylFold_fold_docstring = 0
 " The default is 2*shiftwidth, which is not a valid hanging indent.
 let pyindent_nested_paren="&sw"
 let pyindent_open_paren="&sw"
+
+
+" Like gJ, but always remove spaces
+fun! JoinSpaceless()
+    execute 'normal gJ'
+
+    " Character under cursor is whitespace?
+    if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+        " When remove it!
+        execute 'normal dw'
+    endif
+endfun
+nnoremap J :call JoinSpaceless()<CR>
