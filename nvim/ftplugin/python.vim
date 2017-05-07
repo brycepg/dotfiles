@@ -101,3 +101,5 @@ function! GetGooglePythonIndent(lnum)
   " Delegate the rest to the original function.
   return GetPythonIndent(a:lnum)
 endfunction
+
+let g:neomake_warning_sign={'text': 'W'}
