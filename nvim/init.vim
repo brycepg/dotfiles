@@ -99,7 +99,7 @@ if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
 else
     " Neovim only plugins
-    Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote'), 'for': 'vim,c'}
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'benekastah/neomake'
 endif
 
