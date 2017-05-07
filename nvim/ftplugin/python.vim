@@ -75,7 +75,7 @@ nnoremap J :call JoinSpaceless()<CR>
 "source: https://github.com/dccmx/google-style.vim/blob/master/indent/python.vim
 set indentexpr=GetGooglePythonIndent(v:lnum)
 let s:maxoff = 50 " maximum number of lines to look backwards.
-function GetGooglePythonIndent(lnum)
+function! GetGooglePythonIndent(lnum)
 
   " Indent inside parens.
   " Align with the open paren unless it is at the end of the line.
