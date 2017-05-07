@@ -95,6 +95,9 @@ Plug 'godlygeek/tabular'
 "Plug 'tpope/vim-haml'
 " Plug 'justinmk/vim-sneak'
 
+" Auto format with :Autoformat
+Plug 'Chiel92/vim-autoformat'
+
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
 else
