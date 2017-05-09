@@ -154,3 +154,6 @@ set foldmethod=indent
 set foldlevel=99
 " Enable folding with the spacebar
 nnoremap <space> za
+
+" Turn on spell check
+command! Spell :setlocal spell spelllang=en_us
