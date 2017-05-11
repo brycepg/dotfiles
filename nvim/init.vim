@@ -158,3 +158,6 @@ set foldlevel=99
 
 " Look for ctags file in current directory
 set tags=./tags,tags;
+
+" Disable entering ex mode
+noremap Q <Nop>
