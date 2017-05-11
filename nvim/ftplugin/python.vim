@@ -69,7 +69,7 @@ fun! JoinSpaceless()
         execute 'normal dw'
     endif
 endfun
-nnoremap J :call JoinSpaceless()<CR>
+noremap ,J :call JoinSpaceless()<CR>
 
 " Use improved python indentation for nested parens
 "source: https://github.com/dccmx/google-style.vim/blob/master/indent/python.vim
