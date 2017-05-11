@@ -102,4 +102,5 @@ function! GetGooglePythonIndent(lnum)
   return GetPythonIndent(a:lnum)
 endfunction
 
+" Original warning sign is too hard to see
 let g:neomake_warning_sign={'text': 'W'}
