@@ -35,6 +35,9 @@ vim/neovim
 
 My `dotfiles/nvim/init.vim` rcfile is compatible with both vim and neovim
 
+.. Note::
+
+    Install ctags package and run `ctags -R` against directory for function lookup.
 
 for vim::
 

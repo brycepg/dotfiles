@@ -158,6 +158,9 @@ set secure
 set foldmethod=indent
 set foldlevel=99
 
+" Turn on spell check
+command! Spell :setlocal spell spelllang=en_us
+
 " Look for ctags file in current directory
 set tags=./tags,tags;
 
