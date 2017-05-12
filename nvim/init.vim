@@ -90,6 +90,8 @@ Plug 'qpkorr/vim-bufkill' " :BD option to close buffer
 Plug 'tmhedberg/SimpylFold'
 " Refresh memory on usefulenss
 Plug 'godlygeek/tabular'
+" Rearrange function parameters
+Plug 'AndrewRadev/sideways.vim'
 " Do I still want these
 "Plug 'Glench/Vim-Jinja2-Syntax'
 "Plug 'tpope/vim-haml'
