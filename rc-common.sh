@@ -85,3 +85,9 @@ command-exists() {
     type "$bin" > /dev/null;
     echo $?
 }
+
+
+# Copy into clipboard
+function clip() {
+    xclip -selection clipboard "$@"
+}
