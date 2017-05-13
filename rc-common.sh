@@ -53,8 +53,8 @@ sendtext () {
 }
 
 # Wrap command to notify user upon finish
-endnotify(){
-    if [[ ! $(command-exists notify-send) ]]; then
+endnotify() {
+    if ! $(command-exists notify-send); then
         echo "You need to install notify-send to use this function"
         exit 1
     fi
@@ -66,7 +66,7 @@ endnotify(){
 # Notify when already running process finishes
 curnotify() {
     pid="$1"
-    if [[ ! $(command-exists notify-send) ]]; then
+    if ! $(command-exists notify-send); then
         echo "You need to install notify-send to use this function"
         exit 1
     fi
