@@ -50,3 +50,16 @@ set_editor
 sendtext () {
     curl http://textbelt.com/text -d number=${1} -d "message=$2";echo message sent;
 }
+
+
+# -----------
+# Git Aliases
+# -----------
+alias gstn='git status -uno -s'
+alias gss='git status -s'
+alias gst='git stash'
+alias gstl='git stash list'
+alias gstp='git stash pop'
+alias gp='git pull'
+alias glg='git log --graph --oneline --decorate --all'
+alias gld='git log --pretty=format:"%h %ad %s" --date=short --all'
