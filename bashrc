@@ -45,3 +45,14 @@ if [ -e "$common_source" ]; then
 fi
 
 alias ls='ls --color=auto'
+
+# Set PS1 if set to default bash ps1
+set_ps1() {
+    # Bash version PS1 sucks
+    DEFAULT_PS1='\s-\v\$'
+    # Use user@host cwd hostname
+    if [[ "$(echo -E $PS1)" == "$DEFAULT_PS1" ]]; then
+        PS1='\u@\h \W\$ '
+    fi
+}
+set_ps1
