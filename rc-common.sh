@@ -47,11 +47,6 @@ untracked() {
 }
 set_editor
 
-# Send test message to $1 with $2 as message
-sendtext () {
-    curl http://textbelt.com/text -d number=${1} -d "message=$2";echo message sent;
-}
-
 # -----------
 # Git Aliases
 # -----------
