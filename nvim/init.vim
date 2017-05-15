@@ -7,6 +7,11 @@ else
 endif
 filetype plugin indent on
 set colorcolumn=93
+
+" Override ftplugin/python.vim tabstop set to 8
+autocmd FileType python setlocal tabstop=4
+
+" Expand tabs into spaces
 set expandtab
 set number
 " gg and G will keep column
@@ -67,41 +72,39 @@ function! DoRemote(arg)
 endfunction
 call plug#begin('~/.config/nvim/plugged')
 " I use these all the time
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'itchyny/lightline.vim'
-
-" These should be default functionality/nvim option
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-fugitive'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'arnar/vim-matchopen'
-Plug 'tpope/vim-unimpaired'
-Plug 'luochen1990/rainbow'
-Plug 'tpope/vim-abolish'
-
+"Plug 'python-mode/python-mode', {'for': 'python,vim', 'branch': 'develop'}
+Plug 'ctrlpvim/ctrlp.vim'             " Fuzzy search
+Plug 'itchyny/lightline.vim'          " Status bar
+Plug 'tpope/vim-surround'             " Surround motions
+Plug 'tpope/vim-repeat'               " Extending repeat to macros
+Plug 'tpope/vim-fugitive'             " Git from vim
+Plug 'luochen1990/rainbow'            " Rainbow parenthesis
+Plug 'tpope/vim-abolish'              " Case smart replace/change: via Subvert/cr[smcu]
+Plug 'arnar/vim-matchopen'            " Highlight last opened parenthesis
+Plug 'tpope/vim-unimpaired'           " Bracket shortcuts
+Plug 'ntpeters/vim-better-whitespace' " Highlight trailing whitespace
 " I haven't used this very much
 Plug 'mbbill/undotree'
-Plug 'qpkorr/vim-bufkill'
-
+Plug 'qpkorr/vim-bufkill' " :BD option to close buffer
+" Better Python folding
+Plug 'tmhedberg/SimpylFold'
 " Refresh memory on usefulenss
 Plug 'godlygeek/tabular'
-
+" Rearrange function parameters
+Plug 'AndrewRadev/sideways.vim'
 " Do I still want these
 "Plug 'Glench/Vim-Jinja2-Syntax'
 "Plug 'tpope/vim-haml'
-"Plug 'hynek/vim-python-pep8-indent'
+" Plug 'justinmk/vim-sneak'
 
-" Too slow
-Plug 'klen/python-mode', {'for': 'python,vim'}
-
-" To be determined area
-Plug 'justinmk/vim-sneak'
+" Auto format with :Autoformat
+Plug 'Chiel92/vim-autoformat'
 
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
 else
-    Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote'), 'for': 'vim,c'}
+    " Neovim only plugins
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'benekastah/neomake'
 endif
 
@@ -150,3 +153,16 @@ set exrc
 
 " Disable unsafe config injection for exrc
 set secure
+
+" Fold by default
+set foldmethod=indent
+set foldlevel=99
+
+" Turn on spell check
+command! Spell :setlocal spell spelllang=en_us
+
+" Look for ctags file in current directory
+set tags=./tags,tags;
+
+" Disable entering ex mode
+noremap Q <Nop>

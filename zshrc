@@ -109,10 +109,6 @@ fi
 # put https://github.com/zsh-users/zsh-history-substring-search 
 # into ~/.oh-my-zsh/plugins
 # Add a local rc file for configurations specific to this machine
-local_rc_path=$HOME/.zshrc.local
-if [ -f $local_rc_path ]; then
-    . $local_rc_path
-fi
 
 # Source file that contains directives that are common to both zshrc and bashrc
 dotfile_path=$(dirname $(readlink -f ${(%):-%N}))
@@ -130,3 +126,9 @@ setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
 HISTSIZE=10000000
 SAVEHIST=10000000
+
+
+local_rc_path=$HOME/.zshrc.local
+if [ -f $local_rc_path ]; then
+    . $local_rc_path
+fi

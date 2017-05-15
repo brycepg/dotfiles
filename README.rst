@@ -3,6 +3,9 @@ This git repository contains the dotfiles I reguarly use between computers.
 For me, typical usage is to clone this repo, and then set symlinks to desired rcfiles::
 
     git clone https://github.com/brycepg/dotfiles.git ~/dotfiles
+    python ~/setup.py
+
+.zshrc and .bashrc assume that the dotfiles are located at ~/dotfiles
 
 Linux
 #####
@@ -32,6 +35,9 @@ vim/neovim
 
 My `dotfiles/nvim/init.vim` rcfile is compatible with both vim and neovim
 
+.. Note::
+
+    Install ctags package and run `ctags -R` against directory for function lookup.
 
 for vim::
 

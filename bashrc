@@ -1,6 +1,12 @@
 # Do not source if not interactive
 [[ $- != *i* ]] && return
 
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+
 # Display terminal colors
 colors() {
 	local fgc bgc vals seq0
@@ -56,3 +62,12 @@ set_ps1() {
     fi
 }
 set_ps1
+
+# Unlimited history
+HISTSIZE= HISTFILESIZE= 
+
+# Change history file location because some programs truncate it
+export HISTIFLE=~/.bash_external_history
+
+# Immediately append history to file
+shopt -s histappend
