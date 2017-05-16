@@ -82,6 +82,9 @@ def handle_symlink_case(dst, src):
         False to not continue linking
         True to continue linking location
     """
+    if not exists(src):
+        print("{} does not exist. Skipping.".format(src))
+        return False
     if islink(dst):
         if is_bad_symlink(dst):
             print("Broken symlink found at {}. Removing"
