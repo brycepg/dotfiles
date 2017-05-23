@@ -100,12 +100,14 @@ Plug 'AndrewRadev/sideways.vim'
 " Auto format with :Autoformat
 Plug 'Chiel92/vim-autoformat'
 
+" Static analysis tools
+Plug 'benekastah/neomake'
+
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
 else
     " Neovim only plugins
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'benekastah/neomake'
 endif
 
 call plug#end()
