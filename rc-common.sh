@@ -2,9 +2,12 @@
 [[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
 
 # Add user bin directory to path
-if [ -d ~/.local/bin ]; then
-    export PATH="$PATH:$HOME/.local/bin"
-fi
+add_user_local_bin() {
+    if [ -d ~/.local/bin ]; then
+        export PATH="$PATH:$HOME/.local/bin"
+    fi
+}
+add_user_local_bin
 
 
 agp() {
