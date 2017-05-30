@@ -65,7 +65,7 @@ endnotify() {
     fi
     start=$(date +%s)
     "$@"
-    notify-send --expire-time 999999999 "Notification" "command \"$(echo $@)\" took $(($(date +%s) - start)) seconds to finish"
+    notify-send -u critical --expire-time 999999999 "Notification" "command \"$(echo $@)\" took $(($(date +%s) - start)) seconds to finish"
 }
 
 # Notify when already running process finishes
@@ -81,7 +81,7 @@ curnotify() {
     echo "pid start: " $start_date_formatted
     echo "cur date: $(date +%s)"
     tail --pid="$pid" -f /dev/null
-    notify-send --expire-time 999999999 "Notification" "command \"$(echo ${args})\" took $(($(date +%s) - ${start})) seconds to finish"
+    notify-send -u critical --expire-time 999999999 "Notification" "command \"$(echo ${args})\" took $(($(date +%s) - ${start})) seconds to finish"
 }
 
 # Check if command exists
