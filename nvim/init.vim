@@ -168,3 +168,22 @@ set tags=./tags,tags;
 
 " Disable entering ex mode
 noremap Q <Nop>
+
+
+function! HasComma()
+    " Return true if the line contains a comma
+    let l:line = getline(".")
+    if l:line =~ ","
+        return 1
+    else
+        return 0
+    endif
+endfunction
+
+" Indent after comma for python function code.
+" Use with vim-python-pep8-indent
+function! FunIndent()
+    while HasComma()
+        normal ^/,a
+    endwhile
+endfunction
