@@ -114,7 +114,10 @@ if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
 else
     " Neovim only plugins
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " Autocompletion for Python Jedi
+    "Plug 'zchee/deoplete-jedi'
+    " Autocompletion
+    "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 endif
 
 call plug#end()
