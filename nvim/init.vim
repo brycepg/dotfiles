@@ -102,6 +102,10 @@ Plug 'Chiel92/vim-autoformat'
 
 " Static analysis tools
 Plug 'benekastah/neomake'
+" :Autopep8 auto formatting
+Plug 'tell-k/vim-autopep8'
+" pep8 Formatting on newline
+Plug 'Vimjas/vim-python-pep8-indent'
 
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
