@@ -62,8 +62,11 @@ nnoremap <Leader>B :CtrlPBuffer<CR>
 " Open most recently used files
 nnoremap <Leader>f :CtrlPMRUFiles<CR>
 
-map <F2> :so $MYVIMRC
+" Source vimrc shortcut
+map <F2> :so $MYVIMRC<CR>:echom "Sourced " . $MYVIMRC<CR>
+" View undo tree shortcut
 map <F4> :UndotreeToggle<CR>
+" Auto linting for Vim8+ and Neovim
 map <F5> :Neomake<CR>
 
 
