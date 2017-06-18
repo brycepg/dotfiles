@@ -109,6 +109,8 @@ Plug 'benekastah/neomake'
 Plug 'tell-k/vim-autopep8'
 " pep8 Formatting on newline
 Plug 'Vimjas/vim-python-pep8-indent'
+" gs to sort python imports
+Plug 'christoomey/vim-sort-motion'
 
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
