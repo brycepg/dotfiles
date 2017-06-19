@@ -1,3 +1,4 @@
+let mapleader=","
 syntax on
 if has('win32') && ! has('gui_running')
     " 256 Colors do not work in cmd.exe and cmder
