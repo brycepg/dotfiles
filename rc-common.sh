@@ -104,3 +104,20 @@ alias pl='git pull'
 alias s='git status'
 # Status without untracked files
 alias stu='git status -uno'
+
+# Send text via ISP SMS interface
+# For set up see
+# https://coderwall.com/p/ez1x2w/send-mail-like-a-boss
+# Set up
+# NOTIFIER_USER
+# NOTIFIER_PASS
+# PHONE_NUMBER_EMAIL
+# environment variables elsewhere
+function txtme() {
+    echo | mailx -v -s "$1" -S smtp-use-starttls -S ssl-verify=ignore -S smtp-auth=login -S smtp=smtp://smtp.gmail.com:587 -S from="$NOTIFIER_USER" -S smtp-auth-user=$NOTIFIER_USER -S smtp-auth-password=$NOTIFIER_PASS -S ssl-verify=ignore -S nss-config-dir=~/.certs $PHONE_NUMBER_EMAIL > /tmp/mailsend.txt 2>&1
+    if [[ $? == 0 ]]; then
+        echo TXT mail sent
+    else
+        echo FAILURE
+    fi
+}

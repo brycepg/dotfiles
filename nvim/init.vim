@@ -1,3 +1,4 @@
+let mapleader=","
 syntax on
 if has('win32') && ! has('gui_running')
     " 256 Colors do not work in cmd.exe and cmder
@@ -109,6 +110,14 @@ Plug 'benekastah/neomake'
 Plug 'tell-k/vim-autopep8'
 " pep8 Formatting on newline
 Plug 'Vimjas/vim-python-pep8-indent'
+" gs to sort python imports
+Plug 'christoomey/vim-sort-motion'
+" griw - replace section with register value
+Plug 'vim-scripts/ReplaceWithRegister'
+" extra text objects - cin) da,
+Plug 'wellle/targets.vim'
+" Change argument wrapping
+Plug 'FooSoft/vim-argwrap'
 
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
