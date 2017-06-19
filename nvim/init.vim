@@ -112,6 +112,8 @@ Plug 'tell-k/vim-autopep8'
 Plug 'Vimjas/vim-python-pep8-indent'
 " gs to sort python imports
 Plug 'christoomey/vim-sort-motion'
+" griw - replace section with register value
+Plug 'vim-scripts/ReplaceWithRegister'
 " extra text objects - cin) da,
 Plug 'wellle/targets.vim'
 " Change argument wrapping
