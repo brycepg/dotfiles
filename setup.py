@@ -12,8 +12,10 @@ This file assumes it's in the base directory if dotfiles
 
 from itertools import count
 from os.path import exists, join, islink, isabs, dirname, realpath
+import os
 from os import unlink, readlink, symlink, environ
 import shutil
+
 try:
     # Use generator filter for python 2
     # pylint: disable=redefined-builtin,ungrouped-imports
@@ -70,8 +72,24 @@ def link_pair(src, dst):
     if not should_continue:
         return
     handle_file_backup(dst)
+    create_parent_destination_directory(dst)
     print("{} => {}".format(dst, src))
     symlink(src, dst)
+
+
+def create_parent_destination_directory(path):
+    # type: (str) -> None
+    """Create parent destination directory if it doesn't exists.
+
+    Example:
+        ~/.config
+    """
+    parent_path_dir = os.path.dirname(path)
+    if not os.path.exists(parent_path_dir):
+        if not os.path.exists(parent_path_dir):
+            create_parent_destination_directory(parent_path_dir)
+        print("Creating Parent Destination Directory '{}'".format(parent_path_dir))
+        os.mkdir(parent_path_dir)
 
 
 def handle_symlink_case(dst, src):
