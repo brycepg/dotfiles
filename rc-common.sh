@@ -97,6 +97,13 @@ function clip() {
     xclip -selection clipboard "$@"
 }
 
+# Git aliases
+alias d='git diff'
+alias psh='git push'
+alias pl='git pull'
+alias s='git status'
+# Status without untracked files
+alias stu='git status -uno'
 
 # Send text via ISP SMS interface
 # For set up see
