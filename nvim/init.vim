@@ -118,6 +118,8 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'wellle/targets.vim'
 " Change argument wrapping
 Plug 'FooSoft/vim-argwrap'
+" Opening to specific line
+Plug 'kopischke/vim-fetch'
 
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
