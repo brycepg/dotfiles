@@ -40,7 +40,8 @@ DOTFILE_TO_HOME = (
     ('nvim', '.vim'),
     ('nvim', '.config/nvim'),
     ('nvim/init.vim', '.vimrc'),
-    ('bin', 'bin'),
+# bin get's hijacked by other scripts
+    ('bin', 'executables'),
     ('ipython_config.py', '.ipython/profile_default/ipython_config.py'),
 )
 
