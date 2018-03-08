@@ -71,3 +71,27 @@ export HISTIFLE=~/.bash_external_history
 
 # Immediately append history to file
 shopt -s histappend
+
+# Get IP address from hostname using Python
+# Args:
+#   $1 - hostname
+# Returns:
+#   The ip address
+ipfromhostname() {
+    local hostname="$1"
+    if [ -z "$hostname" ]; then
+        >&2 echo 'Must supply hostname as an argument'
+        return 1
+    fi
+    local python_exists=$(type python 2>/dev/null)
+    if [ -z "$python_exists" ]; then
+        >&2 echo Requires python
+        return 1
+    fi
+    python -c "import socket; print(socket.gethostbyname(\"$hostname\"))" 2>/dev/null
+    local ret="$?"
+    if [[ "$ret" != 0 ]]; then
+        >&2 echo Hostname not found
+        return 1
+    fi
+}
