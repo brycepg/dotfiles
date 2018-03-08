@@ -121,3 +121,8 @@ function txtme() {
         echo FAILURE
     fi
 }
+
+fingerprint() {
+    pubkeypath="$1"
+    ssh-keygen -E md5 -lf "$pubkeypath" | awk '{ print $2 }' | cut -c 5-
+}
