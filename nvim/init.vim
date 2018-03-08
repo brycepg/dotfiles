@@ -118,6 +118,11 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'wellle/targets.vim'
 " Change argument wrapping
 Plug 'FooSoft/vim-argwrap'
+" Remove Current file
+Plug 'tpope/vim-eunuch'
+
+Plug 'vim-scripts/ingo-library'
+Plug 'vim-scripts/JumpToLastOccurrence'
 
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
