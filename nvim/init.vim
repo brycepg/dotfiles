@@ -127,6 +127,9 @@ Plug 'vim-scripts/JumpToLastOccurrence'
 " Opening to specific line
 Plug 'kopischke/vim-fetch'
 
+" Use flake8 for python linting
+Plug 'nvie/vim-flake8'
+
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
 else
