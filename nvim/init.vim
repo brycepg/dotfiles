@@ -150,6 +150,14 @@ let g:deoplete#enable_at_startup = 1
 
 let g:lightline = {
       \ 'colorscheme': 'wombat',
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \ },
+      \ }
+
+function! LightlineFilename()
+  return expand('%:F')
+endfunction
       \ }
 
 let g:rainbow_active = 1
