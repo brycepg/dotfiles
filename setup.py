@@ -11,7 +11,7 @@ This file assumes it's in the base directory if dotfiles
 """
 
 from itertools import count
-from os.path import exists, join, islink, isabs, dirname, realpath
+from os.path import exists, join, islink, isabs, dirname, realpath, expanduser
 import os
 from os import unlink, readlink, symlink, environ
 import shutil
@@ -61,7 +61,8 @@ def main(symlink_pair, cur_dir):
         """
     for src, dst in symlink_pair:
         src_full_path = join(cur_dir, src)
-        dst_full_path = join(environ['HOME'], dst)
+        home = expanduser("~")
+        dst_full_path = join(home, dst)
         link_pair(src_full_path, dst_full_path)
     print("Linking is complete.")
 
