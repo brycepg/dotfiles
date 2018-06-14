@@ -45,6 +45,10 @@ DOTFILE_TO_HOME = (
     ('ipython_config.py', '.ipython/profile_default/ipython_config.py'),
 )
 
+if os.name == "nt":
+    DOTFILE_TO_HOME = DOTFILE_TO_HOME + (('nvim', 'vimfiles'),)
+
+
 
 def main(symlink_pair, cur_dir):
     # type: (Tuple[Tuple[str, str], ...], str) -> None
