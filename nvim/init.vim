@@ -126,6 +126,12 @@ Plug 'vim-scripts/JumpToLastOccurrence'
 
 " Opening to specific line
 Plug 'kopischke/vim-fetch'
+" Run tests inside vim
+Plug 'janko-m/vim-test'
+" toml syntax for vim
+Plug 'cespare/vim-toml'
+" Show ctags info
+Plug 'majutsushi/tagbar'
 
 " Use flake8 for python linting
 Plug 'nvie/vim-flake8'
