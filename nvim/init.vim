@@ -154,17 +154,27 @@ set formatoptions-=r formatoptions-=o formatoptions-=c
 
 let g:deoplete#enable_at_startup = 1
 
+" Status bar
+" - Set colorscheme
+" - Show folder in addition to filename
+" - Show current class / method via tagbar
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'component_function': {
       \   'filename': 'LightlineFilename',
+      \ },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste'],
+      \             [ 'readonly', 'filename', 'modified', 'tagbar'] ],
+      \ },
+      \ 'component': {
+      \   'tagbar': '%{tagbar#currenttag("[%s]", "", "f")}',
       \ },
       \ }
 
 function! LightlineFilename()
   return expand('%:F')
 endfunction
-      \ }
 
 let g:rainbow_active = 1
 
