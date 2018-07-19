@@ -5,3 +5,4 @@ fish_history
 .vim/.netrwhist
 *fishd*
 *.pyc
+*.sw*
