@@ -72,6 +72,8 @@ export HISTIFLE=~/.bash_external_history
 # Immediately append history to file
 shopt -s histappend
 
+export PROMPT_COMMAND="${PROMPT_COMMAND}${PROMPT_COMMAND:+;}history -a; history -n"
+
 # Get IP address from hostname using Python
 # Args:
 #   $1 - hostname
@@ -95,3 +97,4 @@ ipfromhostname() {
         return 1
     fi
 }
+
