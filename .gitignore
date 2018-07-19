@@ -4,3 +4,4 @@ nvim/autoload/plug.vim.old
 fish_history
 .vim/.netrwhist
 *fishd*
+*.pyc
