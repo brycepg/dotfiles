@@ -136,6 +136,9 @@ Plug 'majutsushi/tagbar'
 " Use flake8 for python linting
 Plug 'nvie/vim-flake8'
 
+" Autocompletion (ctrl + space)
+Plug 'davidhalter/jedi-vim'
+
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
 else
