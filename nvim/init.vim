@@ -84,7 +84,8 @@ Plug 'tpope/vim-repeat'               " Extending repeat to macros
 Plug 'tpope/vim-fugitive'             " Git from vim
 Plug 'luochen1990/rainbow'            " Rainbow parenthesis
 Plug 'tpope/vim-abolish'              " Case smart replace/change: via Subvert/cr[smcu]
-Plug 'arnar/vim-matchopen'            " Highlight last opened parenthesis
+" Broken by vim update
+"Plug 'arnar/vim-matchopen'            " Highlight last opened parenthesis
 Plug 'tpope/vim-unimpaired'           " Bracket shortcuts
 Plug 'ntpeters/vim-better-whitespace' " Highlight trailing whitespace
 " I haven't used this very much
@@ -246,3 +247,8 @@ function! FunIndent()
 endfunction
 
 let g:neomake_python_enabled_makers = ['flake8']
+
+" Do not autocomplete on dot
+let g:jedi#popup_on_dot = 0
+let g:jedi#completions_enabled = 0
+let g:jedi#show_call_signatures = 0
