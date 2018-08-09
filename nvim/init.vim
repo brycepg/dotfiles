@@ -136,7 +136,8 @@ Plug 'majutsushi/tagbar'
 Plug 'nvie/vim-flake8'
 
 " Autocompletion (ctrl + space)
-Plug 'davidhalter/jedi-vim'
+" Can't figure how to disable autocomplete import
+"Plug 'davidhalter/jedi-vim'
 
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
