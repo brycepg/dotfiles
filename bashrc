@@ -36,9 +36,6 @@ colors() {
 }
 
 
-# Add a local rc file for configurations specific to this machine
-[[ -f ~/.bashrc.local ]] && . ~/.bashrc.local
-
 # Add Bash autocompletion if available
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
 
@@ -98,3 +95,7 @@ ipfromhostname() {
     fi
 }
 
+
+# Add a local rc file for configurations specific to this machine
+# XXX needs to be at end
+[[ -f ~/.bashrc.local ]] && . ~/.bashrc.local
