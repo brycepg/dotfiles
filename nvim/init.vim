@@ -135,6 +135,9 @@ Plug 'majutsushi/tagbar'
 " Use flake8 for python linting
 Plug 'nvie/vim-flake8'
 
+" Fix jinja syntax highlighting
+Plug 'Glench/Vim-Jinja2-Syntax'
+
 " Autocompletion (ctrl + space)
 " Can't figure how to disable autocomplete import
 "Plug 'davidhalter/jedi-vim'
