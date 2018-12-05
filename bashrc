@@ -51,12 +51,12 @@ alias ls='ls --color=auto'
 
 # Set PS1 if set to default bash ps1
 set_ps1() {
-    # Bash version PS1 sucks
-    DEFAULT_PS1='\s-\v\$'
-    # Use user@host cwd hostname
-    if [[ "$(echo -E $PS1)" == "$DEFAULT_PS1" ]]; then
-        PS1='\u@\h \W\$ '
+    GIT=""
+    if [ -e /etc/bash_completion.d/git-prompt ]; then
+        source /etc/bash_completion.d/git-prompt
+        GIT="\e[0;32m\$(__git_ps1)\e[m"
     fi
+    PS1='\u@\h \W\$'"$GIT "
 }
 set_ps1
 
