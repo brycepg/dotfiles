@@ -142,6 +142,9 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 " Can't figure how to disable autocomplete import
 "Plug 'davidhalter/jedi-vim'
 
+" Thrift syntax
+Plug 'solarnz/thrift.vim'
+
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
 else
