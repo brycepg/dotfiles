@@ -51,12 +51,10 @@ alias ls='ls --color=auto'
 
 # Set PS1 if set to default bash ps1
 set_ps1() {
-    GIT=""
     if [ -e /etc/bash_completion.d/git-prompt ]; then
         source /etc/bash_completion.d/git-prompt
-        GIT="\e[0;32m\$(__git_ps1)\e[m"
     fi
-    PS1='\u@\h \W\$'"$GIT "
+    PS1='\u@\h \W\$ '
 }
 set_ps1
 
