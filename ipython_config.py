@@ -1,3 +1,4 @@
+c = get_config()
 c.InteractiveShellApp.exec_lines = []
 # ipython-autoimport - Automatically import modules
 c.InteractiveShellApp.exec_lines.append(
