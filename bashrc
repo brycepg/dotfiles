@@ -62,7 +62,7 @@ set_ps1
 HISTSIZE= HISTFILESIZE= 
 
 # Change history file location because some programs truncate it
-export HISTIFLE=~/.bash_external_history
+export HISTFILE=~/.bash_external_history
 
 # Immediately append history to file
 shopt -s histappend
