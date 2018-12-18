@@ -42,6 +42,11 @@ set hidden
 autocmd cursorhold * set nohlsearch
 autocmd cursormoved * set hlsearch
 
+" Only enable use of the mouse in normal mode
+" It's helpful to disable the mouse to copy and paste text
+" via the terminal emulator because vim copy pasting is flaky
+set mouse=n
+
 " ------------------------ <Leader> key(SPACE) ------------------------
 " Map the leader key to SPACE
 
