@@ -1,4 +1,8 @@
-let mapleader=","
+" ------------------------ <Leader> key(SPACE) ------------------------
+" Map the leader key to SPACE
+
+"map <SPACE> <Nop>
+let mapleader="\<SPACE>"
 syntax on
 if has('win32') && ! has('gui_running')
     " 256 Colors do not work in cmd.exe and cmder
@@ -47,11 +51,6 @@ autocmd cursormoved * set hlsearch
 " via the terminal emulator because vim copy pasting is flaky
 set mouse=n
 
-" ------------------------ <Leader> key(SPACE) ------------------------
-" Map the leader key to SPACE
-
-map <SPACE> <Nop>
-let mapleader="\<SPACE>"
 " nohl shortcut
 map <Leader>h :nohl<CR>
 " Paste from clipboard
