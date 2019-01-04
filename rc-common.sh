@@ -16,6 +16,18 @@ agp() {
     ag -G ".*\.py" "$@"
 }
 
+pysed() {
+    # Apply sed function to all python files in current directory
+    sed -i -e $@ $(find -name "*.py")
+}
+
+pysedsr() {
+    # search for $1 and replace with $2
+    # for all python files in the curreent directory
+    sedinpy "s/$1/$2/${3:-}"
+}
+
+
 set_editor() {
     # Prefer nvim over vim over vi
     # Alias vim to nvim if available
