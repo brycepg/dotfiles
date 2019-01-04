@@ -271,9 +271,9 @@ endfunction
 let g:neomake_python_enabled_makers = ['flake8']
 
 " Do not autocomplete on dot
-let g:jedi#popup_on_dot = 0
-let g:jedi#completions_enabled = 0
-let g:jedi#show_call_signatures = 0
+"let g:jedi#popup_on_dot = 0
+"let g:jedi#completions_enabled = 0
+"let g:jedi#show_call_signatures = 0
 
 set directory=$HOME/.vim/swapfiles//
 
