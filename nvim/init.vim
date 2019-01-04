@@ -4,10 +4,9 @@
 " :TestNearest
 " :TestFile
 
-
 " ------------------------ <Leader> key(SPACE) ------------------------
 " Map the leader key to SPACE
-"map <SPACE> <Nop>
+map <SPACE> <Nop>
 let mapleader="\<SPACE>"
 syntax on
 if has('win32') && ! has('gui_running')
