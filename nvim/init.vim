@@ -154,8 +154,10 @@ Plug 'nvie/vim-flake8'
 Plug 'Glench/Vim-Jinja2-Syntax'
 
 " Autocompletion (ctrl + space)
-" Can't figure how to disable autocomplete import
-"Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim'
+
+" Autocompletion
+"Plug 'Valloric/YouCompleteMe'
 
 " Thrift syntax
 Plug 'solarnz/thrift.vim'
