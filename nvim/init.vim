@@ -170,6 +170,8 @@ Plug 'solarnz/thrift.vim'
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
 else
+    " Python code formatting
+    Plug 'ambv/black'
     " Neovim only plugins
     " Autocompletion for Python Jedi
     "Plug 'zchee/deoplete-jedi'
