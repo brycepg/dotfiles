@@ -1,6 +1,12 @@
+" See ~/.vim/ftplugin/python for more python specific mappings
+"
+" Run tests see vim-test
+" :TestNearest
+" :TestFile
+
+
 " ------------------------ <Leader> key(SPACE) ------------------------
 " Map the leader key to SPACE
-
 "map <SPACE> <Nop>
 let mapleader="\<SPACE>"
 syntax on
@@ -262,6 +268,7 @@ endfunction
 
 " Indent after comma for python function code.
 " Use with vim-python-pep8-indent
+" To use :call FunIndent()
 function! FunIndent()
     while HasComma()
         normal ^/,a
