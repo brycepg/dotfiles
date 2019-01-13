@@ -283,7 +283,11 @@ let g:neomake_python_enabled_makers = ['flake8']
 "let g:jedi#completions_enabled = 0
 "let g:jedi#show_call_signatures = 0
 
-set directory=$HOME/.vim/swapfiles//
+if !empty(glob("~/.vim/swapfiles/"))
+    set directory=$HOME/.vim/swapfiles/
+else
+    echo "Please set swapfile at ~/.vim/swapfiles"
+endif
 
 if filereadable(glob("~/.vimrc.local"))
         source ~/.vimrc.local
