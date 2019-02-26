@@ -292,3 +292,6 @@ endif
 if filereadable(glob("~/.vimrc.local"))
         source ~/.vimrc.local
 endif
+
+" Auto run lint on write -- good for writing code
+autocmd BufWritePost * :Neomake
