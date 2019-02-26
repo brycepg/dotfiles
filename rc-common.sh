@@ -24,7 +24,7 @@ pysed() {
 pysedsr() {
     # search for $1 and replace with $2
     # for all python files in the curreent directory
-    sedinpy "s/$1/$2/${3:-}"
+    pysed "s/$1/$2/${3:-}"
 }
 
 
