@@ -38,9 +38,6 @@ set sidescrolloff=5
 " Global default sed
 set gdefault
 
-" Set tags dir
-set tags=~/mytags
-
 " Long history
 set history=1000
 
