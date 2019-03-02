@@ -4,9 +4,9 @@
 " :TestNearest
 " :TestFile
 
-syntax on
 " Map the leader key to comma
 let mapleader=","
+syntax enable
 if has('win32') && ! has('gui_running')
     " 256 Colors do not work in cmd.exe and cmder
     colorscheme wombat
