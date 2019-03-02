@@ -4,11 +4,9 @@
 " :TestNearest
 " :TestFile
 
-" ------------------------ <Leader> key(SPACE) ------------------------
-" Map the leader key to SPACE
-map <SPACE> <Nop>
-let mapleader="\<SPACE>"
 syntax on
+" Map the leader key to comma
+let mapleader=","
 if has('win32') && ! has('gui_running')
     " 256 Colors do not work in cmd.exe and cmder
     colorscheme wombat
