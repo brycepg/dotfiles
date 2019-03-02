@@ -36,9 +36,6 @@ set sidescrolloff=5
 " Global default sed
 set gdefault
 
-" Long history
-set history=1000
-
 " Allow buffers to be hidden
 set hidden
 
