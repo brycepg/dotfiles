@@ -126,6 +126,7 @@ Plug 'wellle/targets.vim'
 " Change argument wrapping
 Plug 'FooSoft/vim-argwrap'
 
+" Vim sugar for the UNIX shell commands that need it the most
 Plug 'tpope/vim-eunuch'
 
 Plug 'vim-scripts/ingo-library'
