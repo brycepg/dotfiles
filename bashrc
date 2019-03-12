@@ -1,3 +1,5 @@
+# Check dotfiles rc-common.sh if not found in here
+
 # Do not source if not interactive
 [[ $- != *i* ]] && return
 
