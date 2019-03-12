@@ -22,8 +22,12 @@ pysed() {
 }
 
 pysedsr() {
-    # search for $1 and replace with $2
-    # for all python files in the curreent directory
+    if [[ "$#" == "0" ]]; then
+        echo 'search for $1 and replace with $2'
+        echo 'for all python files in the current directory'
+        echo '$3' for sed arguments
+        return 1
+    fi
     pysed "s/$1/$2/${3:-}"
 }
 
