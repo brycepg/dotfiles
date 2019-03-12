@@ -49,7 +49,7 @@ autocmd cursormoved * set hlsearch
 set mouse=n
 
 " nohl shortcut
-map <Leader>h :nohl<CR>
+map <SPACE>h :nohl<CR>
 " Paste from clipboard
 map <Leader>p "+p<CR>
 " Yank line to clipboard
