@@ -18,7 +18,7 @@ agp() {
 
 pysed() {
     # Apply sed function to all python files in current directory
-    sed -i -e $@ $(find -name "*.py")
+    sed -i -e "$@" $(find -name "*.py")
 }
 
 pysedsr() {
