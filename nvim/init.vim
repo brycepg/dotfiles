@@ -59,10 +59,13 @@ map <Leader>s :s/\( \+\)\(.\+\)\(.=.\)\(.\+\)/\1\4\3\2<CR>:nohl<CR>
 " ------------------ CtrlP plugin ---------------
 " Open file menu
 nnoremap <Leader>o :CtrlP<CR>
+nnoremap <SPACE>o :CtrlP<CR>
 " Open buffer menu
 nnoremap <Leader>B :CtrlPBuffer<CR>
+nnoremap <SPACE>B :CtrlPBuffer<CR>
 " Open most recently used files
 nnoremap <Leader>f :CtrlPMRUFiles<CR>
+nnoremap <SPACE>f :CtrlPMRUFiles<CR>
 
 " Source vimrc shortcut
 map <F2> :so $MYVIMRC<CR>:echom "Sourced " . $MYVIMRC<CR>
