@@ -86,82 +86,47 @@ function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
 call plug#begin('~/.config/nvim/plugged')
-Plug 'ctrlpvim/ctrlp.vim'             " Fuzzy search
-Plug 'itchyny/lightline.vim'          " Status bar
-Plug 'tpope/vim-surround'             " Surround motions
-Plug 'tpope/vim-repeat'               " Extending repeat to macros
-Plug 'tpope/vim-fugitive'             " Git from vim
-Plug 'luochen1990/rainbow'            " Rainbow parenthesis
-Plug 'tpope/vim-abolish'              " Case smart replace/change: via Subvert/cr[smcu]
-" Broken by vim update
-"Plug 'arnar/vim-matchopen'            " Highlight last opened parenthesis
-Plug 'tpope/vim-unimpaired'           " Bracket shortcuts
-Plug 'ntpeters/vim-better-whitespace' " Highlight trailing whitespace
-" I haven't used this very much
-Plug 'mbbill/undotree'
-Plug 'qpkorr/vim-bufkill' " :BD option to close buffer
-" Better Python folding
-Plug 'tmhedberg/SimpylFold'
-" Refresh memory on usefulenss
-Plug 'godlygeek/tabular'
-" Rearrange function parameters
-Plug 'AndrewRadev/sideways.vim'
+Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy search
+Plug 'tpope/vim-surround'               " Surround motions
+Plug 'tpope/vim-repeat'                 " Extending repeat to macros
+Plug 'tpope/vim-fugitive'               " Git from vim
+Plug 'frazrepo/vim-rainbow'             " Rainbow parenthesis
+Plug 'tpope/vim-abolish'                " Case smart replace/change: via Subvert/cr[smcu]
+Plug 'arnar/vim-matchopen'              " Highlight last opened parenthesis
+Plug 'tpope/vim-unimpaired'             " Bracket shortcuts
+Plug 'ntpeters/vim-better-whitespace'   " Highlight trailing whitespace
+Plug 'mbbill/undotree'                  " :UndotreeShow
+Plug 'qpkorr/vim-bufkill'               " :BD option to close buffer
+Plug 'tmhedberg/SimpylFold'             " Better Python folding
+Plug 'godlygeek/tabular'                " Alignment with :Tab /{Pattern}
+Plug 'AndrewRadev/sideways.vim'         " Rearrange function parameters
+Plug 'Chiel92/vim-autoformat'           " Auto format with :Autoformat
+Plug 'benekastah/neomake'               " Static analysis tools :Neomake
+Plug 'tell-k/vim-autopep8'              " :Autopep8 auto formatting
+Plug 'Vimjas/vim-python-pep8-indent'    " pep8 Formatting on newline
+Plug 'nvie/vim-flake8'                  " Use flake8 for python linting
+Plug 'christoomey/vim-sort-motion'      " gs to sort python imports
+Plug 'vim-scripts/ReplaceWithRegister'  " griw - replace section with register value
+Plug 'wellle/targets.vim'               " extra text objects - cin) da,
+Plug 'michaeljsmith/vim-indent-object'  " Indention objects ai/ii/aI/iI mainly for python
+Plug 'FooSoft/vim-argwrap'              " Change argument wrapping
+Plug 'tpope/vim-eunuch'                 " :Delete :Move :Rename
+Plug 'kopischke/vim-fetch'              " Opening to specific line
+Plug 'cespare/vim-toml'                 " toml syntax for vim
+Plug 'itchyny/lightline.vim'            " Status bar
+Plug 'majutsushi/tagbar'                " Show ctags info
+Plug 'Glench/Vim-Jinja2-Syntax'         " Fix jinja syntax highlighting
+Plug 'solarnz/thrift.vim'               " Thrift syntax
+Plug 'janko-m/vim-test'                 " Run tests inside vim :TestNearest :TestFile
+Plug 'davidhalter/jedi-vim'             " Autocompletion (ctrl + space)
+Plug 'vim-scripts/ingo-library'         " Dependent library for JumpToLastOccurrence
+Plug 'vim-scripts/JumpToLastOccurrence' " Jump to last occurance of a char with ,f motion ,t
+
 " Do I still want these
-"Plug 'Glench/Vim-Jinja2-Syntax'
 "Plug 'tpope/vim-haml'
 " Plug 'justinmk/vim-sneak'
-
-" Auto format with :Autoformat
-Plug 'Chiel92/vim-autoformat'
-
-" Static analysis tools
-Plug 'benekastah/neomake'
-" :Autopep8 auto formatting
-Plug 'tell-k/vim-autopep8'
-" pep8 Formatting on newline
-Plug 'Vimjas/vim-python-pep8-indent'
-" gs to sort python imports
-Plug 'christoomey/vim-sort-motion'
-" griw - replace section with register value
-Plug 'vim-scripts/ReplaceWithRegister'
-" extra text objects - cin) da,
-Plug 'wellle/targets.vim'
-" Change argument wrapping
-Plug 'FooSoft/vim-argwrap'
-
-" Vim sugar for the UNIX shell commands that need it the most
-Plug 'tpope/vim-eunuch'
-
-Plug 'vim-scripts/ingo-library'
-Plug 'vim-scripts/JumpToLastOccurrence'
-
-" Opening to specific line
-Plug 'kopischke/vim-fetch'
-
-" Run tests inside vim
-" :TestNearest
-" :TestFile
-Plug 'janko-m/vim-test'
-
-" toml syntax for vim
-Plug 'cespare/vim-toml'
-" Show ctags info
-Plug 'majutsushi/tagbar'
-
-" Use flake8 for python linting
-Plug 'nvie/vim-flake8'
-
-" Fix jinja syntax highlighting
-Plug 'Glench/Vim-Jinja2-Syntax'
-
-" Autocompletion (ctrl + space)
-Plug 'davidhalter/jedi-vim'
-
 " Autocompletion
 "Plug 'Valloric/YouCompleteMe'
-
-" Thrift syntax
-Plug 'solarnz/thrift.vim'
 
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
