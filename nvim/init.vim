@@ -151,13 +151,19 @@ else
     " Python code formatting
     Plug 'ambv/black'
     " Neovim only plugins
-    " Autocompletion for Python Jedi
-    "Plug 'zchee/deoplete-jedi'
     " Autocompletion
-    "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " Autocompletion for Python Jedi
+    Plug 'zchee/deoplete-jedi'
 endif
 
 call plug#end()
+
+if has('nvim')
+    " Disable jedi completions for deoplete-jedi
+    let g:jedi#completions_enabled = 0
+    let g:deoplete#enable_at_startup = 1
+endif
 
 
 " Do not auotmatically insert comments.
@@ -258,8 +264,8 @@ let g:neomake_python_enabled_makers = ['flake8']
 
 " Do not autocomplete on dot
 "let g:jedi#popup_on_dot = 0
-"let g:jedi#completions_enabled = 0
 "let g:jedi#show_call_signatures = 0
+" Disabled for deoplee-jedi
 
 " Create swapfile if it doesn't exists and set it as the swap directory
 let swapfile_dir = $HOME . "/.vim/swapfiles/"
