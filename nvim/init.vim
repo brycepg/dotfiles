@@ -193,6 +193,7 @@ function! LightlineFilename()
   return expand('%:F')
 endfunction
 
+" Enable rainbow parenthesis globally
 let g:rainbow_active = 1
 
 set shiftwidth=4 tabstop=4 softtabstop=4
