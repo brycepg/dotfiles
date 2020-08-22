@@ -281,3 +281,7 @@ endif
 
 " Auto run lint on write -- good for writing code
 autocmd BufWritePost * :Neomake
+
+" Set vim-test python runner to pytest, delete if using a different test
+" runner
+let test#python#runner = 'pytest'
