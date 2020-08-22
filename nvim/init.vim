@@ -121,10 +121,11 @@ Plug 'janko-m/vim-test'                 " Run tests inside vim :TestNearest :Tes
 Plug 'davidhalter/jedi-vim'             " Autocompletion (ctrl + space)
 Plug 'vim-scripts/ingo-library'         " Dependent library for JumpToLastOccurrence
 Plug 'vim-scripts/JumpToLastOccurrence' " Jump to last occurance of a char with ,f motion ,t
+Plug 'justinmk/vim-sneak'               " Two-char search using s motion
+
 
 " Do I still want these
 "Plug 'tpope/vim-haml'
-" Plug 'justinmk/vim-sneak'
 " Autocompletion
 "Plug 'Valloric/YouCompleteMe'
 
