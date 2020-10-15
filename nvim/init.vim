@@ -1,8 +1,12 @@
-" See ~/.vim/ftplugin/python for more python specific mappings
+" Installation:
+" For nvim you should to run `pip install --user neovim jedi black`
 "
 " Run tests see vim-test
 " :TestNearest
 " :TestFile
+"
+" Notes:
+" See ~/.vim/ftplugin/python for more python specific mappings
 
 " Map the leader key to comma
 let mapleader=","
@@ -90,7 +94,8 @@ Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy search
 Plug 'tpope/vim-surround'               " Surround motions
 Plug 'tpope/vim-repeat'                 " Extending repeat to macros
 Plug 'tpope/vim-fugitive'               " Git from vim
-Plug 'frazrepo/vim-rainbow'             " Rainbow parenthesis
+" How do I fix equal signs being red? (too annoying)
+"Plug 'frazrepo/vim-rainbow'             " Rainbow parenthesis
 Plug 'tpope/vim-abolish'                " Case smart replace/change: via Subvert/cr[smcu]
 Plug 'arnar/vim-matchopen'              " Highlight last opened parenthesis
 Plug 'tpope/vim-unimpaired'             " Bracket shortcuts
@@ -137,6 +142,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" Ctrl-S expand snippits
 let g:UltiSnipsExpandTrigger="<c-s>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
@@ -261,12 +267,15 @@ function! FunIndent()
     endwhile
 endfunction
 
-let g:neomake_python_enabled_makers = ['flake8']
 
 " Do not autocomplete on dot
 "let g:jedi#popup_on_dot = 0
 "let g:jedi#show_call_signatures = 0
-" Disabled for deoplee-jedi
+" Does this work?
+let g:jedi#show_call_signatures = "1"
+" Show docs !!!
+let g:jedi#documentation_command = "K"
+
 
 " Create swapfile if it doesn't exists and set it as the swap directory
 let swapfile_dir = $HOME . "/.vim/swapfiles/"
