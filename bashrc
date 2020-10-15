@@ -111,6 +111,9 @@ MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 # Tell Node about these packages
 NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 
+# Path for ruby gem packages
+PATH="$PATH:$HOME/bin"
+
 # Add a local rc file for configurations specific to this machine
 # XXX needs to be at end
 [[ -f ~/.bashrc.local ]] && . ~/.bashrc.local
