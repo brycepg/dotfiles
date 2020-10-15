@@ -289,9 +289,20 @@ if filereadable(glob("~/.vimrc.local"))
         source ~/.vimrc.local
 endif
 
+" =============================
+" === Neomake configuration ===
+" =============================
+let g:neomake_python_enabled_makers = ['flake8']
 " Auto run lint on write -- good for writing code
-autocmd BufWritePost * :Neomake
+" autocmd BufWritePost * :Neomake
+" When writing a buffer (no delay), and on normal mode changes (after 750ms).
+" Full config: when writing or reading a buffer, and on changes in insert and
+" normal mode (after 500ms; no delay when writing).
+call neomake#configure#automake('nrwi', 500)
+
+
 
 " Set vim-test python runner to pytest, delete if using a different test
 " runner
 let test#python#runner = 'pytest'
+
