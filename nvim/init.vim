@@ -127,6 +127,7 @@ Plug 'davidhalter/jedi-vim'             " Autocompletion (ctrl + space)
 Plug 'vim-scripts/ingo-library'         " Dependent library for JumpToLastOccurrence
 Plug 'vim-scripts/JumpToLastOccurrence' " Jump to last occurance of a char with ,f motion ,t
 Plug 'justinmk/vim-sneak'               " Two-char search using s motion
+Plug 'AndrewRadev/bufferize.vim'        " :Bufferize to output vim functions into buffer
 
 
 " Do I still want these
