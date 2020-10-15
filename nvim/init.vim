@@ -106,7 +106,7 @@ Plug 'tmhedberg/SimpylFold'             " Better Python folding
 Plug 'godlygeek/tabular'                " Alignment with :Tab /{Pattern}
 Plug 'AndrewRadev/sideways.vim'         " Rearrange function parameters
 Plug 'Chiel92/vim-autoformat'           " Auto format with :Autoformat
-Plug 'benekastah/neomake'               " Static analysis tools :Neomake
+Plug 'neomake/neomake'                  " Static analysis tools :Neomake
 Plug 'tell-k/vim-autopep8'              " :Autopep8 auto formatting
 Plug 'Vimjas/vim-python-pep8-indent'    " pep8 Formatting on newline
 Plug 'nvie/vim-flake8'                  " Use flake8 for python linting
