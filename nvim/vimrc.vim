@@ -7,6 +7,8 @@
 "
 " Notes:
 " See ~/.vim/ftplugin/python for more python specific mappings
+silent! python3 1
+silent! python2 1
 
 " Map the leader key to comma
 let mapleader=","
@@ -136,11 +138,16 @@ Plug 'AndrewRadev/bufferize.vim'        " :Bufferize to output vim functions int
 "Plug 'Valloric/YouCompleteMe'
 
 " Utili snips code
-"" Track the engine.
-Plug 'SirVer/ultisnips'
+""   EEEEEEEEEEEEEEEEEE
+"""""Plug 'SirVer/ultisnips'
 
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
+
+" Doesn't work yet, blocked my Neural config and maybe plug
+Plug 'dense-analysis/neural'
+    Plug 'muniftanjim/nui.nvim'
+    Plug 'elpiloto/significant.nvim'
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 " Ctrl-S expand snippits
@@ -151,6 +158,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 " End of Utili snips code
+
 
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
@@ -306,3 +314,4 @@ call neomake#configure#automake('nrwi', 500)
 " runner
 let test#python#runner = 'pytest'
 
+let g:neural#open_ai#api_key='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'
