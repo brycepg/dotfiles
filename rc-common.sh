@@ -71,6 +71,7 @@ alias glg='git log --graph --oneline --decorate --all'
 alias gld='git log --pretty=format:"%h %ad %s" --date=short --all'
 alias gb='git branch'
 alias gc='git checkout'
+alias gr='git remote'
 
 # Wrap command to notify user upon finish
 endnotify() {
