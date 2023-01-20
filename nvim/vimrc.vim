@@ -162,6 +162,7 @@ let g:UltiSnipsEditSplit="vertical"
 
 if !has('nvim')
     Plug 'noahfrederick/vim-neovim-defaults'
+    :echom "I now use plugins that are for vim only "
 else
     " Python code formatting
     Plug 'ambv/black'
@@ -313,5 +314,3 @@ call neomake#configure#automake('nrwi', 500)
 " Set vim-test python runner to pytest, delete if using a different test
 " runner
 let test#python#runner = 'pytest'
-
-let g:neural#open_ai#api_key='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'
