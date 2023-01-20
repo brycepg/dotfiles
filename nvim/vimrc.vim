@@ -130,6 +130,7 @@ Plug 'vim-scripts/ingo-library'         " Dependent library for JumpToLastOccurr
 Plug 'vim-scripts/JumpToLastOccurrence' " Jump to last occurance of a char with ,f motion ,t
 Plug 'justinmk/vim-sneak'               " Two-char search using s motion
 Plug 'AndrewRadev/bufferize.vim'        " :Bufferize to output vim functions into buffer
+Plug 'KabbAmine/zeavim.vim'             " Zeal docs lookup with :Zeavim
 
 
 " Do I still want these
