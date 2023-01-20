@@ -1,0 +1,7 @@
+Reqiurements:
+
+Python3.x
+git
+
+- Execute setup-commands.sh
+- Execute setup.py
