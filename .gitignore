@@ -7,3 +7,4 @@ fish_history
 *.pyc
 *.sw*
 nvim/black
+nvim/env.lua
