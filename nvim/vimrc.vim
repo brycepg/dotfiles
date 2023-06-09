@@ -74,11 +74,12 @@ nnoremap <Leader>f :CtrlPMRUFiles<CR>
 nnoremap <SPACE>f :CtrlPMRUFiles<CR>
 
 " Source vimrc shortcut
-map <F2> :so $MYVIMRC<CR>:echom "Sourced " . $MYVIMRC<CR>
+map <F2> :Tree<CR>
 " View undo tree shortcut
 map <F4> :UndotreeToggle<CR>
 " Auto linting for Vim8+ and Neovim
 map <F5> :Neomake<CR>
+map <F6> :so $MYVIMRC<CR>:echom "Sourced " . $MYVIMRC<CR>
 
 
 " Run tests
@@ -92,6 +93,9 @@ function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
 call plug#begin('~/.config/nvim/plugged')
+Plug 'tpope/vim-eunuch'                 " :Delete :Move :Rename :SudoWrite :SudoEdit
+Plug 'qpkorr/vim-bufkill'               " :BD option to close buffer
+Plug 'mbbill/undotree'                  " :UndotreeShow
 Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy search
 Plug 'tpope/vim-surround'               " Surround motions
 Plug 'tpope/vim-repeat'                 " Extending repeat to macros
@@ -102,8 +106,6 @@ Plug 'tpope/vim-abolish'                " Case smart replace/change: via Subvert
 Plug 'arnar/vim-matchopen'              " Highlight last opened parenthesis
 Plug 'tpope/vim-unimpaired'             " Bracket shortcuts
 Plug 'ntpeters/vim-better-whitespace'   " Highlight trailing whitespace
-Plug 'mbbill/undotree'                  " :UndotreeShow
-Plug 'qpkorr/vim-bufkill'               " :BD option to close buffer
 Plug 'tmhedberg/SimpylFold'             " Better Python folding
 Plug 'godlygeek/tabular'                " Alignment with :Tab /{Pattern}
 Plug 'AndrewRadev/sideways.vim'         " Rearrange function parameters
@@ -113,12 +115,11 @@ Plug 'tell-k/vim-autopep8'              " :Autopep8 auto formatting
 Plug 'Vimjas/vim-python-pep8-indent'    " pep8 Formatting on newline
 Plug 'nvie/vim-flake8'                  " Use flake8 for python linting
 Plug 'christoomey/vim-sort-motion'      " gs to sort python imports
+Plug 'michaeljsmith/vim-indent-object'  " Indention objects ai/ii/aI/iI mainly for python
 Plug 'vim-scripts/ReplaceWithRegister'  " griw - replace section with register value
 Plug 'wellle/targets.vim'               " extra text objects - cin) da,
-Plug 'michaeljsmith/vim-indent-object'  " Indention objects ai/ii/aI/iI mainly for python
 Plug 'FooSoft/vim-argwrap'              " Change argument wrapping
-Plug 'tpope/vim-eunuch'                 " :Delete :Move :Rename
-Plug 'kopischke/vim-fetch'              " Opening to specific line
+Plug 'kopischke/vim-fetch'              " Opening to specific line using colon number ex :3
 Plug 'cespare/vim-toml'                 " toml syntax for vim
 Plug 'itchyny/lightline.vim'            " Status bar
 Plug 'majutsushi/tagbar'                " Show ctags info
@@ -132,6 +133,11 @@ Plug 'justinmk/vim-sneak'               " Two-char search using s motion
 Plug 'AndrewRadev/bufferize.vim'        " :Bufferize to output vim functions into buffer
 Plug 'KabbAmine/zeavim.vim'             " Zeal docs lookup with :Zeavim
 
+Plug 'preservim/nerdtree' " :NERDTree :NERDTreeToggle :NERDTreeFocus
+command Tree :NERDTreeFocus " :Tree command
+command T :NERDTreeFocus " :T command
+
+Plug 'preservim/nerdtree' " :NERDTree :NERDTreeToggle :NERDTd T :Tree
 
 " Do I still want these
 "Plug 'tpope/vim-haml'
@@ -145,10 +151,25 @@ Plug 'KabbAmine/zeavim.vim'             " Zeal docs lookup with :Zeavim
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 
+" Search cheatsheet for neovim
+Plug 'sudormrfbin/cheatsheet.nvim' " <leader>?
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" Trying out this linter for ansible make sure to install required linters in
+" Gemfile or requirements.txt
+Plug 'mfussenegger/nvim-lint'
+
 " Doesn't work yet, blocked my Neural config and maybe plug
+" Does it work now? :checkhealth is all green on quarth
 Plug 'dense-analysis/neural'
-    Plug 'muniftanjim/nui.nvim'
+    Plug 'MunifTanjim/nui.nvim'
     Plug 'elpiloto/significant.nvim'
+
+" Colorschemes
+Plug 'morhetz/gruvbox'
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 " Ctrl-S expand snippits
@@ -172,6 +193,13 @@ else
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     " Autocompletion for Python Jedi
     Plug 'zchee/deoplete-jedi'
+
+    " Chatgpt
+    Plug 'jackMort/ChatGPT.nvim'
+    Plug 'MunifTanjim/nui.nvim'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
+
 endif
 
 call plug#end()

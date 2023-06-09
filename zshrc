@@ -1,3 +1,24 @@
+# Source file that contains directives that are common to both zshrc and bashrc
+dotfile_path=$(dirname $(readlink -f ${(%):-%N}))
+common_source="${dotfile_path}/rc-common.sh"
+if [ -e $common_source ]; then
+    . "$common_source"
+else
+    echo common source $common_source not found
+fi
+
+local_rc_path=$HOME/.zshrc.local
+if [ -f $local_rc_path ]; then
+    . $local_rc_path
+fi
+
+
+# ----------------- End of non-interactive configuration ---------------------
+if [[ $- != *i* ]]; then
+    return
+else
+# ----------------- Start of interactive configuration -----------------------
+
 function check_last_exit_code() {
   # Provides exit code in comand prompt
   local LAST_EXIT_CODE=$?
@@ -110,15 +131,6 @@ fi
 # into ~/.oh-my-zsh/plugins
 # Add a local rc file for configurations specific to this machine
 
-# Source file that contains directives that are common to both zshrc and bashrc
-dotfile_path=$(dirname $(readlink -f ${(%):-%N}))
-common_source="${dotfile_path}/rc-common.sh"
-if [ -e $common_source ]; then
-    . "$common_source"
-else
-    echo common source $common_source not found
-fi
-
 # History
 unsetopt share_history
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
@@ -126,9 +138,3 @@ setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
 HISTSIZE=10000000
 SAVEHIST=10000000
-
-
-local_rc_path=$HOME/.zshrc.local
-if [ -f $local_rc_path ]; then
-    . $local_rc_path
-fi

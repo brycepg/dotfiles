@@ -1,13 +1,60 @@
-# Check dotfiles rc-common.sh if not found in here
+# Check dotfiles ~/dotfiles/rc-common.sh if not found in here
 
-# Do not source if not interactive
+# Source file that contains directives that are common to both zshrc and bashrc
+dotfiles_path=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+common_source="$dotfiles_path/rc-common.sh"
+if [ -e "$common_source" ]; then
+    . "$common_source"
+fi
+
+
+# Do not source below if not interactive
 [[ $- != *i* ]] && return
 
+# ------------------- Interactive shell configuration ---------------------------
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# Add Bash autocompletion if available
+[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
+
+
+alias ls='ls --color=auto'
+
+# Set PS1 if set to default bash ps1
+set_ps1() {
+    if [ -e /etc/bash_completion.d/git-prompt ]; then
+        source /etc/bash_completion.d/git-prompt
+    fi
+    PS1='\u@\h \W\$ '
+}
+set_ps1
+
+# Unlimited history
+HISTSIZE= HISTFILESIZE= 
+
+# Change history file location because some programs truncate it
+export HISTFILE=~/.bash_external_history
+
+# Immediately append history to file
+shopt -s histappend
+
+export PROMPT_COMMAND="${PROMPT_COMMAND}${PROMPT_COMMAND:+;}history -a; history -n"
+
+# Add a local rc file for configurations specific to this machine
+# XXX needs to be at end
+[[ -f ~/.bashrc.local ]] && . ~/.bashrc.local
+
+
+# Autocomplete tab select for interactive
+if [[ $- = *i* ]]; then
+    bind '"\t":menu-complete'
+    bind "set show-all-if-ambiguous on"
+    bind "set completion-ignore-case on"
+    bind "set menu-complete-display-prefix on"
+fi
 
 # Display terminal colors
 colors() {
@@ -37,83 +84,10 @@ colors() {
 	done
 }
 
-
-# Add Bash autocompletion if available
-[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
-
-
-# Source file that contains directives that are common to both zshrc and bashrc
-dotfiles_path=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
-common_source="$dotfiles_path/rc-common.sh"
-if [ -e "$common_source" ]; then
-    . "$common_source"
-fi
-
-alias ls='ls --color=auto'
-
-# Set PS1 if set to default bash ps1
-set_ps1() {
-    if [ -e /etc/bash_completion.d/git-prompt ]; then
-        source /etc/bash_completion.d/git-prompt
-    fi
-    PS1='\u@\h \W\$ '
-}
-set_ps1
-
-# Unlimited history
-HISTSIZE= HISTFILESIZE= 
-
-# Change history file location because some programs truncate it
-export HISTFILE=~/.bash_external_history
-
-# Immediately append history to file
-shopt -s histappend
-
-export PROMPT_COMMAND="${PROMPT_COMMAND}${PROMPT_COMMAND:+;}history -a; history -n"
-
-# Get IP address from hostname using Python
-# Args:
-#   $1 - hostname
-# Returns:
-#   The ip address
-ipfromhostname() {
-    local hostname="$1"
-    if [ -z "$hostname" ]; then
-        >&2 echo 'Must supply hostname as an argument'
-        return 1
-    fi
-    local python_exists=$(type python 2>/dev/null)
-    if [ -z "$python_exists" ]; then
-        >&2 echo Requires python
-        return 1
-    fi
-    python -c "import socket; print(socket.gethostbyname(\"$hostname\"))" 2>/dev/null
-    local ret="$?"
-    if [[ "$ret" != 0 ]]; then
-        >&2 echo Hostname not found
-        return 1
-    fi
+pdroid() {
+    ansible-playbook -l odroid -i inventory.yml $@
 }
 
-
-# Install npm packages user local
-export NPM_PACKAGES="$HOME/.npm-packages"
-
-# NPM packages in homedir
-NPM_PACKAGES="$HOME/.npm-packages"
-
-# Tell our environment about user-installed node tools
-PATH="$PATH:$NPM_PACKAGES/bin"
-# Unset manpath so we can inherit from /etc/manpath via the `manpath` command
-unset MANPATH  # delete if you already modified MANPATH elsewhere in your configuration
-MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-
-# Tell Node about these packages
-NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-
-# Path for ruby gem packages
-PATH="$PATH:$HOME/bin"
-
-# Add a local rc file for configurations specific to this machine
-# XXX needs to be at end
-[[ -f ~/.bashrc.local ]] && . ~/.bashrc.local
+sb() {
+    source ~/.bashrc
+}
