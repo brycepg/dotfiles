@@ -339,9 +339,6 @@ if ! isdirectory(swapfile_dir)
 endif
 let &directory=swapfile_dir
 
-if filereadable(glob("~/.vimrc.local"))
-        source ~/.vimrc.local
-endif
 
 " =============================
 " === Neomake configuration ===
