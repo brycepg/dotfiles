@@ -7,8 +7,9 @@
 "
 " Notes:
 " See ~/.vim/ftplugin/python for more python specific mappings
-silent! python3 1
-silent! python2 1
+if filereadable(glob("~/.vimrc.local"))
+        source ~/.vimrc.local
+endif
 
 " Map the leader key to comma
 let mapleader=","
