@@ -47,6 +47,7 @@ DOTFILE_TO_HOME = (
 
 if os.name == "nt":
     DOTFILE_TO_HOME = DOTFILE_TO_HOME + (('nvim', 'vimfiles'),)
+    DOTFILE_TO_HOME = DOTFILE_TO_HOME + (('nvim', 'AppData/Local/nvim'),)
 
 
 
