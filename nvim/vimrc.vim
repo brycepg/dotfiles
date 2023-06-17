@@ -50,6 +50,9 @@ autocmd cursormoved * set hlsearch
 " via the terminal emulator because vim copy pasting is flaky
 set mouse=n
 
+"-------------------------------------------------------------
+"--------------------------- Shortcuts -----------------------
+"-------------------------------------------------------------
 " nohl shortcut
 map <SPACE>h :nohl<CR>
 " Paste from clipboard
@@ -58,26 +61,22 @@ map <Leader>p "+p<CR>
 map <Leader>y "+yy<CR>
 " Swap expressions between equals sign
 map <Leader>s :s/\( \+\)\(.\+\)\(.=.\)\(.\+\)/\1\4\3\2<CR>:nohl<CR>
-" ------------------ CtrlP plugin ---------------
-" Open file menu
-nnoremap <Leader>o :CtrlP<CR>
-nnoremap <SPACE>o :CtrlP<CR>
-" Open buffer menu
-nnoremap <Leader>B :CtrlPBuffer<CR>
-nnoremap <SPACE>B :CtrlPBuffer<CR>
-" Open most recently used files
-nnoremap <Leader>f :CtrlPMRUFiles<CR>
-nnoremap <SPACE>f :CtrlPMRUFiles<CR>
 
 " Source vimrc shortcut
+" Show filesystem tree in sidebar
 map <F2> :Tree<CR>
 " View undo tree shortcut
+" Show edits and deletions
 map <F4> :UndotreeToggle<CR>
 " Auto linting for Vim8+ and Neovim
 map <F5> :Neomake<CR>
+" Source vimrc
 map <F6> :so $MYVIMRC<CR>:echom "Sourced " . $MYVIMRC<CR>
 
 
+"-------------------------------------------------------------
+"-------------------------- Testing --------------------------
+"-------------------------------------------------------------
 " Run tests
 nnoremap <Leader><C-n> :TestNearest<CR>
 nnoremap <Leader><C-f> :TestFile<CR>
@@ -85,6 +84,24 @@ nnoremap <Leader><C-s> :TestSuite<CR>
 nnoremap <Leader><C-l> :TestLast<CR>
 nnoremap <Leader><C-g> :TestVisit<CR>
 
+
+"-------------------------------------------------------------
+"------------------------ CtrlP plugin -----------------------
+"-------------------------------------------------------------
+" Open file menu
+nnoremap <Leader>o :CtrlP<CR>
+nnoremap <SPACE>o :CtrlP<CR>
+" Open buffer menu
+nnoremap <Leader>B :CtrlPBuffer<CR>
+nnoremap <SPACE>B :CtrlPBuffer<CR>
+nnoremap <SPACE>b :CtrlPBuffer<CR>
+" Open most recently used files
+nnoremap <Leader>f :CtrlPMRUFiles<CR>
+nnoremap <SPACE>f :CtrlPMRUFiles<CR>
+
+"-------------------------------------------------------------
+"------------------- Plugin installation ---------------------
+"-------------------------------------------------------------
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
@@ -98,6 +115,9 @@ Plug 'tpope/vim-repeat'                 " Extending repeat to macros
 Plug 'tpope/vim-fugitive'               " Git from vim
 " How do I fix equal signs being red? (too annoying)
 "Plug 'frazrepo/vim-rainbow'             " Rainbow parenthesis
+" Lets try this rainbow plugin which is more updated
+" waiting on https://github.com/luochen1990/rainbow/pull/134
+" Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-abolish'                " Case smart replace/change: via Subvert/cr[smcu]
 Plug 'arnar/vim-matchopen'              " Highlight last opened parenthesis
 Plug 'tpope/vim-unimpaired'             " Bracket shortcuts
