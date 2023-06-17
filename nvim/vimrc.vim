@@ -14,12 +14,7 @@ endif
 " Map the leader key to comma
 let mapleader=","
 syntax enable
-if has('win32') && ! has('gui_running')
-    " 256 Colors do not work in cmd.exe and cmder
-    colorscheme wombat
-else
-    colorscheme wombat256mod
-endif
+colorscheme wombat256mod
 filetype plugin indent on
 set colorcolumn=93
 
