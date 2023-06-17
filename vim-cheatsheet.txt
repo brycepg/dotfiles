@@ -1,0 +1,14 @@
+leader is comma (",")
+<F2> file explorer tree
+<F4> revision edits tree
+<F5> Run neomake for linter
+<F6> Source vimrc
+
+<space>f - find files
+<space>b - fuzzy find buffers
+
+","Ctrl-n :TestNearest
+","p paste from clipboard
+","y yank from clipboard
+","s swap expressions between equals sign
+
