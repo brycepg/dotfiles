@@ -262,7 +262,7 @@ autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 
 " Persistent undo directory
 " Create undodir if not existent
-let undodir_path = $HOME . "/.undodir"
+let undodir_path = $HOME . "/.config/.undodir"
 if !isdirectory(undodir_path)
     call mkdir(undodir_path)
 endif
