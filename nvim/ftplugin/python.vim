@@ -104,3 +104,8 @@ endfunction
 
 " Original warning sign is too hard to see
 let g:neomake_warning_sign={'text': 'W'}
+
+" Set vim-test python runner to pytest, delete if using a different test
+" runner
+let test#python#runner = 'pytest'
+let g:neomake_python_enabled_makers = ['flake8']

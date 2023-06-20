@@ -2,7 +2,7 @@
 " For nvim you should to run `pip install --user neovim jedi black`
 "
 " Run tests see vim-test
-" :TestNearest
+" :CestNearest
 " :TestFile
 "
 " Notes:
@@ -61,6 +61,8 @@ map <Leader>p "+p<CR>
 map <Leader>y "+yy<CR>
 " Swap expressions between equals sign
 map <Leader>s :s/\( \+\)\(.\+\)\(.=.\)\(.\+\)/\1\4\3\2<CR>:nohl<CR>
+" Buffer history
+nnoremap <leader>mh <cmd>lua require('memento').toggle()<CR>
 
 " Source vimrc shortcut
 " Show filesystem tree in sidebar
@@ -106,6 +108,11 @@ function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
 call plug#begin('~/.config/nvim/plugged')
+Plug 'm4xshen/autoclose.nvim'           " Autoclose functions
+Plug 'kkoomen/vim-doge'                 " Documentation saffold
+" - [ ] did this work?
+Plug 'editorconfig/editorconfig-vim'    " Consistent coding styles between editors
+" <leader>d - generate documentation scaffold for function,etc
 Plug 'tpope/vim-eunuch'                 " :Delete :Move :Rename :SudoWrite :SudoEdit
 Plug 'qpkorr/vim-bufkill'               " :BD option to close buffer
 Plug 'mbbill/undotree'                  " :UndotreeShow
@@ -150,8 +157,11 @@ Plug 'AndrewRadev/bufferize.vim'        " :Bufferize to output vim functions int
 Plug 'KabbAmine/zeavim.vim'             " Zeal docs lookup with :Zeavim
 
 Plug 'preservim/nerdtree' " :NERDTree :NERDTreeToggle :NERDTreeFocus
-command Tree :NERDTreeFocus " :Tree command
-command T :NERDTreeFocus " :T command
+command! Tree :NERDTreeFocus " :Tree command
+command! T :NERDTreeFocus " :T command
+command! Vimrc :e ~/dotfiles/nvim/vimrc.vim
+command! Nvimrc :e ~/dotfiles/nvim/init.lua
+command! Cheatsheet :e ~/dotfiles/nvim/vim-cheatsheet.txt
 
 Plug 'preservim/nerdtree' " :NERDTree :NERDTreeToggle :NERDTd T :Tree
 
@@ -290,14 +300,17 @@ set exrc
 set secure
 
 " Fold by default
-set foldmethod=indent
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 set foldlevel=99
 
 " Turn on spell check
 command! Spell :setlocal spell spelllang=en_us
+" Turn off spell check
+command! Nospell :setlocal spell spelllang=
 
 " Look for ctags file in current directory
-set tags=./tags,tags;
+set tags=./tags,tags,./ctags;
 
 " Disable entering ex mode
 noremap Q <Nop>
@@ -343,7 +356,6 @@ let &directory=swapfile_dir
 " =============================
 " === Neomake configuration ===
 " =============================
-let g:neomake_python_enabled_makers = ['flake8']
 " Auto run lint on write -- good for writing code
 " autocmd BufWritePost * :Neomake
 " When writing a buffer (no delay), and on normal mode changes (after 750ms).
@@ -351,8 +363,5 @@ let g:neomake_python_enabled_makers = ['flake8']
 " normal mode (after 500ms; no delay when writing).
 call neomake#configure#automake('nrwi', 500)
 
-
-
-" Set vim-test python runner to pytest, delete if using a different test
-" runner
-let test#python#runner = 'pytest'
+" language specific configuration is at ~/dotfiles/nvim/ftplugin
+" Python configuration: ~/dotfiles/nvim/ftplugin/python.vim
