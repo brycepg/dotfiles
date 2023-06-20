@@ -120,11 +120,6 @@ Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy search
 Plug 'tpope/vim-surround'               " Surround motions
 Plug 'tpope/vim-repeat'                 " Extending repeat to macros
 Plug 'tpope/vim-fugitive'               " Git from vim
-" How do I fix equal signs being red? (too annoying)
-"Plug 'frazrepo/vim-rainbow'             " Rainbow parenthesis
-" Lets try this rainbow plugin which is more updated
-" waiting on https://github.com/luochen1990/rainbow/pull/134
-" Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-abolish'                " Case smart replace/change: via Subvert/cr[smcu]
 Plug 'arnar/vim-matchopen'              " Highlight last opened parenthesis
 Plug 'tpope/vim-unimpaired'             " Bracket shortcuts
@@ -263,9 +258,6 @@ let g:lightline = {
 function! LightlineFilename()
   return expand('%:F')
 endfunction
-
-" Enable rainbow parenthesis globally
-let g:rainbow_active = 1
 
 set shiftwidth=4 tabstop=4 softtabstop=4
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
