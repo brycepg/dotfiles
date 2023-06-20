@@ -109,3 +109,6 @@ let g:neomake_warning_sign={'text': 'W'}
 " runner
 let test#python#runner = 'pytest'
 let g:neomake_python_enabled_makers = ['flake8']
+
+" Override ftplugin/python.vim tabstop set to 8
+autocmd FileType python setlocal tabstop=4

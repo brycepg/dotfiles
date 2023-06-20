@@ -6,7 +6,7 @@
 " :TestFile
 "
 " Notes:
-" See ~/.vim/ftplugin/python for more python specific mappings
+" See ~/dotfiles/nvim/ftplugin/python.vim for more python specific mappings
 if filereadable(glob("~/.vimrc.local"))
         source ~/.vimrc.local
 endif
@@ -17,9 +17,6 @@ syntax enable
 colorscheme wombat256mod
 filetype plugin indent on
 set colorcolumn=93
-
-" Override ftplugin/python.vim tabstop set to 8
-autocmd FileType python setlocal tabstop=4
 
 " Expand tabs into spaces
 set expandtab
@@ -65,7 +62,8 @@ map <Leader>s :s/\( *\)\(.*\)\(.=.\)\(.*\)/\1\4\3\2<CR>
 " Source vimrc shortcut
 " Show filesystem tree in sidebar
 map <F1> :Cheatsheet<CR>
-map <F2> :Tree<CR>
+" File explorer
+map <F2> :NERDTreeToggle<CR>
 " Source vimrc
 map <F3> :so $MYVIMRC<CR>:echom "Sourced " . $MYVIMRC<CR>
 " View undo tree shortcut
@@ -107,6 +105,8 @@ function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
 call plug#begin('~/.config/nvim/plugged')
+Plug 'neovim/nvim-lspconfig'
+Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 Plug 'junegunn/vim-easy-align'          " Align on word
 Plug 'm4xshen/autoclose.nvim'           " Autoclose functions
 Plug 'kkoomen/vim-doge'                 " Documentation saffold
@@ -155,6 +155,7 @@ Plug 'preservim/nerdtree' " :NERDTree :NERDTreeToggle :NERDTreeFocus
 command! Tree :NERDTreeFocus " :Tree command
 command! T :NERDTreeFocus " :T command
 command! Vimrc :e ~/dotfiles/nvim/vimrc.vim
+command! Pythonrc :e ~/dotfiles/nvim/ftplugin/python.vim
 command! Nvimrc :e ~/dotfiles/nvim/init.lua
 command! Reference :e ~/dotfiles/nvim/vim-cheatsheet.txt
 
