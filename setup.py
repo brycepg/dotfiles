@@ -33,10 +33,9 @@ except ImportError:
 DOTFILE_DIR = dirname(realpath(__file__))
 
 # Change this to configure the symlink mapping
+# File or directory in dotfiles => path relative to home directory
+# path in home directory will point to file/dir in dotfiles
 DOTFILE_TO_HOME = (
-    ('bashrc', '.bashrc'),
-    ('screenrc', '.screenrc'),
-    ('zshrc', '.zshrc'),
     ('nvim', '.vim'),
     ('nvim', '.config/nvim'),
     ('nvim/init.vim', '.vimrc'),
@@ -45,9 +44,17 @@ DOTFILE_TO_HOME = (
     ('ipython_config.py', '.ipython/profile_default/ipython_config.py'),
 )
 
+if os.name != "nt":
+    DOTFILE_TO_HOME = DOTFILE_TO_HOME + (
+    ('bashrc', '.bashrc'),
+    ('screenrc', '.screenrc'),
+    ('zshrc', '.zshrc'),
+    )
+
 if os.name == "nt":
     DOTFILE_TO_HOME = DOTFILE_TO_HOME + (('nvim', 'vimfiles'),)
     DOTFILE_TO_HOME = DOTFILE_TO_HOME + (('nvim', 'AppData/Local/nvim'),)
+    DOTFILE_TO_HOME = DOTFILE_TO_HOME + (('Microsoft.PowerShell_profile.ps1', 'Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1'),)
 
 
 
