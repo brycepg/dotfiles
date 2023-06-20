@@ -1,5 +1,5 @@
 " Installation:
-" For nvim you should to run `pip install --user neovim jedi black`
+" For nvim run `pip install --user neovim jedi black`
 "
 " Run tests see vim-test
 " :CestNearest
@@ -60,20 +60,19 @@ map <Leader>p "+p<CR>
 " Yank line to clipboard
 map <Leader>y "+yy<CR>
 " Swap expressions between equals sign
-map <Leader>s :s/\( \+\)\(.\+\)\(.=.\)\(.\+\)/\1\4\3\2<CR>:nohl<CR>
-" Buffer history
-nnoremap <leader>mh <cmd>lua require('memento').toggle()<CR>
+map <Leader>s :s/\( *\)\(.*\)\(.=.\)\(.*\)/\1\4\3\2<CR>
 
 " Source vimrc shortcut
 " Show filesystem tree in sidebar
+map <F1> :Cheatsheet<CR>
 map <F2> :Tree<CR>
+" Source vimrc
+map <F3> :so $MYVIMRC<CR>:echom "Sourced " . $MYVIMRC<CR>
 " View undo tree shortcut
 " Show edits and deletions
 map <F4> :UndotreeToggle<CR>
 " Auto linting for Vim8+ and Neovim
 map <F5> :Neomake<CR>
-" Source vimrc
-map <F6> :so $MYVIMRC<CR>:echom "Sourced " . $MYVIMRC<CR>
 
 
 "-------------------------------------------------------------
@@ -108,7 +107,7 @@ function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
 call plug#begin('~/.config/nvim/plugged')
-Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'          " Align on word
 Plug 'm4xshen/autoclose.nvim'           " Autoclose functions
 Plug 'kkoomen/vim-doge'                 " Documentation saffold
 " - [ ] did this work?
@@ -157,7 +156,7 @@ command! Tree :NERDTreeFocus " :Tree command
 command! T :NERDTreeFocus " :T command
 command! Vimrc :e ~/dotfiles/nvim/vimrc.vim
 command! Nvimrc :e ~/dotfiles/nvim/init.lua
-command! Cheatsheet :e ~/dotfiles/nvim/vim-cheatsheet.txt
+command! Reference :e ~/dotfiles/nvim/vim-cheatsheet.txt
 
 Plug 'preservim/nerdtree' " :NERDTree :NERDTreeToggle :NERDTd T :Tree
 
