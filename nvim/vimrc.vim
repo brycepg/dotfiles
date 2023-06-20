@@ -157,7 +157,7 @@ command! T :NERDTreeFocus " :T command
 command! Vimrc :e ~/dotfiles/nvim/vimrc.vim
 command! Pythonrc :e ~/dotfiles/nvim/ftplugin/python.vim
 command! Nvimrc :e ~/dotfiles/nvim/init.lua
-command! Reference :e ~/dotfiles/nvim/vim-cheatsheet.txt
+command! Reference :e ~/dotfiles/vim-cheatsheet.txt
 
 Plug 'preservim/nerdtree' " :NERDTree :NERDTreeToggle :NERDTd T :Tree
 

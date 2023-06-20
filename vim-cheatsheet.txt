@@ -37,3 +37,4 @@ cr.        dot case
 :Rename   - Rename current file
 :SudoEdit - Edit current file as sudo
 :Reference - open curated cheatsheet
+:Pythonrc  - open python ftplugin configuration file for vim
