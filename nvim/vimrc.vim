@@ -108,6 +108,7 @@ function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
 call plug#begin('~/.config/nvim/plugged')
+Plug 'junegunn/vim-easy-align'
 Plug 'm4xshen/autoclose.nvim'           " Autoclose functions
 Plug 'kkoomen/vim-doge'                 " Documentation saffold
 " - [ ] did this work?
@@ -344,6 +345,11 @@ if ! isdirectory(swapfile_dir)
 endif
 let &directory=swapfile_dir
 
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " =============================
 " === Neomake configuration ===
