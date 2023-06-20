@@ -270,7 +270,7 @@ if !isdirectory(undodir_path)
     call mkdir(undodir_path)
 endif
 set undofile
-set undodir=~/.undodir
+let &undodir = undodir_path
 
 
 function! HeaderCreate(...)
