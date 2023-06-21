@@ -15,22 +15,12 @@ from os.path import exists, join, islink, isabs, dirname, realpath, expanduser
 import os
 from os import unlink, readlink, symlink
 import shutil
-
-try:
-    # Use generator filter for python 2
-    # pylint: disable=redefined-builtin,ungrouped-imports
-    from itertools import ifilter as filter  # type: ignore
-except ImportError:
-    pass
-try:
-    # Ignore typing if not installed
-    # pylint: disable=unused-import
-    from typing import (  # noqa: F401
-        Tuple, Callable, Iterable, Optional, TypeVar)
-except ImportError:
-    pass
+from itertools import ifilter as filter  # type: ignore
+from typing import (  # noqa: F401
+    Tuple, Callable, Iterable, Optional, TypeVar)
 
 DOTFILE_DIR = dirname(realpath(__file__))
+T = TypeVar('T')
 
 # Change this to configure the symlink mapping
 # File or directory in dotfiles => path relative to home directory
@@ -45,16 +35,18 @@ DOTFILE_TO_HOME = (
 
 if os.name != "nt":
     DOTFILE_TO_HOME = DOTFILE_TO_HOME + (
-    ('bashrc', '.bashrc'),
-    ('screenrc', '.screenrc'),
-    ('zshrc', '.zshrc'),
-)
+        ('bashrc', '.bashrc'),
+        ('screenrc', '.screenrc'),
+        ('zshrc', '.zshrc'),
+    )
 
 if os.name == "nt":
     DOTFILE_TO_HOME = DOTFILE_TO_HOME + (('nvim', 'vimfiles'),)
     DOTFILE_TO_HOME = DOTFILE_TO_HOME + (('nvim', 'AppData/Local/nvim'),)
-    DOTFILE_TO_HOME = DOTFILE_TO_HOME + (('Microsoft.PowerShell_profile.ps1', 'Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1'),)
-
+    DOTFILE_TO_HOME = DOTFILE_TO_HOME + (
+        ('Microsoft.PowerShell_profile.ps1',
+         'Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1'),
+    )
 
 
 def main(symlink_pair, cur_dir):
@@ -102,6 +94,7 @@ def identical_symlink_exists(dst, src):
         print(f"Found established symlink for {dst}")
     return ret
 
+
 def create_parent_destination_directory(path):
     # type: (str) -> None
     """Create parent destination directory if it doesn't exists.
@@ -113,7 +106,8 @@ def create_parent_destination_directory(path):
     if not os.path.exists(parent_path_dir):
         if not os.path.exists(parent_path_dir):
             create_parent_destination_directory(parent_path_dir)
-        print("Creating Parent Destination Directory '{}'".format(parent_path_dir))
+        print("Creating Parent Destination Directory '{}'"
+              .format(parent_path_dir))
         os.mkdir(parent_path_dir)
 
 
@@ -199,12 +193,6 @@ class ParentDirectoryDoesNotExist(Exception):
         return fmt.format(
             filepath=self.filepath,
             parent_directory=self.parent_directory)
-
-
-try:
-    T = TypeVar('T')
-except NameError:
-    pass
 
 
 def first_true(iterable, pred=None):
