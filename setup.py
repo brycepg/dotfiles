@@ -13,7 +13,7 @@ This file assumes it's in the base directory if dotfiles
 from itertools import count
 from os.path import exists, join, islink, isabs, dirname, realpath, expanduser
 import os
-from os import unlink, readlink, symlink, environ
+from os import unlink, readlink, symlink
 import shutil
 
 try:
@@ -38,8 +38,7 @@ DOTFILE_DIR = dirname(realpath(__file__))
 DOTFILE_TO_HOME = (
     ('nvim', '.vim'),
     ('nvim', '.config/nvim'),
-    ('nvim/init.vim', '.vimrc'),
-# bin get's hijacked by other scripts
+    # bin get's hijacked by other scripts
     ('bin', 'executables'),
     ('ipython_config.py', '.ipython/profile_default/ipython_config.py'),
 )
@@ -49,7 +48,7 @@ if os.name != "nt":
     ('bashrc', '.bashrc'),
     ('screenrc', '.screenrc'),
     ('zshrc', '.zshrc'),
-    )
+)
 
 if os.name == "nt":
     DOTFILE_TO_HOME = DOTFILE_TO_HOME + (('nvim', 'vimfiles'),)
@@ -85,11 +84,23 @@ def link_pair(src, dst):
     should_continue = handle_symlink_case(dst, src)
     if not should_continue:
         return
-    handle_file_backup(dst)
-    create_parent_destination_directory(dst)
-    print("{} => {}".format(dst, src))
-    symlink(src, dst)
+    if not identical_symlink_exists(dst, src):
+        handle_file_backup(dst, src)
+        create_parent_destination_directory(dst)
+        print("{} => {}".format(dst, src))
+        symlink(src, dst)
 
+
+def identical_symlink_exists(dst, src):
+    # tupe: (str, src) -> None
+    if not exists(dst):
+        return
+    link_path = os.path.realpath(os.readlink(dst)).replace("\\\\?\\", "")
+    src_path = os.path.realpath(src)
+    ret = os.path.islink(dst) and link_path == src_path
+    if ret:
+        print(f"Found established symlink for {dst}")
+    return ret
 
 def create_parent_destination_directory(path):
     # type: (str) -> None
@@ -140,11 +151,13 @@ def is_bad_symlink(filepath):
     return not (symlink_dst_exists and abs_symlink)
 
 
-def handle_file_backup(filepath):
+def handle_file_backup(filepath, target):
     # type: (str) -> None
     """Moving existing file to a backup location."""
+    # This function is only relevant when a file exists at the src location
     if not exists(filepath):
         return
+    # Prevent duplicate bak symlinks
     bak_path = get_bak_path(filepath)
     print("Backing up existing file '{}' to '{}'"
           .format(filepath, bak_path))
