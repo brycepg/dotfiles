@@ -8,3 +8,5 @@ fish_history
 *.sw*
 nvim/black
 nvim/env.lua
+swapfiles
+lazy-lock.json

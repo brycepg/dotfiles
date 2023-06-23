@@ -1,0 +1,5 @@
+CaskaydiaCoveNerdFont for neovim in terminal:
+    https://www.nerdfonts.com/
+
+tgpt for chatgpt without api key:
+    scoop install https://raw.githubusercontent.com/aandrew-me/tgpt/main/tgpt.json

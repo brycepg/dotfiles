@@ -1,14 +1,15 @@
 leader is comma (",")
 <F1> Open cheatsheet
 <F2> file explorer tree
+<F3> Source vimrc
 <F4> revision edits tree
 <F5> Run neomake for linter
-<F3> Source vimrc
 
 <space>f       find files
 <space>b       fuzzy find buffers
 <space>h       turn off highlight
 
+- repeat macro
 ,s swap assignment a=b => b=a
 ,p paste from clipboard
 ,y yank from clipboard
@@ -17,6 +18,7 @@ leader is comma (",")
 ,s swap
 zc         close fold
 ga         start alignment
+-          repeat macro
 cr[smcu-.] change word into different case
 crs        snake
 crm        mixed
@@ -38,3 +40,4 @@ cr.        dot case
 :SudoEdit - Edit current file as sudo
 :Reference - open curated cheatsheet
 :Pythonrc  - open python ftplugin configuration file for vim
+:ol - view last opened files

@@ -1,18 +1,26 @@
 " Installation:
-" For nvim run `pip install --user neovim jedi black`
+" For nvim run `pip install --user neovim jedi black pynvim`
 "
 " Run tests see vim-test
 " :CestNearest
 " :TestFile
 "
 " Notes:
+" For NeoVim, this file is run AFTER plugins are loaded
 " See ~/dotfiles/nvim/ftplugin/python.vim for more python specific mappings
+
+" Header for startup message is a vim Tip
+let g:startify_custom_header = 'startify#pad([GetTip()])'
+
 if filereadable(glob("~/.vimrc.local"))
-        source ~/.vimrc.local
+       source ~/.vimrc.local
 endif
 
-" Map the leader key to comma
-let mapleader=","
+" Do not duplicate configuration
+if !has("nvim")
+    " Map the leader key to comma
+    let mapleader=","
+endif
 syntax enable
 colorscheme wombat256mod
 filetype plugin indent on
@@ -47,6 +55,8 @@ autocmd cursormoved * set hlsearch
 " via the terminal emulator because vim copy pasting is flaky
 set mouse=n
 
+set termguicolors
+
 "-------------------------------------------------------------
 "--------------------------- Shortcuts -----------------------
 "-------------------------------------------------------------
@@ -58,7 +68,9 @@ map <Leader>p "+p<CR>
 map <Leader>y "+yy<CR>
 " Swap expressions between equals sign
 map <Leader>s :s/\( *\)\(.*\)\(.=.\)\(.*\)/\1\4\3\2<CR>
-
+map <Leader>/ :help myhelp<bar>:set modifiable<CR>
+map <Leader>rc :Vr<CR>
+map <Leader>nrc :Nrc<CR>
 " Source vimrc shortcut
 " Show filesystem tree in sidebar
 map <F1> :Cheatsheet<CR>
@@ -84,11 +96,10 @@ nnoremap <Leader><C-l> :TestLast<CR>
 nnoremap <Leader><C-g> :TestVisit<CR>
 
 
-"-------------------------------------------------------------
-"------------------------ CtrlP plugin -----------------------
-"-------------------------------------------------------------
+"-----------------------------------------------------------
+"------------------mappings & commands --------------------
+"-----------------------------------------------------------
 " Open file menu
-nnoremap <Leader>o :CtrlP<CR>
 nnoremap <SPACE>o :CtrlP<CR>
 " Open buffer menu
 nnoremap <Leader>B :CtrlPBuffer<CR>
@@ -98,167 +109,55 @@ nnoremap <SPACE>b :CtrlPBuffer<CR>
 nnoremap <Leader>f :CtrlPMRUFiles<CR>
 nnoremap <SPACE>f :CtrlPMRUFiles<CR>
 
-"-------------------------------------------------------------
-"------------------- Plugin installation ---------------------
-"-------------------------------------------------------------
-function! DoRemote(arg)
-    UpdateRemotePlugins
-endfunction
-call plug#begin('~/.config/nvim/plugged')
-Plug 'neovim/nvim-lspconfig'
-Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
-Plug 'junegunn/vim-easy-align'          " Align on word
-Plug 'm4xshen/autoclose.nvim'           " Autoclose functions
-Plug 'kkoomen/vim-doge'                 " Documentation saffold
-" - [ ] did this work?
-Plug 'editorconfig/editorconfig-vim'    " Consistent coding styles between editors
-" <leader>d - generate documentation scaffold for function,etc
-Plug 'tpope/vim-eunuch'                 " :Delete :Move :Rename :SudoWrite :SudoEdit
-Plug 'qpkorr/vim-bufkill'               " :BD option to close buffer
-Plug 'mbbill/undotree'                  " :UndotreeShow
-Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy search
-Plug 'tpope/vim-surround'               " Surround motions
-Plug 'tpope/vim-repeat'                 " Extending repeat to macros
-Plug 'tpope/vim-fugitive'               " Git from vim
-Plug 'tpope/vim-abolish'                " Case smart replace/change: via Subvert/cr[smcu]
-Plug 'arnar/vim-matchopen'              " Highlight last opened parenthesis
-Plug 'tpope/vim-unimpaired'             " Bracket shortcuts
-Plug 'ntpeters/vim-better-whitespace'   " Highlight trailing whitespace
-Plug 'tmhedberg/SimpylFold'             " Better Python folding
-Plug 'godlygeek/tabular'                " Alignment with :Tab /{Pattern}
-Plug 'AndrewRadev/sideways.vim'         " Rearrange function parameters
-Plug 'Chiel92/vim-autoformat'           " Auto format with :Autoformat
-Plug 'neomake/neomake'                  " Static analysis tools :Neomake
-Plug 'tell-k/vim-autopep8'              " :Autopep8 auto formatting
-Plug 'Vimjas/vim-python-pep8-indent'    " pep8 Formatting on newline
-Plug 'nvie/vim-flake8'                  " Use flake8 for python linting
-Plug 'christoomey/vim-sort-motion'      " gs to sort python imports
-Plug 'michaeljsmith/vim-indent-object'  " Indention objects ai/ii/aI/iI mainly for python
-Plug 'vim-scripts/ReplaceWithRegister'  " griw - replace section with register value
-Plug 'wellle/targets.vim'               " extra text objects - cin) da,
-Plug 'FooSoft/vim-argwrap'              " Change argument wrapping
-Plug 'kopischke/vim-fetch'              " Opening to specific line using colon number ex :3
-Plug 'cespare/vim-toml'                 " toml syntax for vim
-Plug 'itchyny/lightline.vim'            " Status bar
-Plug 'majutsushi/tagbar'                " Show ctags info
-Plug 'Glench/Vim-Jinja2-Syntax'         " Fix jinja syntax highlighting
-Plug 'solarnz/thrift.vim'               " Thrift syntax
-Plug 'janko-m/vim-test'                 " Run tests inside vim :TestNearest :TestFile
-Plug 'davidhalter/jedi-vim'             " Autocompletion (ctrl + space)
-Plug 'vim-scripts/ingo-library'         " Dependent library for JumpToLastOccurrence
-Plug 'vim-scripts/JumpToLastOccurrence' " Jump to last occurance of a char with ,f motion ,t
-Plug 'justinmk/vim-sneak'               " Two-char search using s motion
-Plug 'AndrewRadev/bufferize.vim'        " :Bufferize to output vim functions into buffer
-Plug 'KabbAmine/zeavim.vim'             " Zeal docs lookup with :Zeavim
+" View last opened files
+nnoremap <Leader>o :oldfiles<CR>
+nnoremap <Leader>so :so %<CR>
 
-Plug 'preservim/nerdtree' " :NERDTree :NERDTreeToggle :NERDTreeFocus
-command! Tree :NERDTreeFocus " :Tree command
-command! T :NERDTreeFocus " :T command
+" cycle through multiple buffers
+nnoremap <silent> ]c :bn<CR>
+nnoremap <silent> [c :bp<CR>
+
+command! Tree :NeoTreeRevealToggle
+command! T :Tree
 command! Vimrc :e ~/dotfiles/nvim/vimrc.vim
+command! Rc :Vimrc
+command! Vr :Vimrc
 command! Pythonrc :e ~/dotfiles/nvim/ftplugin/python.vim
 command! Nvimrc :e ~/dotfiles/nvim/init.lua
-command! Reference :e ~/dotfiles/vim-cheatsheet.txt
+command! Nv :Nvimrc
+command! Nrc :Nvimrc
+command! Nvr :Nvimrc
+command! NvP :e ~/dotfiles/nvim/init.lua | :normal /^plugins<CR> | :normal $%<CR>
+command! Pu :NvP
+command! Ip :call InsertPlugin("")
+command! Pi :Ip
+command! OldReference :e ~/dotfiles/vim-cheatsheet.txt
+command! Reference :help myhelp
+command! Ref :Reference
+command! Mru :oldfiles
+command! So :so %
+command! Src :so %
+command! Ftp :e ~/dotfiles/nvim/ftplugin/python.vim
+command! Ftl :e ~/dotfiles/nvim/ftplugin/lua.vim
+" Open Shortcuts
+command! Shortcuts :e ~/dotfiles/nvim/vimrc.vim | :normal ?command!<CR>
+command! Sc :Shortcuts
+" Turn on spell check
+command! Spell :setlocal spell spelllang=en_us
+" Turn off spell check
+command! Nospell :setlocal spell spelllang=
+" How do I get
+command! Fkeys :nmap <F1>
+command! -nargs=? Hrst call HeaderCreate('<args>')
 
-Plug 'preservim/nerdtree' " :NERDTree :NERDTreeToggle :NERDTd T :Tree
-
-" Do I still want these
-"Plug 'tpope/vim-haml'
-" Autocompletion
-"Plug 'Valloric/YouCompleteMe'
-
-" Utili snips code
-""   EEEEEEEEEEEEEEEEEE
-"""""Plug 'SirVer/ultisnips'
-
-" Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
-
-" Search cheatsheet for neovim
-Plug 'sudormrfbin/cheatsheet.nvim' " <leader>?
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-" Trying out this linter for ansible make sure to install required linters in
-" Gemfile or requirements.txt
-Plug 'mfussenegger/nvim-lint'
-
-" Doesn't work yet, blocked my Neural config and maybe plug
-" Does it work now? :checkhealth is all green on quarth
-Plug 'dense-analysis/neural'
-    Plug 'MunifTanjim/nui.nvim'
-    Plug 'elpiloto/significant.nvim'
-
-" Colorschemes
-Plug 'morhetz/gruvbox'
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-" Ctrl-S expand snippits
-let g:UltiSnipsExpandTrigger="<c-s>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-" End of Utili snips code
-
-
-if !has('nvim')
-    Plug 'noahfrederick/vim-neovim-defaults'
-    :echom "I now use plugins that are for vim only "
-else
-    " Python code formatting
-    Plug 'ambv/black'
-    " Neovim only plugins
-    " Autocompletion
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    " Autocompletion for Python Jedi
-    Plug 'zchee/deoplete-jedi'
-
-    " Chatgpt
-    Plug 'jackMort/ChatGPT.nvim'
-    Plug 'MunifTanjim/nui.nvim'
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
-
-endif
-
-call plug#end()
-
-if has('nvim')
-    " Disable jedi completions for deoplete-jedi
-    let g:jedi#completions_enabled = 0
-    let g:deoplete#enable_at_startup = 1
-endif
-
+function! Mytest()
+    " TODO: display mappings
+    echo nmap <F1>
+endfunction
 
 " Do not auotmatically insert comments.
 set formatoptions-=r formatoptions-=o formatoptions-=c
 
-let g:deoplete#enable_at_startup = 1
-
-" Status bar
-" - Set colorscheme
-" - Show folder in addition to filename
-" - Show current class / method via tagbar
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \ },
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste'],
-      \             [ 'readonly', 'filename', 'modified', 'tagbar'] ],
-      \ },
-      \ 'component': {
-      \   'tagbar': '%{tagbar#currenttag("[%s]", "", "f")}',
-      \ },
-      \ }
-
-function! LightlineFilename()
-  return expand('%:F')
-endfunction
 
 set shiftwidth=4 tabstop=4 softtabstop=4
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
@@ -284,7 +183,6 @@ function! HeaderCreate(...)
     endif
     normal yyp:s/./\=l:char/ | nohl
 endfunction
-command! -nargs=? Hrst call HeaderCreate('<args>')
 
 " Enable project specific configuration files
 set exrc
@@ -296,11 +194,6 @@ set secure
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldlevel=99
-
-" Turn on spell check
-command! Spell :setlocal spell spelllang=en_us
-" Turn off spell check
-command! Nospell :setlocal spell spelllang=
 
 " Look for ctags file in current directory
 set tags=./tags,tags,./ctags;
@@ -318,25 +211,6 @@ function! HasComma()
         return 0
     endif
 endfunction
-
-" Indent after comma for python function code.
-" Use with vim-python-pep8-indent
-" To use :call FunIndent()
-function! FunIndent()
-    while HasComma()
-        normal ^/,a
-    endwhile
-endfunction
-
-
-" Do not autocomplete on dot
-"let g:jedi#popup_on_dot = 0
-"let g:jedi#show_call_signatures = 0
-" Does this work?
-let g:jedi#show_call_signatures = "1"
-" Show docs !!!
-let g:jedi#documentation_command = "K"
-
 
 " Create swapfile if it doesn't exists and set it as the swap directory
 let swapfile_dir = $HOME . "/.vim/swapfiles/"
@@ -363,3 +237,81 @@ call neomake#configure#automake('nrwi', 500)
 
 " language specific configuration is at ~/dotfiles/nvim/ftplugin
 " Python configuration: ~/dotfiles/nvim/ftplugin/python.vim
+
+" Shortcut for repeating macros
+"
+if has('nvim')
+    call ddc#custom#patch_global('ui', 'native')
+    call ddc#custom#patch_global('sources', ['around'])
+    call ddc#custom#patch_global('sourceOptions', #{
+          \ _: #{
+          \   matchers: ['matcher_head'],
+          \   sorters: ['sorter_rank']},
+          \ })
+
+    " Change source options
+    call ddc#custom#patch_global('sourceOptions', #{
+          \   around: #{ mark: 'A' },
+          \ })
+    call ddc#custom#patch_global('sourceParams', #{
+          \   around: #{ maxSize: 500 },
+          \ })
+
+    " Customize settings on a filetype
+    call ddc#custom#patch_filetype(['c', 'cpp'], 'sources',
+          \ ['around', 'clangd'])
+    call ddc#custom#patch_filetype(['c', 'cpp'], 'sourceOptions', #{
+          \   clangd: #{ mark: 'C' },
+          \ })
+    call ddc#custom#patch_filetype('markdown', 'sourceParams', #{
+          \   around: #{ maxSize: 100 },
+          \ })
+
+    " Mappings
+
+    " <TAB>: completion.
+    inoremap <silent><expr> <TAB>
+    \ pumvisible() ? '<C-n>' :
+    \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+    \ '<TAB>' : ddc#map#manual_complete()
+
+    " <S-TAB>: completion back.
+    inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
+
+    " Use ddc.
+    call ddc#enable()
+endif
+
+let g:pydoc_cmd = 'python -m pydoc'
+
+"===================================================
+"=================Functions========================
+"===================================================
+function! InsertPlugin(plugin_line)
+    " Insert a plugin into the lua line
+    " - quote and brace and add comma
+    " Optional[plugin_line(str)]
+
+    " Retrieve line from clipboard if not
+    " supplied
+    let output_line = a:plugin_line
+    if output_line ==# ''
+        let output_line = getreg('+')
+    endif
+
+    " Does this line even work? I've been having the pipe symbol not work
+    "let output_line = substitute(output_line, '^\n\|\n$', '', 'g')
+    if stridx(output_line, "{") == -1
+        " Drop quotes - only if there are no braces
+        let output_line = substitute(output_line, "['\"]", '', 'g')
+        " Add braces and quotes
+        let output_line = "{\"" . output_line . "\"}"
+    endif
+    let lastChar = strpart(output_line, -1)
+    " Add delimieter for next plugin
+    if lastChar != ","
+        let output_line = output_line . ","
+    endif
+    NvP
+    execute 'normal O' . output_line
+endfunction

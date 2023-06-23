@@ -1,3 +1,5 @@
+install pydoc flake8
+
 How is easy align working? Try another one?
 
 Reqiurements:
