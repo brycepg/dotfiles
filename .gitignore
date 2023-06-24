@@ -10,3 +10,4 @@ nvim/black
 nvim/env.lua
 swapfiles
 lazy-lock.json
+tags

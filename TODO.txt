@@ -1,0 +1,5 @@
+I would like the install on new computers to be seamless
+In order for that to happen I need to test the install
+I could try to do that by testing out the installation script in a docker container and then opening vim to ferrett out the initial install errors
+
+auto implement scoop install

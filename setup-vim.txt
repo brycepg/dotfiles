@@ -2,3 +2,9 @@ setup:
 
     pip install black neovim
     :COQDeps
+
+    # Language servers
+    pip install pyright
+    npm install -g vim-language-server
+    # Install lua-language-server
+    # Install nodejs for github COpilot and LSPs

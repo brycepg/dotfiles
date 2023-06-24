@@ -3,3 +3,6 @@ CaskaydiaCoveNerdFont for neovim in terminal:
 
 tgpt for chatgpt without api key:
     scoop install https://raw.githubusercontent.com/aandrew-me/tgpt/main/tgpt.json
+
+Add cl to PATH
+    Use fd to find cl.exe

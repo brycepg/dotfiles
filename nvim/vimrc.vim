@@ -1,6 +1,6 @@
 " Installation:
-" For nvim run `pip install --user neovim jedi black pynvim`
-"
+" See ~/dotfiles/setup-vim.txt
+" Docs at :h myhelp
 " Run tests see vim-test
 " :CestNearest
 " :TestFile
@@ -10,20 +10,36 @@
 " See ~/dotfiles/nvim/ftplugin/python.vim for more python specific mappings
 
 " Header for startup message is a vim Tip
-let g:startify_custom_header = 'startify#pad([GetTip()])'
+" How do prevent enter requirements
+" let g:startify_custom_header = 'startify#pad([GetTip()])'
 
+" This works
+" :execute 'let a = glob("~/dotfiles")' | execute 'echo a'
+
+"XXX insert brackets inside function
+"XXX pyright is not being enabled for some reason
+"XXX delete until end of function
+
+" example:
+    " subprocess.run("a", "b", "c")
+
+" becomes:
+    " subprocess.run(["a", "b", "c"])
 if filereadable(glob("~/.vimrc.local"))
        source ~/.vimrc.local
 endif
+
+source ~/dotfiles/nvim/vimrc-utils.vim
 
 " Do not duplicate configuration
 if !has("nvim")
     " Map the leader key to comma
     let mapleader=","
 endif
-syntax enable
-colorscheme wombat256mod
+
+"colorscheme wombat256mod
 filetype plugin indent on
+set termguicolors
 set colorcolumn=93
 
 " Expand tabs into spaces
@@ -55,7 +71,6 @@ autocmd cursormoved * set hlsearch
 " via the terminal emulator because vim copy pasting is flaky
 set mouse=n
 
-set termguicolors
 
 "-------------------------------------------------------------
 "--------------------------- Shortcuts -----------------------
@@ -68,16 +83,17 @@ map <Leader>p "+p<CR>
 map <Leader>y "+yy<CR>
 " Swap expressions between equals sign
 map <Leader>s :s/\( *\)\(.*\)\(.=.\)\(.*\)/\1\4\3\2<CR>
-map <Leader>/ :help myhelp<bar>:set modifiable<CR>
+map <Leader>/ :Cheatsheet<CR>
 map <Leader>rc :Vr<CR>
 map <Leader>nrc :Nrc<CR>
 " Source vimrc shortcut
 " Show filesystem tree in sidebar
-map <F1> :Cheatsheet<CR>
+map <F1> :h myhelp<bar>set modifiable<CR>
 " File explorer
+" map <F2> :NeoTreeRevealToggle<CR>
 map <F2> :NERDTreeToggle<CR>
 " Source vimrc
-map <F3> :so $MYVIMRC<CR>:echom "Sourced " . $MYVIMRC<CR>
+map <F3> :lua ReloadConfig()<CR>
 " View undo tree shortcut
 " Show edits and deletions
 map <F4> :UndotreeToggle<CR>
@@ -117,6 +133,71 @@ nnoremap <Leader>so :so %<CR>
 nnoremap <silent> ]c :bn<CR>
 nnoremap <silent> [c :bp<CR>
 
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+
+"----------------------- Commands  ----------------------------
+" XXX: How would I get the assignment operator with nvim-treesitter?
+function! SplitOnce(str, delimiter)
+  " Split by delimeter once
+  let parts = split(a:str, a:delimiter, 2)
+  if len(parts) > 1
+    return [parts[0], join(parts[1:], a:delimiter)]
+  endif
+  return [a:str]
+endfunction
+
+function! SplitByAssign(str)
+  " Merge all arguments into a single argument
+  let parts = SplitOnce(a:str, '=')
+  if len(parts) > 1
+    let right_half = substitute(parts[1], '^\s*', '', '')
+    return right_half
+  endif
+  return a:str
+endfunction
+
+" XXX: WIP
+function! ExecuteLine(cmd)
+    let ft = &filetype
+    if ft == "vim"
+        let result = execute(a:cmd)
+    elseif ft == "lua"
+        let result = luaeval(a:cmd)
+    elseif ft == "python"
+        let result = system('python', a:cmd)
+    else
+        return "<No Yet Implemented>"
+    endif
+    return result
+endfunction
+
+function! EvalLine(cmd)
+    let ft = &filetype
+    if ft == "vim"
+        let result = eval(a:cmd)
+    elseif ft == "lua"
+        let result = luaeval(a:cmd)
+    elseif ft == "python"
+        let result = system('python', a:cmd)
+    else
+        return "<Error>"
+    endif
+    return result
+endfunction
+
+
+function! RightOfCurLine()
+    return SplitByAssign(shellescape(getline('.')))
+endfunction
+
+command! Poke echo SplitByAssign(getline('.'))
+command! Exec echo ExecuteLine(RightOfCurLine())
+command! Eval echo EvalLine(RightOfCurLine())
 command! Tree :NeoTreeRevealToggle
 command! T :Tree
 command! Vimrc :e ~/dotfiles/nvim/vimrc.vim
@@ -148,7 +229,38 @@ command! Spell :setlocal spell spelllang=en_us
 command! Nospell :setlocal spell spelllang=
 " How do I get
 command! Fkeys :nmap <F1>
-command! -nargs=? Hrst call HeaderCreate('<args>')
+command! -nargs=? Hrst call HeaderCreate(<args>)
+command! -nargs=? Mkdir call Mkdir(<f-args>)
+command! GH
+
+function! OpenGithubUrlFromLine(line)
+    let plugin_name = substitute(
+        line, '\zs[^/]\+\(\/[^"]\+\)\?$', '', ''
+    )
+    return plugin_name
+endfunction
+
+
+function! GetUrlOpener()
+    if has('win32')
+        return "start"
+    else
+        return "xdg-open"
+    endif
+endfunction
+
+" Create Delete Mkdir plugin?
+" function! Mkdir(...)
+"     let path = join(a:000, ' ')
+"     execute ":!mkdir " . expand('%:p:h') . GetSeparator() . path
+" endfunction
+
+command! -nargs=1 MyCommand call MyFunction(<f-args>)
+function! MyFunction(...)
+    let arg = join(a:000, ' ')
+    echo "Argument received: " . arg
+    " Add your custom logic here
+endfunction
 
 function! Mytest()
     " TODO: display mappings
@@ -219,14 +331,8 @@ if ! isdirectory(swapfile_dir)
 endif
 let &directory=swapfile_dir
 
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
 " =============================
-" === Neomake configuration ===
+" == Neomake configuration ===
 " =============================
 " Auto run lint on write -- good for writing code
 " autocmd BufWritePost * :Neomake
@@ -284,34 +390,13 @@ endif
 
 let g:pydoc_cmd = 'python -m pydoc'
 
-"===================================================
-"=================Functions========================
-"===================================================
-function! InsertPlugin(plugin_line)
-    " Insert a plugin into the lua line
-    " - quote and brace and add comma
-    " Optional[plugin_line(str)]
-
-    " Retrieve line from clipboard if not
-    " supplied
-    let output_line = a:plugin_line
-    if output_line ==# ''
-        let output_line = getreg('+')
-    endif
-
-    " Does this line even work? I've been having the pipe symbol not work
-    "let output_line = substitute(output_line, '^\n\|\n$', '', 'g')
-    if stridx(output_line, "{") == -1
-        " Drop quotes - only if there are no braces
-        let output_line = substitute(output_line, "['\"]", '', 'g')
-        " Add braces and quotes
-        let output_line = "{\"" . output_line . "\"}"
-    endif
-    let lastChar = strpart(output_line, -1)
-    " Add delimieter for next plugin
-    if lastChar != ","
-        let output_line = output_line . ","
-    endif
-    NvP
-    execute 'normal O' . output_line
-endfunction
+lua <<EOF
+function _G.ReloadConfig()
+  for name,_ in pairs(package.loaded) do
+    if name:match('^core') or name:match('^lsp') or name:match('^plugins') then
+      package.loaded[name] = nil
+    end
+  end
+  dofile(vim.env.MYVIMRC)
+end
+EOF

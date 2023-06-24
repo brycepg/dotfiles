@@ -7,29 +7,6 @@ For me, typical usage is to clone this repo, and then set symlinks to desired rc
 
 .zshrc and .bashrc assume that the dotfiles are located at ~/dotfiles
 
-Linux
-#####
-
-Use `ln <https://linux.die.net/man/1/ln>`_ to create symbol links to the desired files.
-
-zsh
-===
-
-For zsh::
-
-    ln -s ~/dotfiles/zshrc ~/.zshrc
-
-
-I recommend `thefuck` for autocorrection.
-
-bash
-====
-
-::
-
-    ln -s ~/dotfiles/bashrc ~/.bashrc
-
-
 vim/neovim
 ==========
 

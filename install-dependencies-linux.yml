@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  tasks:
+    - package: pip-neovim
+    - package: name=vim-language-server state=latest
+    - package: vim-language-server
+    - package: nodejs
+    - package: ctags
+    - pip:
+        install: pyright
