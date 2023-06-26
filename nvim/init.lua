@@ -96,6 +96,8 @@ plugins = {
     {'brycepg/nvim-eunuch'},             -- :Delete :Move :Rename :SudoWrite :SudoEdit
     {'godlygeek/tabular'},               -- :Tab /{Pattern}
     {'mhinz/vim-signify'},
+    {"numToStr/Comment.nvim", -- gcc or <visual>gc
+    dependencies="nvim-treesitter/nvim-treesitter"},
 
     -- 'ds' is not working for some reason
     -- {"kylechui/nvim-surround", dependencies='nvim-treesitter/nvim-treesitter'},
