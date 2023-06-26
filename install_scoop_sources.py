@@ -11,7 +11,7 @@ NAME_COL_INDEX = 0
 SOURCE_COL_INDEX = 2
 DOTFILE_DIR = dirname(realpath(__file__))
 
-SCOOP_PACKAGE_LIST = os.path.join(DOTFILE_DIR, 'scoop-files.txt')
+SCOOP_PACKAGE_LIST = os.path.join(DOTFILE_DIR, 'vetted-scoop-files.txt')
 
 def gen_whitespace_col(iter_, col):
     next(iter_) # Skip column
