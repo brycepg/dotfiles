@@ -239,8 +239,6 @@ plugins = {
     -- ^^^ How can I get some timed highlightning when the end is inserted?
     {'tyru/capture.vim', cmd="Capture"}, -- Show Ex command output in a buffer
     {dir="~/dotfiles/vim-myhelp/"}, -- My help plugin
-    'mhinz/vim-startify', -- Startup menu that works
---     {'michaelb/vim-tips', -- I'm liking this one a lot actually except it keeps opening at startup and i have to hit enter },
     {"nvim-treesitter/playground"}, -- :TSPlaygroundToggle
     {"RRethy/nvim-treesitter-endwise"},
 
@@ -295,10 +293,15 @@ plugins = {
     { "folke/neodev.nvim", opts = {} },
     -- included dependencies inside of plugin
     -- {"~/colo-blankline-indent.nvim"},
-    {"numToStr/Comment.nvim", dependencies="nvim-treesitter/nvim-treesitter"},
+    { -- open ipynb in vim
+        "meatballs/notebook.nvim"},
+    {"startup-nvim/startup.nvim",
+  dependencies={"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
+  },
 }
 local opts = {}
 require("lazy").setup(plugins, opts)
+require("startup").setup()
 vim.cmd[[ set updatetime=100 ]]
 
 -- vim.cmd("colorscheme wombat256mod")
