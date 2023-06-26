@@ -1,0 +1,3 @@
+- autocompletion for neovim lua
+- multi file symbol/class lookup for lua
+- docker testing setup

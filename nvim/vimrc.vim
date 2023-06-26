@@ -19,6 +19,7 @@
 "XXX insert brackets inside function
 "XXX pyright is not being enabled for some reason
 "XXX delete until end of function
+"XXX lua vim api completion
 
 " example:
     " subprocess.run("a", "b", "c")
@@ -389,6 +390,8 @@ call neomake#configure#automake('nrwi', 500)
 "endif
 
 let g:pydoc_cmd = 'python -m pydoc'
+
+set formatoptions-=cro
 
 lua <<EOF
 function _G.ReloadConfig()

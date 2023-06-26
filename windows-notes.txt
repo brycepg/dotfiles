@@ -5,4 +5,12 @@ tgpt for chatgpt without api key:
     scoop install https://raw.githubusercontent.com/aandrew-me/tgpt/main/tgpt.json
 
 Add cl to PATH
-    Use fd to find cl.exe
+    Use fd to find cl.exe after installing visual studio
+
+Modify Windows Powershell Settings > Actions
+    Delete Paste Text (Ctrl - V)
+
+Installed python at
+    ~\Applications\python-3.11.4
+
+because of path issues

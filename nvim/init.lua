@@ -1,4 +1,10 @@
 -- IDEA: gh open github link
+-- IDEA: mini.treesitter
+--  mini.treesitter.swap
+--  mini.treesitter.deletearound
+--  mini.treesitter.replacecall
+--  mini.treesitter.
+--
 --
 -- install deno for ddc
 -- MOTD: 'gf' to goto file
@@ -19,11 +25,16 @@
 -- XXX: How do I supress the lazy.nvim source warning
 -- XXX: pyright is not working on Windows
 -- XXX I don't like the lsp server autocompletion for lua
+-- delta=3 delta=5, delta=10?
+-- for wombat256mod, nightfox,
+--
+-- Currently working on neodev completion for lua
+-- : https://github.com/folke/neodev.nvim
 
 require "utils"
 -- Where do I put this horseshit?:
 -- * `Lua.workspace.library`: add element `"${3rd}/luv/library"` ;
--- require "lsp_setup"
+require "lsp_setup"
 
 -- Bootstrap neovim rcfile access in case rcfile loading fails
 
@@ -55,28 +66,23 @@ plugins = {
 
     -- Colorschemes
     {"EdenEast/nightfox.nvim"},
-    {"nxvu699134/vn-night.nvim"},
     {"projekt0n/github-nvim-theme"},
-    {"adisen99/codeschool.nvim"},
-    {"catppuccin/nvim"},
-    {"dasupradyumna/midnight.nvim"},
-    {"sekke276/dark_flat.nvim"},
 
     -- LSP stuff
     {
         "williamboman/mason.nvim",
         build = ":MasonUpdate" -- :MasonUpdate updates registry contents
     },
-    -- {
-    --     'neovim/nvim-lspconfig',
-    --     dependencies={"SmiteshP/nvim-navbuddy",
-    --         dependencies={"SmiteshP/nvim-navic",
-    --         "MunifTanjim/nui.nvim",
-    --         "numToStr/Comment.nvim",        -- Optional
-    --         "nvim-telescope/telescope.nvim" -- Optional
-    --         }
-    --     }
-    -- },
+    {
+        'neovim/nvim-lspconfig',
+        dependencies={"SmiteshP/nvim-navbuddy",
+            dependencies={"SmiteshP/nvim-navic",
+            "MunifTanjim/nui.nvim",
+            "numToStr/Comment.nvim",        -- Optional
+            "nvim-telescope/telescope.nvim" -- Optional
+            }
+        }
+    },
 
     -- Autocompletion stuff
     {'m4xshen/autoclose.nvim'},          -- Autoclose functions
@@ -90,6 +96,7 @@ plugins = {
     {'tpope/vim-abolish'},               -- Case smart replace/change: via Subvert/cr[smcu]
     {'brycepg/nvim-eunuch'},             -- :Delete :Move :Rename :SudoWrite :SudoEdit
     {'godlygeek/tabular'},               -- :Tab /{Pattern}
+    {'mhinz/vim-signify'},
 
     -- 'ds' is not working for some reason
     -- {"kylechui/nvim-surround", dependencies='nvim-treesitter/nvim-treesitter'},
@@ -217,14 +224,14 @@ plugins = {
     --   end,
     -- },
     "fs111/pydoc.vim",
-    -- The alternative is https://github.com/hrsh7th/nvim-cmp
-    {'ms-jpq/coq_nvim', branch='coq'}, -- :COQnow
+    -- Not working on windows due to python path issue
+    -- {'ms-jpq/coq_nvim', branch='coq'}, -- :COQnow
     -- {{"hrsh7th/nvim-cmp"}},
-    {'xolox/vim-lua-ftplugin', dependencies='xolox/vim-misc'},
+    -- {'xolox/vim-lua-ftplugin', dependencies='xolox/vim-misc'},
     -- alternative to ftplugin
     -- tbastos/vim-lua
+
     {'mg979/vim-visual-multi'},
-    {'eandrju/cellular-automaton.nvim'}, -- how do I make colorscheme persist?
     {'liuchengxu/vim-which-key'}, -- show keys with
 --    {'tpope/vim-endwise'}, -- automatically end functions
 
@@ -232,9 +239,8 @@ plugins = {
     {'tyru/capture.vim', cmd="Capture"}, -- Show Ex command output in a buffer
     {dir="~/dotfiles/vim-myhelp/"}, -- My help plugin
     'mhinz/vim-startify', -- Startup menu that works
-    {'michaelb/vim-tips', -- I'm liking this one a lot actually
-    },
-    {"nvim-treesitter/playground"},
+--     {'michaelb/vim-tips', -- I'm liking this one a lot actually except it keeps opening at startup and i have to hit enter },
+    {"nvim-treesitter/playground"}, -- :TSPlaygroundToggle
     {"RRethy/nvim-treesitter-endwise"},
 
     -- Does this work?
@@ -256,20 +262,74 @@ plugins = {
          opts = {},
     },
     {"github/copilot.vim"}, -- :Copilot enable
-    {
+    { -- highlight todo comments
       "folke/todo-comments.nvim",
-      dependencies = { "nvim-lua/plenary.nvim" },
+      dependencies = {"nvim-lua/plenary.nvim", "folke/trouble.nvim", "nvim-telescope/telescope.nvim"},
       opts = {
+--          signs = false,
       }
     },
-    {"alec-gibson/nvim-tetris"}, -- :Tetris
     {"lukas-reineke/indent-blankline.nvim"},
+    -- Games
+    {"alec-gibson/nvim-tetris"}, -- :Tetris
     {"seandewar/killersheep.nvim"}, -- :KillKillKill
+    {'eandrju/cellular-automaton.nvim'}, -- how do I make colorscheme persist?
+    {--  Focus on current  function
+        "koenverburg/peepsight.nvim"}, -- :PeepsightEnable
+    {"folke/twilight.nvim"}, -- :TwilightEnable
+    { -- "A code outline window for skimming and quick navigation"
+      'stevearc/aerial.nvim',
+      opts = {},
+      -- Optional dependencies
+      dependencies = {
+         "nvim-treesitter/nvim-treesitter",
+         "nvim-tree/nvim-web-devicons"
+      },
+    },
+   {'hrsh7th/cmp-nvim-lsp', dependencies="neovim/nvim-lspconfig"},
+   {'hrsh7th/cmp-buffer'},
+   {'hrsh7th/cmp-path'},
+   {'hrsh7th/cmp-cmdline'},
+   {'hrsh7th/nvim-cmp'}, -- uses lspconfig
+    { "folke/neodev.nvim", opts = {} },
+    -- included dependencies inside of plugin
+    -- {"~/colo-blankline-indent.nvim"},
+    {"numToStr/Comment.nvim", dependencies="nvim-treesitter/nvim-treesitter"},
 }
 local opts = {}
 require("lazy").setup(plugins, opts)
+vim.cmd[[ set updatetime=100 ]]
 
-vim.cmd("colorscheme wombat256mod")
+-- vim.cmd("colorscheme wombat256mod")
+vim.cmd("colorscheme nightfox")
+
+require('Comment').setup()
+require("neodev").setup({})
+
+-- then setup your lsp server as usual
+local lspconfig = require('lspconfig')
+
+-- example to setup lua_ls and enable call snippets
+lspconfig.lua_ls.setup({
+  settings = {
+    Lua = {
+      completion = {
+        callSnippet = "Replace"
+      }
+    }
+  }
+})
+
+require('aerial').setup({
+  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+  on_attach = function(bufnr)
+    -- Jump forwards/backwards with '{' and '}'
+    vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
+    vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
+  end
+})
+-- You probably also want to set a keymap to toggle aerial
+vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>')
 
 -- Treesitter configuration
 require('nvim-treesitter.configs').setup {
@@ -294,7 +354,6 @@ require('nvim-treesitter.configs').setup {
 
 -- transform nodes with treesitter
 vim.keymap.set({ "n" }, "<leader>k", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
-vim.keymap.set({ "n" }, "<leader>n", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
 
 -- Source ~/dotfiles/nvim/vimrc.vim here
 local vimrc = vim.fn.stdpath("config") .. "/vimrc.vim" vim.cmd.source(vimrc)
@@ -320,4 +379,86 @@ if status_chatgpt then
     require("chatgpt").setup()
 end
 
+-- Jump to todo comments
+vim.keymap.set("n", "]t", function()
+  require("todo-comments").jump_next()
+end, { desc = "Next todo comment" })
+
+vim.keymap.set("n", "[t", function()
+  require("todo-comments").jump_prev()
+end, { desc = "Previous todo comment" })
+
 require "indent_highlight"
+
+-- Set up nvim-cmp.
+local cmp = require'cmp'
+
+cmp.setup({
+snippet = {
+  -- REQUIRED - you must specify a snippet engine
+  expand = function(args)
+    vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+    -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+    -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+    -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+  end,
+},
+window = {
+  -- completion = cmp.config.window.bordered(),
+  -- documentation = cmp.config.window.bordered(),
+},
+mapping = cmp.mapping.preset.insert({
+  ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+  ['<C-u>'] = cmp.mapping.scroll_docs(4),
+  ['<C-Space>'] = cmp.mapping.complete(),
+  ['<C-a>'] = cmp.mapping.abort(),
+  ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+}),
+sources = cmp.config.sources({
+  { name = 'nvim_lsp' },
+  { name = 'vsnip' }, -- For vsnip users.
+  -- { name = 'luasnip' }, -- For luasnip users.
+  -- { name = 'ultisnips' }, -- For ultisnips users.
+  -- { name = 'snippy' }, -- For snippy users.
+}, {
+  { name = 'buffer' },
+})
+})
+
+-- Set configuration for specific filetype.
+cmp.setup.filetype('gitcommit', {
+sources = cmp.config.sources({
+  { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+}, {
+  { name = 'buffer' },
+})
+})
+
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ '/', '?' }, {
+mapping = cmp.mapping.preset.cmdline(),
+sources = {
+  { name = 'buffer' }
+}
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+mapping = cmp.mapping.preset.cmdline(),
+sources = cmp.config.sources({
+  { name = 'path' }
+}, {
+  { name = 'cmdline' }
+    })
+})
+
+-- Set up lspconfig.
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+--   require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+--     capabilities = capabilities
+--   }
+-- I had to manually remove cro from runtime via :verbose set formatoptions?
+vim.cmd([[
+set formatoptions-=cro
+]])
