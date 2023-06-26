@@ -1,10 +1,7 @@
 ---
 - hosts: localhost
+  become: true
   tasks:
-    - package: pip-neovim
-    - package: name=vim-language-server state=latest
-    - package: vim-language-server
-    - package: nodejs
-    - package: ctags
-    - pip:
-        install: pyright
+    #    - package: name=deno
+    - package: name=nodejs
+    - package: name=ctags

@@ -17,10 +17,14 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+
+
 # Add Bash autocompletion if available
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
 
 
+alias vimrc='nvim ~/dotfiles/nvim/vimrc.vim'
+alias nvimrc='nvim ~/dotfiles/nvim/init.lua'
 alias ls='ls --color=auto'
 
 # Set PS1 if set to default bash ps1
@@ -33,7 +37,7 @@ set_ps1() {
 set_ps1
 
 # Unlimited history
-HISTSIZE= HISTFILESIZE= 
+HISTSIZE= HISTFILESIZE=
 
 # Change history file location because some programs truncate it
 export HISTFILE=~/.bash_external_history
