@@ -22,7 +22,6 @@
 -- print("b")
 -- TODO: What is turning hyphen character lines unto UTF monstrosities?
 -- I could bisect plugins
--- XXX: How do I supress the lazy.nvim source warning
 -- XXX: pyright is not working on Windows
 -- XXX I don't like the lsp server autocompletion for lua
 -- delta=3 delta=5, delta=10?
@@ -462,3 +461,6 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 vim.cmd([[
 set formatoptions-=cro
 ]])
+
+-- Supress re source warning for lazy.nvim
+vim.g.lazy_did_setup = false
