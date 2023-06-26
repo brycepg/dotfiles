@@ -1,9 +1,15 @@
-local bg_color = vim.api.nvim_get_hl_by_name('Normal', true).background
+-- colo-indent-highlight
+-- Color highlight indentation based on color scheme
+-- TODO search "how to create a newvim pulgin"
+--      - what is the structure?
+local delta = 3
+-- require("colo_indent_highlight").setup {
+--      rbgdelta
+-- }
 
 function LightenDarkenColor(numColor, amt)
     -- Lighten or darken a base 10 RBG color by amt
-    -- Return a base 16 RBG hex string starting with #
-    -- For vimscript
+    -- Return a base 16 RBG hex string starting with '#'
     local r_base = bit.rshift(numColor, 16)
     local b_base = bit.band(bit.rshift(numColor, 8), 0x00FF)
     local g_base = bit.band(numColor, 0x0000FF)
@@ -28,18 +34,30 @@ function LightenDarkenColor(numColor, amt)
     return hexString
 end
 
-vim.cmd("highlight IndentBlanklineIndent1 guibg=" .. LightenDarkenColor(bg_color, 3) .. " gui=nocombine")
-vim.cmd("highlight IndentBlanklineIndent2 guibg=" .. LightenDarkenColor(bg_color, -3) .. " gui=nocombine")
+function setup_color_indent_highlight()
+    bg_color = vim.api.nvim_get_hl_by_name('Normal', true).background
+    vim.cmd("highlight IndentBlanklineIndent1 guibg=" .. LightenDarkenColor(bg_color, delta) .. " gui=nocombine")
+    vim.cmd("highlight IndentBlanklineIndent2 guibg=" .. LightenDarkenColor(bg_color, -delta) .. " gui=nocombine")
 
-require("indent_blankline").setup {
-    char = "",
-    char_highlight_list = {
+    require("indent_blankline").setup {
+        char = "",
+        char_highlight_list = {
             "IndentBlanklineIndent1",
-        "IndentBlanklineIndent2",
-    },
-    space_char_highlight_list = {
-        "IndentBlanklineIndent1",
-        "IndentBlanklineIndent2",
-    },
-    show_trailing_blankline_indent = false,
-}
+            "IndentBlanklineIndent2",
+        },
+        space_char_highlight_list = {
+            "IndentBlanklineIndent1",
+            "IndentBlanklineIndent2",
+        },
+        show_trailing_blankline_indent = false,
+    }
+end
+
+vim.api.nvim_create_autocmd(
+    "ColorScheme",
+    {
+		pattern = "*",
+		callback = setup_color_indent_highlight,
+    }
+)
+setup_color_indent_highlight()
