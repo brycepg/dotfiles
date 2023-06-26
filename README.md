@@ -6,4 +6,6 @@ For me, typical usage is to clone this repo, and then set symlinks to desired rc
     python ~/setup.py
 
 
-Text editor: neovim
+Text editor: neovim   
+Language support: lua, python  
+Potential future support: rust, webdev   

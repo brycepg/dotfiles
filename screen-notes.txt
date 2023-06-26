@@ -1,0 +1,8 @@
+screen
+======
+
+I've changed the control key to Ctrl-b since Ctrl-a is used to go to the start of the line in readline.
+
+::
+
+    ln -s ~/dotfiles/screenrc ~/.screenrc
