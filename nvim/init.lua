@@ -295,6 +295,8 @@ plugins = {
     -- included dependencies inside of plugin
     -- {"~/colo-blankline-indent.nvim"},
     {"numToStr/Comment.nvim", dependencies="nvim-treesitter/nvim-treesitter"},
+    { -- a motion plugin based on incremental fuzzy search
+        "rlane/pounce.nvim"}, -- :Pounce
 }
 local opts = {}
 require("lazy").setup(plugins, opts)
