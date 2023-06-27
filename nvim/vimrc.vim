@@ -232,7 +232,7 @@ command! Nospell :setlocal spell spelllang=
 command! Fkeys :nmap <F1>
 command! -nargs=? Hrst call HeaderCreate(<args>)
 command! -nargs=? Mkdir call Mkdir(<f-args>)
-command! GH
+" command! GH
 
 function! OpenGithubUrlFromLine(line)
     let plugin_name = substitute(
