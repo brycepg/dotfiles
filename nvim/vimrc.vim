@@ -203,6 +203,7 @@ command! Nv :Nvimrc
 command! Nrc :Nvimrc
 command! Nvr :Nvimrc
 command! NvP :e ~/dotfiles/nvim/init.lua | :normal /^plugins<CR> | :normal $%<CR>
+command! Nvp :NvP
 command! Pu :NvP
 command! Ip :call InsertPlugin("")
 command! Pi :Ip
