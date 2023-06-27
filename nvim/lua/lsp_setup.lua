@@ -1,8 +1,16 @@
 function SetupLspServers()
-    -- XXX: pyright is not working on Windows
-    -- require'lspconfig'.pyright.setup{}
-    require'lspconfig'.vimls.setup{}
+    local navbuddy = require("nvim-navbuddy")
+    require'lspconfig'.pyright.setup{}
+    require'lspconfig'.vimls.setup{
+        on_attach = function(client, bufnr)
+            navbuddy.attach(client, bufnr)
+        end
+    }
+    -- require'lspconfig'.lua_ls.settings.Lua.workspace.checkThirdParty = false
     require'lspconfig'.lua_ls.setup {
+      on_attach = function(client, bufnr)
+          navbuddy.attach(client, bufnr)
+      end,
       settings = {
         Lua = {
           runtime = {

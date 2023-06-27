@@ -7,17 +7,10 @@
 "
 " Notes:
 " For NeoVim, this file is run AFTER plugins are loaded
-" See ~/dotfiles/nvim/ftplugin/python.vim for more python specific mappings
-
-" Header for startup message is a vim Tip
-" How do prevent enter requirements
-" let g:startify_custom_header = 'startify#pad([GetTip()])'
-
-" This works
-" :execute 'let a = glob("~/dotfiles")' | execute 'echo a'
+" language specific configuration is at ~/dotfiles/nvim/ftplugin
+" Python configuration: ~/dotfiles/nvim/ftplugin/python.vim
 
 "XXX insert brackets inside function
-"XXX pyright is not being enabled for some reason
 "XXX delete until end of function
 "XXX lua vim api completion
 

@@ -361,8 +361,8 @@ require('nvim-treesitter.configs').setup {
 
 -- The language servers keep breaking
 -- LSP configuration
--- SetupLspServers()
--- ConfigureLSPShortcuts()
+SetupLspServers()
+ConfigureLSPShortcuts()
 
 -- transform nodes with treesitter
 vim.keymap.set({ "n" }, "<leader>k", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
