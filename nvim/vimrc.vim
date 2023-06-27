@@ -201,6 +201,7 @@ command! Tree :NeoTreeRevealToggle
 command! T :Tree
 command! Vimrc :e ~/dotfiles/nvim/vimrc.vim
 command! Rc :Vimrc
+command! Cur :e ~\colo-blankline-indent.nvim\
 command! Vr :Vimrc
 command! Pythonrc :e ~/dotfiles/nvim/ftplugin/python.vim
 command! Nvimrc :e ~/dotfiles/nvim/init.lua
