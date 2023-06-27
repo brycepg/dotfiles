@@ -9,7 +9,6 @@
 -- install deno for ddc
 -- MOTD: 'gf' to goto file
 -- TODO: neotest: A modern, powerful testing plugin
--- TODO: nvim-navbuddy! A simple popup window that provides
 -- folke/trouble.nvim A pretty list for showing diagnostics
 -- TODO: Make heading for plugin sections
 -- TODO: plugin for deleting conditional. For example
@@ -298,6 +297,16 @@ plugins = {
     {"startup-nvim/startup.nvim",
   dependencies={"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
   },
+    {
+        "SmiteshP/nvim-navbuddy", -- :NavBuddy
+        dependencies = {
+            "neovim/nvim-lspconfig",
+            "SmiteshP/nvim-navic",
+            "MunifTanjim/nui.nvim",
+            "numToStr/Comment.nvim",        -- Optional
+            "nvim-telescope/telescope.nvim" -- Optional
+        }
+    },
 }
 local opts = {}
 require("lazy").setup(plugins, opts)
@@ -334,6 +343,7 @@ require('aerial').setup({
 })
 -- You probably also want to set a keymap to toggle aerial
 vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>')
+vim.keymap.set('n', '<leader>nb', require("nvim-navbuddy").open)
 
 -- Treesitter configuration
 require('nvim-treesitter.configs').setup {
