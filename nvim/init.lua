@@ -289,7 +289,9 @@ plugins = {
    {'hrsh7th/cmp-cmdline'},
    {'hrsh7th/nvim-cmp'}, -- uses lspconfig
     { "folke/neodev.nvim", opts = {} },
-    {"~/colo-blankline-indent.nvim"},
+    -- {"~/colo-blankline-indent.nvim" init=function
+    --     require("colo-blankline-indent").setup({delta=5})
+    -- end},
     { -- open ipynb in vim
         "meatballs/notebook.nvim"},
     {"startup-nvim/startup.nvim",
@@ -305,6 +307,7 @@ plugins = {
             "nvim-telescope/telescope.nvim" -- Optional
         }
     },
+    {dir="~/myneovimplugin"},
 }
 local opts = {}
 require("lazy").setup(plugins, opts)
