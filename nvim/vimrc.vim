@@ -336,53 +336,6 @@ let &directory=swapfile_dir
 " normal mode (after 500ms; no delay when writing).
 call neomake#configure#automake('nrwi', 500)
 
-" language specific configuration is at ~/dotfiles/nvim/ftplugin
-" Python configuration: ~/dotfiles/nvim/ftplugin/python.vim
-
-" Shortcut for repeating macros
-"
-"if has('nvim')
-"    call ddc#custom#patch_global('ui', 'native')
-"    call ddc#custom#patch_global('sources', ['around'])
-"    call ddc#custom#patch_global('sourceOptions', #{
-"          \ _: #{
-"          \   matchers: ['matcher_head'],
-"          \   sorters: ['sorter_rank']},
-"          \ })
-"
-"    " Change source options
-"    call ddc#custom#patch_global('sourceOptions', #{
-"          \   around: #{ mark: 'A' },
-"          \ })
-"    call ddc#custom#patch_global('sourceParams', #{
-"          \   around: #{ maxSize: 500 },
-"          \ })
-"
-"    " Customize settings on a filetype
-"    call ddc#custom#patch_filetype(['c', 'cpp'], 'sources',
-"          \ ['around', 'clangd'])
-"    call ddc#custom#patch_filetype(['c', 'cpp'], 'sourceOptions', #{
-"          \   clangd: #{ mark: 'C' },
-"          \ })
-"    call ddc#custom#patch_filetype('markdown', 'sourceParams', #{
-"          \   around: #{ maxSize: 100 },
-"          \ })
-"
-"    " Mappings
-"
-"    " <TAB>: completion.
-"    inoremap <silent><expr> <TAB>
-"    \ pumvisible() ? '<C-n>' :
-"    \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-"    \ '<TAB>' : ddc#map#manual_complete()
-"
-"    " <S-TAB>: completion back.
-"    inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
-"
-"    " Use ddc.
-"    call ddc#enable()
-"endif
-
 let g:pydoc_cmd = 'python -m pydoc'
 
 set formatoptions-=cro
