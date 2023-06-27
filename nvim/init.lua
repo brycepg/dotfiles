@@ -58,7 +58,11 @@ vim.opt.rtp:prepend(lazypath)
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 plugins = {
     -- Foundational stuff
-    {'itchyny/lightline.vim'},           -- Status bar, having error upon lazy install
+    {"startup-nvim/startup.nvim",
+    { -- how do i get it to print context folder
+      'nvim-lualine/lualine.nvim',
+      dependencies={'nvim-tree/nvim-web-devicons'}
+    },
     {'ntpeters/vim-better-whitespace'},  -- Highlight trailing whitespace
     {'nvim-treesitter/nvim-treesitter', build= ':TSUpdate'},
 
@@ -158,9 +162,6 @@ plugins = {
     {'Vimjas/vim-python-pep8-indent'},   -- pep8 Formatting on newline
     {'FooSoft/vim-argwrap'},             -- Change argument wrapping
     {'cespare/vim-toml'},                -- toml syntax for vim
---    {'nvim-lualine/lualine.nvim', -- need to configure
---      dependencies={ 'nvim-tree/nvim-web-devicons'}
---    },
     {'majutsushi/tagbar'},               -- Show ctags info
     {'Glench/Vim-Jinja2-Syntax'},        -- Fix jinja syntax highlighting
     {'solarnz/thrift.vim'},              -- Thrift syntax
@@ -288,13 +289,9 @@ plugins = {
    {'hrsh7th/cmp-path'},
    {'hrsh7th/cmp-cmdline'},
    {'hrsh7th/nvim-cmp'}, -- uses lspconfig
-    { "folke/neodev.nvim", opts = {} },
-    -- {"~/colo-blankline-indent.nvim" init=function
-    --     require("colo-blankline-indent").setup({delta=5})
-    -- end},
+   { "folke/neodev.nvim", opts = {} },
     { -- open ipynb in vim
         "meatballs/notebook.nvim"},
-    {"startup-nvim/startup.nvim",
   dependencies={"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
   },
     {
@@ -307,11 +304,45 @@ plugins = {
             "nvim-telescope/telescope.nvim" -- Optional
         }
     },
-    {dir="~/myneovimplugin"},
+     -- {dir="~/myneovimplugin"},
+     -- {dir="~/colo-blankline-indent.nvim"},
+    {"echasnovski/mini.ai"}
 }
 local opts = {}
 require("lazy").setup(plugins, opts)
 require("startup").setup()
+
+-- Lualine configuration
+require('lualine').setup {
+  options = {
+      theme = "codedark",
+      component_separators = { left = '|', right = '|' },
+      icons_enabled = false,
+  },
+  sections = {
+      lualine_a = {'mode'},
+      -- removed branch due to disuse for now
+      lualine_b = {'diagnostics'},
+      lualine_c = {
+        {
+            'filename',
+            path=1,
+            shorting_target=0,
+        },
+      },
+      lualine_x={'diff', 'encoding', 'fileformat'},
+  },
+  inactive_sections = {
+      lualine_c = {
+          -- 'diff', 'diagnostics',
+          'filetype',
+          {
+              'filename',
+              path=1,
+          }
+      },
+  }
+}
 vim.cmd[[ set updatetime=100 ]]
 
 -- vim.cmd("colorscheme wombat256mod")
