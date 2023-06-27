@@ -267,7 +267,6 @@ plugins = {
 --          signs = false,
       }
     },
-    {"lukas-reineke/indent-blankline.nvim"},
     -- Games
     {"alec-gibson/nvim-tetris"}, -- :Tetris
     {"seandewar/killersheep.nvim"}, -- :KillKillKill
@@ -290,8 +289,7 @@ plugins = {
    {'hrsh7th/cmp-cmdline'},
    {'hrsh7th/nvim-cmp'}, -- uses lspconfig
     { "folke/neodev.nvim", opts = {} },
-    -- included dependencies inside of plugin
-    -- {"~/colo-blankline-indent.nvim"},
+    {"~/colo-blankline-indent.nvim"},
     { -- open ipynb in vim
         "meatballs/notebook.nvim"},
     {"startup-nvim/startup.nvim",
@@ -402,7 +400,7 @@ vim.keymap.set("n", "[t", function()
   require("todo-comments").jump_prev()
 end, { desc = "Previous todo comment" })
 
-require "indent_highlight"
+-- require "indent_highlight"
 
 -- Set up nvim-cmp.
 local cmp = require'cmp'
