@@ -127,6 +127,11 @@ nnoremap <Leader>so :so %<CR>
 nnoremap <silent> ]c :bn<CR>
 nnoremap <silent> [c :bp<CR>
 
+nnoremap <silent> ]T :tabnext<CR>
+nnoremap <silent> [T :tabprevious<CR>
+
+
+
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
