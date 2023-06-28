@@ -12,7 +12,6 @@
 -- folke/trouble.nvim A pretty list for showing diagnostics
 -- TODO: Make heading for plugin sections
 -- TODO: plugin for deleting conditional. For example
--- TODO: How do I make highlight group for XXX red?
 -- IDEA: Mini.github for neovim
 -- if (a==b):
 --    print("a")
@@ -57,17 +56,22 @@ vim.opt.rtp:prepend(lazypath)
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 plugins = {
     -- Foundational stuff
-    {"startup-nvim/startup.nvim",
-    { -- how do i get it to print context folder
+    {
+        'goolord/alpha-nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+    },
+    {
       'nvim-lualine/lualine.nvim',
       dependencies={'nvim-tree/nvim-web-devicons'}
     },
     {'ntpeters/vim-better-whitespace'},  -- Highlight trailing whitespace
+    { 'anuvyklack/pretty-fold.nvim'},
     {'nvim-treesitter/nvim-treesitter', build= ':TSUpdate'},
 
     -- Colorschemes
     {"EdenEast/nightfox.nvim"},
     {"projekt0n/github-nvim-theme"},
+    {"navarasu/onedark.nvim"},
 
     -- LSP stuff
     {
@@ -164,152 +168,165 @@ plugins = {
     {'majutsushi/tagbar'},               -- Show ctags info
     {'Glench/Vim-Jinja2-Syntax'},        -- Fix jinja syntax highlighting
     {'solarnz/thrift.vim'},              -- Thrift syntax
-    {'janko-m/vim-test'},                -- Run tests inside vim :TestNearest :TestFile
-    -- {'davidhalter/jedi-vim'},            -- Autocompletion (ctrl + space)
-    {'vim-scripts/ingo-library'},        -- Dependent library for JumpToLastOccurrence
-    {'vim-scripts/JumpToLastOccurrence'},-- Jump to last occurance of a char with ,f motion ,t
-    {'justinmk/vim-sneak'},              -- Two-char search using s motion
-    {'AndrewRadev/bufferize.vim'},       -- :Bufferize to output vim functions into buffer
-    {'ambv/black'}, -- Python code formatting
-    {
-        "L3MON4D3/LuaSnip",
-        -- follow latest release.
-        version = "1.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-        -- install jsregexp (optional!).
-        build = "make install_jsregexp"
-    },
-    -- prebuilt snippits - do they work with LuaSnip
-    {'honza/vim-snippets'},
-
-    -- Search cheatsheet for neovim
-    {'sudormrfbin/cheatsheet.nvim'},
-    {'nvim-lua/popup.nvim'},
-    {'nvim-lua/plenary.nvim'},
-
-
-    -- Trying out this linter for ansible make sure to install required linters in
-    -- Gemfile or requirements.txt
-    {'mfussenegger/nvim-lint'},
-
-    -- Doesn't work yet, blocked my Neural config and maybe plug
-    -- Does it work now? :checkhealth is all green on quarth
-    {'dense-analysis/neural'},
-    {'MunifTanjim/nui.nvim'},
-    {'elpiloto/significant.nvim'},
-
-    -- Colorschemes
-    {'morhetz/gruvbox'},
-    {'jackMort/ChatGPT.nvim'}, -- Chatgpt
-    {'MunifTanjim/nui.nvim'},
-    {'nvim-telescope/telescope.nvim', version= '0.1.1'},
-    {'nvim-lua/plenary.nvim'},
-    'vim-denops/denops.vim',
-    -- deno was timing out on fedora for ddc
-    -- {'Shougo/ddc.vim', dependencies='vim-denops/denops.vim'},
-    -- 'Shougo/ddc-ui-native',
-    -- 'Shougo/ddc-source-around',
-    -- 'Shougo/ddc-matcher_head',
-    -- 'Shougo/ddc-sorter_rank',
-    'phaazon/hop.nvim',
-    {
-      "folke/edgy.nvim",
-      event = "VeryLazy",
-      opts = {}
-    },
-    -- { Getting duplicate output
-    --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    --   config = function()
-    --     require("lsp_lines").setup()
-    --     vim.diagnostic.config({ virtual_lines = true })
-    --   end,
-    -- },
-    "fs111/pydoc.vim",
-    -- Not working on windows due to python path issue
-    -- {'ms-jpq/coq_nvim', branch='coq'}, -- :COQnow
-    -- {{"hrsh7th/nvim-cmp"}},
-    -- {'xolox/vim-lua-ftplugin', dependencies='xolox/vim-misc'},
-    -- alternative to ftplugin
-    -- tbastos/vim-lua
-
-    {'mg979/vim-visual-multi'},
-    {'liuchengxu/vim-which-key'}, -- show keys with
---    {'tpope/vim-endwise'}, -- automatically end functions
-
-    -- ^^^ How can I get some timed highlightning when the end is inserted?
-    {'tyru/capture.vim', cmd="Capture"}, -- Show Ex command output in a buffer
-    {dir="~/dotfiles/vim-myhelp/"}, -- My help plugin
-    {"nvim-treesitter/playground"}, -- :TSPlaygroundToggle
-    {"RRethy/nvim-treesitter-endwise"},
-
-    -- Does this work?
-    {"xolox/vim-colorscheme-switcher", dependencies="xolox/vim-misc"},
- -- :Bufferize dump output of command into a buffer
-    {"AndrewRadev/bufferize.vim"},
-    {"justinmk/vim-dirvish"}, -- Create files in netrw using :e %foo.txt
-    {"mattn/emmet-vim"},
-    -- {"Olical/conjure"}, Getting documentation lookup errors
-    {"HiPhish/nvim-ts-rainbow2"},
-    {"mileszs/ack.vim"},
-    {"junegunn/fzf"},
-    {"easymotion/vim-easymotion"}, -- TODO Test
-    {"tzachar/highlight-undo.nvim"}, -- XXX does it work do i like?
-    {"ThePrimeagen/refactoring.nvim"}, -- TODO
-    {
-        'ckolkey/ts-node-action',
-         dependencies = { 'nvim-treesitter' },
-         opts = {},
-    },
-    {"github/copilot.vim"}, -- :Copilot enable
-    { -- highlight todo comments
-      "folke/todo-comments.nvim",
-      dependencies = {"nvim-lua/plenary.nvim", "folke/trouble.nvim", "nvim-telescope/telescope.nvim"},
-      opts = {
---          signs = false,
-      }
-    },
-    -- Games
-    {"alec-gibson/nvim-tetris"}, -- :Tetris
-    {"seandewar/killersheep.nvim"}, -- :KillKillKill
-    {'eandrju/cellular-automaton.nvim'}, -- how do I make colorscheme persist?
-    {--  Focus on current  function
-        "koenverburg/peepsight.nvim"}, -- :PeepsightEnable
-    {"folke/twilight.nvim"}, -- :TwilightEnable
-    { -- "A code outline window for skimming and quick navigation"
-      'stevearc/aerial.nvim',
-      opts = {},
-      -- Optional dependencies
+    { -- Run tests inside vim
+    'janko-m/vim-test'}, -- :TestNearest :TestFile
+    { -- A framework for interacting with tests within NeoVim.
+      "nvim-neotest/neotest", -- :Neotest <args>
       dependencies = {
-         "nvim-treesitter/nvim-treesitter",
-         "nvim-tree/nvim-web-devicons"
-      },
-    },
-   {'hrsh7th/cmp-nvim-lsp', dependencies="neovim/nvim-lspconfig"},
-   {'hrsh7th/cmp-buffer'},
-   {'hrsh7th/cmp-path'},
-   {'hrsh7th/cmp-cmdline'},
-   {'hrsh7th/nvim-cmp'}, -- uses lspconfig
-   { "folke/neodev.nvim", opts = {} },
-    { -- open ipynb in vim
-        "meatballs/notebook.nvim"},
-  dependencies={"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
-  },
-    {
-        "SmiteshP/nvim-navbuddy", -- :NavBuddy
-        dependencies = {
-            "neovim/nvim-lspconfig",
-            "SmiteshP/nvim-navic",
-            "MunifTanjim/nui.nvim",
-            "numToStr/Comment.nvim",        -- Optional
-            "nvim-telescope/telescope.nvim" -- Optional
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        "antoinemadec/FixCursorHold.nvim"
         }
     },
-     -- {dir="~/myneovimplugin"},
-     -- {dir="~/colo-blankline-indent.nvim"},
-    {"echasnovski/mini.ai"}
+
+        -- {'davidhalter/jedi-vim'},            -- Autocompletion (ctrl + space)
+        {'vim-scripts/ingo-library'},        -- Dependent library for JumpToLastOccurrence
+        {'vim-scripts/JumpToLastOccurrence'},-- Jump to last occurance of a char with ,f motion ,t
+        {'justinmk/vim-sneak'},              -- Two-char search using s motion
+        {'AndrewRadev/bufferize.vim'},       -- :Bufferize to output vim functions into buffer
+        {'ambv/black'}, -- Python code formatting
+        {
+            "L3MON4D3/LuaSnip",
+            -- follow latest release.
+            version = "1.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+            -- install jsregexp (optional!).
+            build = "make install_jsregexp"
+        },
+        -- prebuilt snippits - do they work with LuaSnip
+        {'honza/vim-snippets'},
+
+        -- Search cheatsheet for neovim
+        {'sudormrfbin/cheatsheet.nvim'},
+        {'nvim-lua/popup.nvim'},
+        {'nvim-lua/plenary.nvim'},
+
+
+        -- Trying out this linter for ansible make sure to install required linters in
+        -- Gemfile or requirements.txt
+        {'mfussenegger/nvim-lint'},
+
+        -- Doesn't work yet, blocked my Neural config and maybe plug
+        -- Does it work now? :checkhealth is all green on quarth
+        {'dense-analysis/neural'},
+        {'MunifTanjim/nui.nvim'},
+        {'elpiloto/significant.nvim'},
+
+        -- Colorschemes
+        {'morhetz/gruvbox'},
+        {'jackMort/ChatGPT.nvim'}, -- Chatgpt
+        {'MunifTanjim/nui.nvim'},
+        {'nvim-telescope/telescope.nvim', version= '0.1.1'},
+        {'nvim-lua/plenary.nvim'},
+        'vim-denops/denops.vim',
+        -- deno was timing out on fedora for ddc
+        -- {'Shougo/ddc.vim', dependencies='vim-denops/denops.vim'},
+        -- 'Shougo/ddc-ui-native',
+        -- 'Shougo/ddc-source-around',
+        -- 'Shougo/ddc-matcher_head',
+        -- 'Shougo/ddc-sorter_rank',
+        'phaazon/hop.nvim',
+        {
+          "folke/edgy.nvim",
+          event = "VeryLazy",
+          opts = {}
+        },
+        -- { Getting duplicate output
+        --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        --   config = function()
+        --     require("lsp_lines").setup()
+        --     vim.diagnostic.config({ virtual_lines = true })
+        --   end,
+        -- },
+        "fs111/pydoc.vim",
+        -- Not working on windows due to python path issue
+        -- {'ms-jpq/coq_nvim', branch='coq'}, -- :COQnow
+        -- {{"hrsh7th/nvim-cmp"}},
+        -- {'xolox/vim-lua-ftplugin', dependencies='xolox/vim-misc'},
+        -- alternative to ftplugin
+        -- tbastos/vim-lua
+
+        {'mg979/vim-visual-multi'},
+        {'liuchengxu/vim-which-key'}, -- show keys with
+    --    {'tpope/vim-endwise'}, -- automatically end functions
+
+        -- ^^^ How can I get some timed highlightning when the end is inserted?
+        {'tyru/capture.vim', cmd="Capture"}, -- Show Ex command output in a buffer
+        {dir="~/dotfiles/vim-myhelp/"}, -- My help plugin
+        {"nvim-treesitter/playground"}, -- :TSPlaygroundToggle
+        {"RRethy/nvim-treesitter-endwise"},
+
+        -- Does this work?
+        {"xolox/vim-colorscheme-switcher", dependencies="xolox/vim-misc"},
+     -- :Bufferize dump output of command into a buffer
+        {"AndrewRadev/bufferize.vim"},
+        {"justinmk/vim-dirvish"}, -- Create files in netrw using :e %foo.txt
+        {"mattn/emmet-vim"},
+        -- {"Olical/conjure"}, Getting documentation lookup errors
+        {"HiPhish/nvim-ts-rainbow2"},
+        {"mileszs/ack.vim"},
+        {"junegunn/fzf"},
+        {"easymotion/vim-easymotion"}, -- TODO Test
+        {"tzachar/highlight-undo.nvim"}, -- XXX does it work do i like?
+        {"ThePrimeagen/refactoring.nvim"}, -- TODO
+        {
+            'ckolkey/ts-node-action',
+             dependencies = { 'nvim-treesitter' },
+             opts = {},
+        },
+        {"github/copilot.vim"}, -- :Copilot enable
+        { -- highlight todo comments
+          "folke/todo-comments.nvim",
+          dependencies = {"nvim-lua/plenary.nvim", "folke/trouble.nvim", "nvim-telescope/telescope.nvim"},
+          opts = {
+    --          signs = false,
+          }
+        },
+        -- Games
+        {"alec-gibson/nvim-tetris"}, -- :Tetris
+        {"seandewar/killersheep.nvim"}, -- :KillKillKill
+        {'eandrju/cellular-automaton.nvim'}, -- how do I make colorscheme persist?
+        {--  Focus on current  function
+            "koenverburg/peepsight.nvim"}, -- :PeepsightEnable
+        {"folke/twilight.nvim"}, -- :TwilightEnable
+        { -- "A code outline window for skimming and quick navigation"
+          'stevearc/aerial.nvim',
+          opts = {},
+          -- Optional dependencies
+          dependencies = {
+             "nvim-treesitter/nvim-treesitter",
+             "nvim-tree/nvim-web-devicons"
+          },
+        },
+       {'hrsh7th/cmp-nvim-lsp', dependencies="neovim/nvim-lspconfig"},
+       {'hrsh7th/cmp-buffer'},
+       {'hrsh7th/cmp-path'},
+       {'hrsh7th/cmp-cmdline'},
+       {'hrsh7th/nvim-cmp'}, -- uses lspconfig
+       { "folke/neodev.nvim", opts = {} },
+       { -- open ipynb in vim
+           "meatballs/notebook.nvim",
+               dependencies={"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
+       },
+       {
+           "SmiteshP/nvim-navbuddy", -- :NavBuddy
+           dependencies = {
+               "neovim/nvim-lspconfig",
+               "SmiteshP/nvim-navic",
+               "MunifTanjim/nui.nvim",
+               "numToStr/Comment.nvim",        -- Optional
+               "nvim-telescope/telescope.nvim" -- Optional
+           }
+       },
+        -- {dir="~/myneovimplugin"},
+        -- {dir="~/colo-blankline-indent.nvim"},
+       {"echasnovski/mini.ai"}, -- TODO
+       {'vladdoster/remember.nvim'},
+    }
+require("lazy").setup(plugins, {})
+require'alpha'.setup(require'alpha.themes.startify'.config)
+require('pretty-fold').setup{
+  fill_char = ' ',
 }
-local opts = {}
-require("lazy").setup(plugins, opts)
-require("startup").setup()
 
 -- Lualine configuration
 require('lualine').setup {
@@ -342,12 +359,19 @@ require('lualine').setup {
       },
   }
 }
+-- write to swap file immediately
 vim.cmd[[ set updatetime=100 ]]
 
 -- vim.cmd("colorscheme wombat256mod")
 vim.cmd("colorscheme nightfox")
 
 require('Comment').setup()
+require('todo-comments').setup{
+    keywords = {
+        WARN = { icon = " ", color = "#FF0000", alt = { "WARNING", "XXX" } },
+
+    }
+}
 require("neodev").setup({})
 
 -- then setup your lsp server as usual
@@ -379,6 +403,9 @@ vim.keymap.set('n', '<leader>nb', require("nvim-navbuddy").open)
 -- Treesitter configuration
 require('nvim-treesitter.configs').setup {
     endwise = {
+        enable = true,
+    },
+    indent = {
         enable = true,
     },
     rainbow = {
@@ -499,10 +526,9 @@ sources = cmp.config.sources({
 
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
---   require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
---     capabilities = capabilities
---   }
+  require('lspconfig')['lua_ls'].setup {
+    capabilities = capabilities
+}
 -- I had to manually remove cro from runtime via :verbose set formatoptions?
 vim.cmd([[
 set formatoptions-=cro

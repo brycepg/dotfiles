@@ -150,6 +150,19 @@ function! SplitOnce(str, delimiter)
   return [a:str]
 endfunction
 
+" TODO Test on Linux
+function! _GHStrip(str)
+
+    let line = substitute(a:str, '[=}{ ,"''\t]', '', 'g')
+    " validation?
+    let url = "https://github.com/" .. line
+    execute("!" .. GetUrlOpener() .. " " .. url)
+endfunction
+
+command! Github echo _GHStrip(getline('.'))
+command! GHub echo _GHStrip(getline('.'))
+command! GH echo _GHStrip(getline('.'))
+
 function! SplitByAssign(str)
   " Merge all arguments into a single argument
   let parts = SplitOnce(a:str, '=')
@@ -307,6 +320,7 @@ set secure
 " Fold by default
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable
 set foldlevel=99
 
 " Look for ctags file in current directory
