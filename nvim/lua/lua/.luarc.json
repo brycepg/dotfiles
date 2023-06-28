@@ -94,6 +94,8 @@
         "C:/Users/Bryce/dotfiles/nvim/lua",
         "${3rd}/luv/library",
         "${3rd}/luv/library",
+        "${3rd}/luv/library",
         "${3rd}/luv/library"
-    ]
+    ],
+    "workspace.checkThirdParty": false
 }

@@ -10,15 +10,14 @@
 " language specific configuration is at ~/dotfiles/nvim/ftplugin
 " Python configuration: ~/dotfiles/nvim/ftplugin/python.vim
 
-"XXX insert brackets inside function
-"XXX delete until end of function
-"XXX lua vim api completion
-
+" MOTD of the day for nvim-surround:
+"
+" ysyi)]
+"
 " example:
-    " subprocess.run("a", "b", "c")
-
+"   subprocess.run(["a", "b", "c"])
 " becomes:
-    " subprocess.run(["a", "b", "c"])
+"   subprocess.run(["a", "b", "c"])
 if filereadable(glob("~/.vimrc.local"))
        source ~/.vimrc.local
 endif
@@ -130,8 +129,6 @@ nnoremap <silent> [c :bp<CR>
 nnoremap <silent> ]T :tabnext<CR>
 nnoremap <silent> [T :tabprevious<CR>
 
-
-
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
@@ -157,6 +154,10 @@ function! _GHStrip(str)
     " validation?
     let url = "https://github.com/" .. line
     execute("!" .. GetUrlOpener() .. " " .. url)
+endfunction
+
+function! TestRegex()
+    " [A-z\-]
 endfunction
 
 command! Github echo _GHStrip(getline('.'))
@@ -221,6 +222,7 @@ command! Nvimrc :e ~/dotfiles/nvim/init.lua
 command! Nv :Nvimrc
 command! Nrc :Nvimrc
 command! Nvr :Nvimrc
+command! Gv :e ~/dotfiles/nvim/ginit.vim
 command! NvP :e ~/dotfiles/nvim/init.lua | :normal /^plugins<CR> | :normal $%<CR>
 command! Nvp :NvP
 command! Lsp :e ~\dotfiles\nvim\lua\lsp_setup.lua

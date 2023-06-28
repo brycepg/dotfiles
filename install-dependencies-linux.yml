@@ -2,6 +2,7 @@
 - hosts: localhost
   become: true
   tasks:
-    #    - package: name=deno
-    - package: name=nodejs
-    - package: name=ctags
+    - name: install nodejs for LSP language servers support in neovim
+      package: name=nodejs
+    - name: Verify ctags has been installed
+      package: name=ctags

@@ -8,3 +8,4 @@ setup:
     npm install -g vim-language-server
     # Install lua-language-server
     # Install nodejs for github COpilot and LSPs
+    # lua-language-server complaining on windows until the directory ~/lua/lua was created

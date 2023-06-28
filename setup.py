@@ -15,7 +15,6 @@ from os.path import exists, join, islink, isabs, dirname, realpath, expanduser
 import os
 from os import unlink, readlink, symlink
 import shutil
-from itertools import ifilter as filter  # type: ignore
 from typing import (  # noqa: F401
     Tuple, Callable, Iterable, Optional, TypeVar)
 
@@ -38,6 +37,8 @@ if os.name != "nt":
         ('bashrc', '.bashrc'),
         ('screenrc', '.screenrc'),
         ('zshrc', '.zshrc'),
+        # GUI config for neovim
+        ('nvim/ginit.vim', "AppData/Local/nvim/ginit.vim"),
     )
 
 if os.name == "nt":

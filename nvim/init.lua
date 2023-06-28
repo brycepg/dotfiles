@@ -1,3 +1,4 @@
+-- MOTD: 'gf' to goto file
 -- IDEA: gh open github link
 -- IDEA: mini.treesitter
 --  mini.treesitter.swap
@@ -7,12 +8,13 @@
 --
 --
 -- install deno for ddc
--- MOTD: 'gf' to goto file
 -- TODO: neotest: A modern, powerful testing plugin
 -- folke/trouble.nvim A pretty list for showing diagnostics
 -- TODO: Make heading for plugin sections
 -- TODO: plugin for deleting conditional. For example
 -- IDEA: Mini.github for neovim
+-- delete until end of function
+
 -- if (a==b):
 --    print("a")
 -- print("b")
@@ -38,6 +40,7 @@ vim.api.nvim_create_user_command("Nvimrc", ":e ~/dotfiles/nvim/init.lua", {})
 
 -- set leader before plugin loading according to lazy.nvim
 vim.g.mapleader=","
+vim.opt.termguicolors = true
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 -- Remove bootstrap after installation on linux
@@ -297,30 +300,44 @@ plugins = {
              "nvim-tree/nvim-web-devicons"
           },
         },
-       {'hrsh7th/cmp-nvim-lsp', dependencies="neovim/nvim-lspconfig"},
-       {'hrsh7th/cmp-buffer'},
-       {'hrsh7th/cmp-path'},
-       {'hrsh7th/cmp-cmdline'},
-       {'hrsh7th/nvim-cmp'}, -- uses lspconfig
-       { "folke/neodev.nvim", opts = {} },
-       { -- open ipynb in vim
-           "meatballs/notebook.nvim",
-               dependencies={"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
-       },
-       {
-           "SmiteshP/nvim-navbuddy", -- :NavBuddy
-           dependencies = {
-               "neovim/nvim-lspconfig",
-               "SmiteshP/nvim-navic",
-               "MunifTanjim/nui.nvim",
-               "numToStr/Comment.nvim",        -- Optional
-               "nvim-telescope/telescope.nvim" -- Optional
-           }
-       },
-        -- {dir="~/myneovimplugin"},
-        -- {dir="~/colo-blankline-indent.nvim"},
-       {"echasnovski/mini.ai"}, -- TODO
-       {'vladdoster/remember.nvim'},
+        {'hrsh7th/cmp-nvim-lsp', dependencies="neovim/nvim-lspconfig"},
+        {'hrsh7th/cmp-buffer'},
+        {'hrsh7th/cmp-path'},
+        {'hrsh7th/cmp-cmdline'},
+        {'hrsh7th/nvim-cmp'}, -- uses lspconfig
+        { "folke/neodev.nvim", opts = {} },
+        { -- open ipynb in vim
+            "meatballs/notebook.nvim",
+                dependencies={"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
+        },
+        {
+            "SmiteshP/nvim-navbuddy", -- :NavBuddy
+            dependencies = {
+                "neovim/nvim-lspconfig",
+                "SmiteshP/nvim-navic",
+                "MunifTanjim/nui.nvim",
+                "numToStr/Comment.nvim",        -- Optional
+                "nvim-telescope/telescope.nvim" -- Optional
+            }
+        },
+         -- {dir="~/myneovimplugin"},
+         -- {dir="~/colo-blankline-indent.nvim"},
+        {"echasnovski/mini.ai"}, -- TODO
+        {'vladdoster/remember.nvim'},
+        {
+          "nvim-treesitter/nvim-treesitter-textobjects",
+          dependencies = "nvim-treesitter/nvim-treesitter",
+        },
+        -- currently treeclimber is broken
+        -- {"Dkendal/nvim-treeclimber",
+        --  dependencies={
+        --     "rktjmp/lush.nvim",
+        --     "nvim-treesitter/nvim-treesitter",
+        -- }
+        -- },
+	{"ziontee113/syntax-tree-surfer",
+	 dependencies="nvim-treesitter/nvim-treesitter"},
+	-- {"rktjmp/lush.nvim"}, -- :LushRunQuickstart
     }
 require("lazy").setup(plugins, {})
 require'alpha'.setup(require'alpha.themes.startify'.config)
@@ -359,6 +376,13 @@ require('lualine').setup {
       },
   }
 }
+
+-- Evaluate syntax-tree-surfer, compare to treeclimber
+local status_treeclimber, treeclimber = pcall(require, 'nvim-treeclimber')
+if status_treeclimber then
+    treeclimber.setup()
+end
+
 -- write to swap file immediately
 vim.cmd[[ set updatetime=100 ]]
 
@@ -416,6 +440,57 @@ require('nvim-treesitter.configs').setup {
       query = 'rainbow-parens',
       -- Highlight the entire buffer all at once
       strategy = require('ts-rainbow').strategy.global,
+    },
+  textobjects = {
+    select = {
+      enable = true,
+
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        -- You can optionally set descriptions to the mappings (used in the desc parameter of
+        -- nvim_buf_set_keymap) which plugins like which-key display
+        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+        -- You can also use captures from other query groups like `locals.scm`
+        ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+      },
+      -- You can choose the select mode (default is charwise 'v')
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * method: eg 'v' or 'o'
+      -- and should return the mode ('v', 'V', or '<c-v>') or a table
+      -- mapping query_strings to modes.
+      selection_modes = {
+        ['@parameter.outer'] = 'v', -- charwise
+        ['@function.outer'] = 'V', -- linewise
+        ['@class.outer'] = '<c-v>', -- blockwise
+      },
+      -- If you set this to `true` (default is `false`) then any textobject is
+      -- extended to include preceding or succeeding whitespace. Succeeding
+      -- whitespace has priority in order to act similarly to eg the built-in
+      -- `ap`.
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * selection_mode: eg 'v'
+      -- and should return true of false
+      include_surrounding_whitespace = true,
+    },
+  },
+    textsubjects = {
+        enable = true,
+        -- prev_selection = ',', -- (Optional) keymap to select the previous selection
+        keymaps = {
+            ['.'] = 'textsubjects-smart',
+            [';'] = 'textsubjects-container-outer',
+            ['i;'] = 'textsubjects-container-inner',
+        },
     },
 }
 
@@ -536,3 +611,49 @@ set formatoptions-=cro
 
 -- Supress re source warning for lazy.nvim
 vim.g.lazy_did_setup = false
+
+
+-- Syntax Tree Surfer
+local surfer_opts = {noremap = true, silent = true}
+require"syntax-tree-surfer".setup()
+
+-- Normal Mode Swapping:
+-- Swap The Master Node relative to the cursor with it's siblings, Dot Repeatable
+vim.keymap.set("n", "vU", function()
+	vim.opt.opfunc = "v:lua.STSSwapUpNormal_Dot"
+	return "g@l"
+end, { silent = true, expr = true })
+vim.keymap.set("n", "vD", function()
+	vim.opt.opfunc = "v:lua.STSSwapDownNormal_Dot"
+	return "g@l"
+end, { silent = true, expr = true })
+
+-- Swap Current Node at the Cursor with it's siblings, Dot Repeatable
+vim.keymap.set("n", "vd", function()
+	vim.opt.opfunc = "v:lua.STSSwapCurrentNodeNextNormal_Dot"
+	return "g@l"
+end, { silent = true, expr = true })
+vim.keymap.set("n", "vu", function()
+	vim.opt.opfunc = "v:lua.STSSwapCurrentNodePrevNormal_Dot"
+	return "g@l"
+end, { silent = true, expr = true })
+
+--> If the mappings above don't work, use these instead (no dot repeatable)
+-- vim.keymap.set("n", "vd", '<cmd>STSSwapCurrentNodeNextNormal<cr>', surfer_opts)
+-- vim.keymap.set("n", "vu", '<cmd>STSSwapCurrentNodePrevNormal<cr>', surfer_opts)
+-- vim.keymap.set("n", "vD", '<cmd>STSSwapDownNormal<cr>', surfer_opts)
+-- vim.keymap.set("n", "vU", '<cmd>STSSwapUpNormal<cr>', surfer_opts)
+
+-- Visual Selection from Normal Mode
+vim.keymap.set("n", "vx", '<cmd>STSSelectMasterNode<cr>', surfer_opts)
+vim.keymap.set("n", "vn", '<cmd>STSSelectCurrentNode<cr>', surfer_opts)
+
+-- Select Nodes in Visual Mode
+vim.keymap.set("x", "J", '<cmd>STSSelectNextSiblingNode<cr>', surfer_opts)
+vim.keymap.set("x", "K", '<cmd>STSSelectPrevSiblingNode<cr>', surfer_opts)
+vim.keymap.set("x", "H", '<cmd>STSSelectParentNode<cr>', surfer_opts)
+vim.keymap.set("x", "L", '<cmd>STSSelectChildNode<cr>', surfer_opts)
+
+-- Swapping Nodes in Visual Mode
+vim.keymap.set("x", "<A-j>", '<cmd>STSSwapNextVisual<cr>', surfer_opts)
+vim.keymap.set("x", "<A-k>", '<cmd>STSSwapPrevVisual<cr>', surfer_opts)
