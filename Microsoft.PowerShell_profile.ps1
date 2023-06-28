@@ -17,3 +17,13 @@ $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
+
+# Better autocomplete
+Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+
+Set-Alias ctc ConvertTo-Csv
+
+# install with:
+#   winget install JanDeDobbeleer.OhMyPosh -s winget
+oh-my-posh init pwsh | Invoke-Expression
+
