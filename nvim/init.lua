@@ -13,6 +13,7 @@
 -- TODO: Make heading for plugin sections
 -- TODO: plugin for deleting conditional. For example
 -- TODO: How do I make highlight group for XXX red?
+-- IDEA: Mini.github for neovim
 -- if (a==b):
 --    print("a")
 -- print("b")
@@ -20,7 +21,6 @@
 -- print("a")
 -- print("b")
 -- I could bisect plugins
--- XXX: pyright is not working on Windows
 -- XXX I don't like the lsp server autocompletion for lua
 -- delta=3 delta=5, delta=10?
 -- for wombat256mod, nightfox,
