@@ -19,7 +19,6 @@
 -- Would become
 -- print("a")
 -- print("b")
--- TODO: What is turning hyphen character lines unto UTF monstrosities?
 -- I could bisect plugins
 -- XXX: pyright is not working on Windows
 -- XXX I don't like the lsp server autocompletion for lua
