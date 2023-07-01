@@ -15,6 +15,7 @@ from os.path import exists, join, islink, isabs, dirname, realpath, expanduser
 import os
 from os import unlink, readlink, symlink
 import shutil
+import sys
 from typing import (  # noqa: F401
     Tuple, Callable, Iterable, Optional, TypeVar)
 
@@ -24,6 +25,10 @@ T = TypeVar('T')
 # Change this to configure the symlink mapping
 # File or directory in dotfiles => path relative to home directory
 # path in home directory will point to file/dir in dotfiles
+
+####################################
+# DOTFILE REL PATH | HOME REL PATH #
+####################################
 DOTFILE_TO_HOME = (
     ('nvim', '.vim'),
     ('nvim', '.config/nvim'),
@@ -48,7 +53,21 @@ if os.name == "nt":
         ('Microsoft.PowerShell_profile.ps1',
          'Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1'),
     )
+    # For Powershell 7
+    DOTFILE_TO_HOME = DOTFILE_TO_HOME + (
+        ('Microsoft.PowerShell_profile.ps1',
+         'Documents/PowerShell/Microsoft.PowerShell_profile.ps1'),
+    )
 
+
+def printerr(str_) -> None:
+    print("", file=sys.stderr)
+    print("", file=sys.stderr)
+    print("", file=sys.stderr)
+    print("ERROR: " + str_, file=sys.stderr)
+    print(f"-----", file=sys.stderr)
+    print(f"       {'^' * (len(str_))}", file=sys.stderr)
+    print("", file=sys.stderr)
 
 def main(symlink_pair, cur_dir):
     # type: (Tuple[Tuple[str, str], ...], str) -> None
@@ -63,6 +82,10 @@ def main(symlink_pair, cur_dir):
         cur_dir: An absolute directory path which points to the
             location of the dotfiles..
         """
+    for tup in symlink_pair:
+        if len(tup) != 2:
+            printerr(f"Symlink pair {tup} has invalid entries")
+            sys.exit(1)
     for src, dst in symlink_pair:
         src_full_path = join(cur_dir, src)
         home = expanduser("~")

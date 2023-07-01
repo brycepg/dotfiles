@@ -104,7 +104,6 @@ nnoremap <Leader><C-s> :TestSuite<CR>
 nnoremap <Leader><C-l> :TestLast<CR>
 nnoremap <Leader><C-g> :TestVisit<CR>
 
-
 "-----------------------------------------------------------
 "------------------mappings & commands --------------------
 "-----------------------------------------------------------
@@ -134,6 +133,14 @@ xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+nnoremap <buffer> <A-CR> :lua vim.lsp.buf.code_action()<CR>
+
+" nmap s <cmd>Pounce<CR>
+" nmap S <cmd>PounceRepeat<CR>
+" xmap s <cmd>Pounce<CR>
+" omap gs <cmd>Pounce<CR>  " 's' is used by vim-surround
+" nmap S :Pounce <C-r>/<cr> " note: if you want to use <C-r> you cannot use <cmd>
 
 
 "----------------------- Commands  ----------------------------
@@ -213,18 +220,17 @@ command! Exec echo ExecuteLine(RightOfCurLine())
 command! Eval echo EvalLine(RightOfCurLine())
 command! Tree :NeoTreeRevealToggle
 command! T :Tree
-command! Vimrc :e ~/dotfiles/nvim/vimrc.vim
 command! Rc :Vimrc
-command! Cur :e ~\colo-blankline-indent.nvim\
-command! Vr :Vimrc
+" command! Cur :e ~\colo-blankline-indent.nvim\
+command! Cur :e ~\dotfiles\nvim\lua\node_mani.lua
 command! Pythonrc :e ~/dotfiles/nvim/ftplugin/python.vim
 command! Nvimrc :e ~/dotfiles/nvim/init.lua
+command! Vimrc :e ~/dotfiles/nvim/vimrc.vim
+command! Vr :Vimrc
 command! Nv :Nvimrc
-command! Nrc :Nvimrc
 command! Nvr :Nvimrc
+command! Nvp :e ~/dotfiles/nvim/init.lua | :normal /^plugins<CR> | :normal $%<CR>
 command! Gv :e ~/dotfiles/nvim/ginit.vim
-command! NvP :e ~/dotfiles/nvim/init.lua | :normal /^plugins<CR> | :normal $%<CR>
-command! Nvp :NvP
 command! Lsp :e ~\dotfiles\nvim\lua\lsp_setup.lua
 command! Pu :NvP
 command! Ip :call InsertPlugin("")

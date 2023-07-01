@@ -8,9 +8,35 @@ Add cl to PATH
     Use fd to find cl.exe after installing visual studio
 
 Modify Windows Powershell Settings > Actions
-    Delete Paste Text (Ctrl - V)
+    Delete Paste Text (Ctrl-V)
+    Delete toggle full screen (Alt-Enter)
 
-Installed python at
-    ~\Applications\python-3.11.4
 
-because of path issues
+Find python scripts path with python --version
+
+Example:
+    C:\Users\Bryce\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\Scripts
+    Add to environment PATH
+
+
+
+-----
+
+Can I automate setting of the font?
+
+- name: Set PowerShell 7 font
+  hosts: windows_hosts
+  gather_facts: false
+  tasks:
+    - name: Set PowerShell 7 font
+      win_shell: |
+        $registryPath = "HKCU:\Console"
+        $fontName = "Your Font Name"
+        $fontSize = 14
+        
+        Set-ItemProperty -Path $registryPath -Name "FaceName" -Value $fontName
+        Set-ItemProperty -Path $registryPath -Name "FontSize" -Value $fontSize
+      become: yes
+      become_method: runas
+      vars:
+        ansible_become_password: your_password

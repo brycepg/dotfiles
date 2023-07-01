@@ -6,3 +6,9 @@
       package: name=nodejs
     - name: Verify ctags has been installed
       package: name=ctags
+    - name: install fuzzy finder for text & vim
+      package: name=fzf
+    - name: install delta for git delta & vim
+      package: name=git-delta
+    - name: Install flake8 for neovim / linting
+      pip: name=flake8

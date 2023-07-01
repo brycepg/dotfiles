@@ -4,8 +4,8 @@
 --  mini.treesitter.swap
 --  mini.treesitter.deletearound
 --  mini.treesitter.replacecall
---  mini.treesitter.
 --
+--  mini.treesitter.
 --
 -- install deno for ddc
 -- TODO: neotest: A modern, powerful testing plugin
@@ -13,8 +13,6 @@
 -- TODO: Make heading for plugin sections
 -- TODO: plugin for deleting conditional. For example
 -- IDEA: Mini.github for neovim
--- delete until end of function
-
 -- if (a==b):
 --    print("a")
 -- print("b")
@@ -79,10 +77,16 @@ plugins = {
     -- LSP stuff
     {
         "williamboman/mason.nvim",
-        build = ":MasonUpdate" -- :MasonUpdate updates registry contents
+        config = function()
+            vim.cmd[[normal :MasonUpdate]] -- :MasonUpdate updates registry contents
+        end
     },
     {
         'neovim/nvim-lspconfig',
+        -- neovim inlay_hint feature: wait for 0.10
+        -- opts = {
+        --     inlay_hints = { enabled = true },
+        -- },
         dependencies={"SmiteshP/nvim-navbuddy",
             dependencies={"SmiteshP/nvim-navic",
             "MunifTanjim/nui.nvim",
@@ -267,7 +271,11 @@ plugins = {
         -- {"Olical/conjure"}, Getting documentation lookup errors
         {"HiPhish/nvim-ts-rainbow2"},
         {"mileszs/ack.vim"},
-        {"junegunn/fzf"},
+        {'junegunn/fzf', build=function()
+            vim.cmd[[fzf#install()]]
+        end
+        },
+        {'junegunn/fzf.vim'},
         {"easymotion/vim-easymotion"}, -- TODO Test
         {"tzachar/highlight-undo.nvim"}, -- XXX does it work do i like?
         {"ThePrimeagen/refactoring.nvim"}, -- TODO
@@ -335,15 +343,103 @@ plugins = {
         --     "nvim-treesitter/nvim-treesitter",
         -- }
         -- },
-	{"ziontee113/syntax-tree-surfer",
+	{"ziontee113/syntax-tree-surfer", -- vd to swap node
 	 dependencies="nvim-treesitter/nvim-treesitter"},
 	-- {"rktjmp/lush.nvim"}, -- :LushRunQuickstart
-    }
+    { -- modify arguments under cursor
+        'echasnovski/mini.splitjoin', -- gS
+        version = "*" },
+    {"RRethy/nvim-treesitter-textsubjects"},
+    {
+        "HampusHauffman/block.nvim", -- :Block
+    },
+    {"crispgm/telescope-heading.nvim"}, -- :Telescope heading
+    { -- quickfix menu
+      'weilbith/nvim-code-action-menu',
+      cmd='CodeActionMenu',
+    },
+    {"rlane/pounce.nvim"}, -- :Pounce
+    {
+      "folke/flash.nvim", -- s/S/gs
+      event = "VeryLazy",
+      ---@type Flash.Config
+      opts = {},
+      keys = {
+        {
+          "s",
+          mode = { "n", "x", "o" },
+          function()
+            require("flash").jump()
+          end,
+          desc = "Flash",
+        },
+        {
+          "S",
+          mode = { "n", "o", "x" },
+	  function()
+              require("flash").treesitter()
+          end,
+          desc = "Flash Treesitter",
+        },
+        {
+          "r",
+          mode = "o",
+          function()
+            require("flash").remote()
+          end,
+          desc = "Remote Flash",
+        },
+        {
+          "R",
+          mode = { "o", "x" },
+          function()
+            require("flash").treesitter_search()
+          end,
+          desc = "Flash Treesitter Search",
+        },
+        {
+          "<c-s>",
+          mode = { "c" },
+          function()
+            require("flash").toggle()
+          end,
+          desc = "Toggle Flash Search",
+        },
+      },
+    },
+}
 require("lazy").setup(plugins, {})
+require("neodev").setup{
+  library = {
+    enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
+    -- these settings will be used for your Neovim config directory
+    runtime = true, -- runtime path
+    types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
+    plugins = true, -- installed opt or start plugins in packpath
+    -- you can also specify the list of plugins to make available as a workspace library
+    plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
+  },
+  setup_jsonls = true, -- configures jsonls to provide completion for project specific .luarc.json files
+  -- for your Neovim config directory, the config.library settings will be used as is
+  -- for plugin directories (root_dirs having a /lua directory), config.library.plugins will be disabled
+  -- for any other directory, config.library.enabled will be set to false
+  override = function(root_dir, options) end,
+  -- With lspconfig, Neodev will automatically setup your lua-language-server
+  -- If you disable this, then you have to set {before_init=require("neodev.lsp").before_init}
+  -- in your lsp start options
+  lspconfig = true,
+  -- much faster, but needs a recent built of lua-language-server
+  -- needs lua-language-server >= 3.6.0
+  pathStrict = true,
+}
+require "node_mani" -- custom
 require'alpha'.setup(require'alpha.themes.startify'.config)
+require('mini.splitjoin').setup{}
+require("block").setup{}
 require('pretty-fold').setup{
   fill_char = ' ',
 }
+require('telescope').load_extension('heading')
 
 -- Lualine configuration
 require('lualine').setup {
@@ -399,18 +495,6 @@ require('todo-comments').setup{
 require("neodev").setup({})
 
 -- then setup your lsp server as usual
-local lspconfig = require('lspconfig')
-
--- example to setup lua_ls and enable call snippets
-lspconfig.lua_ls.setup({
-  settings = {
-    Lua = {
-      completion = {
-        callSnippet = "Replace"
-      }
-    }
-  }
-})
 
 require('aerial').setup({
   -- optionally use on_attach to set keymaps when aerial has attached to a buffer
@@ -421,6 +505,7 @@ require('aerial').setup({
   end
 })
 -- You probably also want to set a keymap to toggle aerial
+vim.keymap.set("n", "<cr>", "ciw")
 vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>')
 vim.keymap.set('n', '<leader>nb', require("nvim-navbuddy").open)
 
@@ -496,7 +581,46 @@ require('nvim-treesitter.configs').setup {
 
 -- The language servers keep breaking
 -- LSP configuration
-SetupLspServers()
+-- SetupLspServers()
+-- embeded due to lua_ls issues
+local navbuddy = require("nvim-navbuddy")
+require'lspconfig'.pyright.setup{}
+require'lspconfig'.vimls.setup{
+    on_attach = function(client, bufnr)
+        navbuddy.attach(client, bufnr)
+    end
+}
+-- require'lspconfig'.lua_ls.settings.Lua.workspace.checkThirdParty = false
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+require'lspconfig'.lua_ls.setup {
+  on_attach = function(client, bufnr)
+      navbuddy.attach(client, bufnr)
+  end,
+  settings = {
+    Lua = {
+      completion = {
+        callSnippet = "Replace"
+        },
+      runtime = {
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {'vim'},
+        disable = {"lowercase-global"},
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+  capabilities = capabilities,
+}
 ConfigureLSPShortcuts()
 
 -- transform nodes with treesitter
@@ -506,6 +630,7 @@ vim.keymap.set({ "n" }, "<leader>k", require("ts-node-action").node_action, { de
 local vimrc = vim.fn.stdpath("config") .. "/vimrc.vim" vim.cmd.source(vimrc)
 
 vim.api.nvim_set_keymap("n", "-", "@@", {}) -- quickly repeat macros with @@
+vim.keymap.set("n", "dp", delete_function_declaration_lines)
 
 -- API key required for :Neuralprompt to work
 local env = vim.fn.expand('$HOME') .. '/.vim/env.lua'
@@ -582,12 +707,12 @@ sources = cmp.config.sources({
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({ '/', '?' }, {
-mapping = cmp.mapping.preset.cmdline(),
-sources = {
-  { name = 'buffer' }
-}
-})
+-- cmp.setup.cmdline({ '/', '?' }, {
+-- mapping = cmp.mapping.preset.cmdline(),
+-- sources = {
+--   { name = 'buffer' }
+-- }
+-- })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
@@ -600,10 +725,6 @@ sources = cmp.config.sources({
 })
 
 -- Set up lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  require('lspconfig')['lua_ls'].setup {
-    capabilities = capabilities
-}
 -- I had to manually remove cro from runtime via :verbose set formatoptions?
 vim.cmd([[
 set formatoptions-=cro
@@ -619,6 +740,7 @@ require"syntax-tree-surfer".setup()
 
 -- Normal Mode Swapping:
 -- Swap The Master Node relative to the cursor with it's siblings, Dot Repeatable
+-- Syntax tree surfer
 vim.keymap.set("n", "vU", function()
 	vim.opt.opfunc = "v:lua.STSSwapUpNormal_Dot"
 	return "g@l"

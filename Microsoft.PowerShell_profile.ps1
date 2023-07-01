@@ -25,5 +25,5 @@ Set-Alias ctc ConvertTo-Csv
 
 # install with:
 #   winget install JanDeDobbeleer.OhMyPosh -s winget
-oh-my-posh init pwsh | Invoke-Expression
-
+#   for some reason its not working
+# oh-my-posh.exe init pwsh | Invoke-Expression

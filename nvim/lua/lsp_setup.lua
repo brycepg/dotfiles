@@ -1,3 +1,5 @@
+LUA_LS_SETUP_RUN=false
+
 function SetupLspServers()
     local navbuddy = require("nvim-navbuddy")
     require'lspconfig'.pyright.setup{}
@@ -7,6 +9,8 @@ function SetupLspServers()
         end
     }
     -- require'lspconfig'.lua_ls.settings.Lua.workspace.checkThirdParty = false
+    if not LUA_LS_SETUP_RUN then
+        print("RUNNING LSP SETTUP")
     require'lspconfig'.lua_ls.setup {
       on_attach = function(client, bufnr)
           navbuddy.attach(client, bufnr)
@@ -14,7 +18,6 @@ function SetupLspServers()
       settings = {
         Lua = {
           runtime = {
-            -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
             version = 'LuaJIT',
           },
           diagnostics = {
@@ -27,13 +30,14 @@ function SetupLspServers()
             library = vim.api.nvim_get_runtime_file("", true),
             checkThirdParty = false,
           },
-          -- Do not send telemetry data containing a randomized but unique identifier
           telemetry = {
             enable = false,
           },
         },
       },
     }
+        LUA_LS_SETUP_RUN = true
+    end
 end
 
 
