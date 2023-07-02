@@ -220,7 +220,7 @@ plugins = {
 
         -- Colorschemes
         {'morhetz/gruvbox'},
-        {'jackMort/ChatGPT.nvim'}, -- Chatgpt
+        -- {'jackMort/ChatGPT.nvim'}, -- Chatgpt
         {'MunifTanjim/nui.nvim'},
         {'nvim-telescope/telescope.nvim', version= '0.1.1'},
         {'nvim-lua/plenary.nvim'},
