@@ -5,10 +5,17 @@
     - name: install nodejs for LSP language servers support in neovim
       package: name=nodejs
     - name: Verify ctags has been installed
-      package: name=ctags
+      package: name=universal-ctags
+      # What's the ctags name for Linux
+      # package: name=ctags
     - name: install fuzzy finder for text & vim
       package: name=fzf
-    - name: install delta for git delta & vim
-      package: name=git-delta
+    - name: install python symlink
+      package: name=python-is-python3
+    - name: install pip for python packages
+      package: name=python3-pip
+    - name: Install fzf for neovim search
+      package: name=fzf
     - name: Install flake8 for neovim / linting
       pip: name=flake8
+

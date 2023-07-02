@@ -81,6 +81,7 @@ plugins = {
             vim.cmd[[normal :MasonUpdate]] -- :MasonUpdate updates registry contents
         end
     },
+    {"williamboman/mason-lspconfig.nvim"},
     {
         'neovim/nvim-lspconfig',
         -- neovim inlay_hint feature: wait for 0.10
@@ -579,6 +580,8 @@ require('nvim-treesitter.configs').setup {
     },
 }
 
+require("mason").setup()
+require("mason-lspconfig").setup()
 -- The language servers keep breaking
 -- LSP configuration
 -- SetupLspServers()
