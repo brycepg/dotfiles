@@ -25,6 +25,7 @@ fi
 
 alias vimrc='nvim ~/dotfiles/nvim/vimrc.vim'
 alias nvimrc='nvim ~/dotfiles/nvim/init.lua'
+alias vim='nvim'
 alias ls='ls --color=auto'
 
 # Set PS1 if set to default bash ps1
