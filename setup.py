@@ -111,10 +111,11 @@ def identical_symlink_exists(dst, src):
     # tupe: (str, src) -> None
     if not exists(dst):
         return
+    if not islink(dst):
+        return
     link_path = os.path.realpath(os.readlink(dst)).replace("\\\\?\\", "")
     src_path = os.path.realpath(src)
-    ret = os.path.islink(dst) and link_path == src_path
-    if ret:
+    if link_path == src_path:
         print(f"Found established symlink for {dst}")
     return ret
 
