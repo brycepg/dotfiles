@@ -93,6 +93,17 @@ map <F4> :UndotreeToggle<CR>
 " Auto linting for Vim8+ and Neovim
 map <F5> :Neomake<CR>
 
+" Create basic header
+function! Getcommentcharlen()
+        " Get the length of a comment character for filetype
+        let commentchar=split(&commentstring, '%s')[0]
+        let commentcharlen=len(commentchar)
+        return commentcharlen
+endfunction
+let headerchar = '='
+command! Header execute 'normal yyp:s/./' . headerchar . '<CR>gcc0whx$' . Getcommentcharlen() . 'x:nohl<CR>'
+
+
 
 "-------------------------------------------------------------
 "-------------------------- Testing --------------------------
