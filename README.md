@@ -31,6 +31,8 @@ Install language servers:
 	nvim --headless "+Lazy! sync" +qa
 	nvim --headless -c ':LspInstall lua_ls' -c 'qa!'
 	nvim --headless -c ':LspInstall vimls' -c 'qa!'
+	nvim --headless -c ':LspInstall bashls' -c 'qa!'
+
 
 Install dependencies on windows:
 ================================

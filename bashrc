@@ -7,6 +7,11 @@ if [ -e "$common_source" ]; then
     . "$common_source"
 fi
 
+# Add lua packages to path
+if which luarocks>/dev/null; then
+    eval $(luarocks path)
+fi
+
 
 # Do not source below if not interactive
 [[ $- != *i* ]] && return
@@ -27,6 +32,12 @@ alias vimrc='nvim ~/dotfiles/nvim/vimrc.vim'
 alias nvimrc='nvim ~/dotfiles/nvim/init.lua'
 alias vim='nvim'
 alias ls='ls --color=auto'
+
+ptest() {
+    nvim --headless -c "PlenaryBustedFile $1"
+}
+
+alias luatest=ptest
 
 # Set PS1 if set to default bash ps1
 set_ps1() {
