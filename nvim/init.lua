@@ -96,6 +96,7 @@ plugins = {
             }
         }
     },
+    {"jose-elias-alvarez/null-ls.nvim"},
 
     -- Autocompletion stuff
     {'m4xshen/autoclose.nvim'},          -- Autoclose functions
@@ -617,6 +618,33 @@ require'lspconfig'.lua_ls.setup {
   },
   capabilities = capabilities,
 }
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        -- See
+        -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#refactoring
+        -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#ts_node_action
+        -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#luasnip
+        -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#vsnip
+        -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#ansiblelint
+        null_ls.builtins.diagnostics.ansiblelint,
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.diagnostics.eslint,
+        null_ls.builtins.completion.spell,
+        -- `luarocks install luacheck`
+        -- null_ls.builtins.diagnostics.luacheck,
+        -- `npm install markdownlint --save-dev`
+        null_ls.builtins.diagnostics.markdownlint,
+        -- Does neomake do the same thing?
+        -- null_ls.builtins.diagnostics.flake8
+        -- null_ls.builtins.diagnostics.pydocstyle
+        -- null_ls.builtins.diagnostics.vulture
+        -- null_ls.builtins.formatting.isort
+        -- :'<,'>lua vim.lsp.buf.range_code_action()
+        -- :'<,'>Telescope lsp_range_code_actions
+        null_ls.builtins.code_actions.refactoring,
+    },
+})
 ConfigureLSPShortcuts()
 
 -- transform nodes with treesitter
