@@ -93,6 +93,11 @@ map <F4> :UndotreeToggle<CR>
 " Auto linting for Vim8+ and Neovim
 map <F5> :Neomake<CR>
 
+" Insert `char` `count` times
+function InsertMultipleCharacters(char, count)
+    call append(line("."), repeat(a:char, a:count))
+endfunction
+
 " Create basic header
 function! Getcommentcharlen()
         " Get the length of a comment character for filetype
