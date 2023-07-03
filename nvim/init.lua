@@ -8,7 +8,6 @@
 --  mini.treesitter.
 --
 -- install deno for ddc
--- TODO: neotest: A modern, powerful testing plugin
 -- folke/trouble.nvim A pretty list for showing diagnostics
 -- TODO: Make heading for plugin sections
 -- TODO: plugin for deleting conditional. For example
