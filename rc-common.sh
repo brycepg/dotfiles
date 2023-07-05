@@ -96,6 +96,7 @@ set_editor
 alias gstn='git status -uno -s'
 alias gsts='git status -s'
 alias gsta='git stash'
+alias gs='git status -s'
 alias gstl='git stash list'
 alias gstp='git stash pop'
 alias gp='git pull'
