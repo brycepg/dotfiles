@@ -77,9 +77,10 @@ plugins = {
 -- LSP stuff
 {
     "williamboman/mason.nvim",
-    config = function()
-        vim.cmd[[normal :MasonUpdate]] -- :MasonUpdate updates registry contents
-    end
+    build=":MasonUpdate",
+    -- config = function()
+    --     vim.cmd[[normal :MasonUpdate]] -- :MasonUpdate updates registry contents
+    -- end
 },
 {"williamboman/mason-lspconfig.nvim"},
 {
