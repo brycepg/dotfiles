@@ -30,6 +30,7 @@ fi
 
 alias vimrc='nvim ~/dotfiles/nvim/vimrc.vim'
 alias nvimrc='nvim ~/dotfiles/nvim/init.lua'
+alias bashrc='nvim ~/.bashrc'
 alias vim='nvim'
 alias ls='ls --color=auto'
 
