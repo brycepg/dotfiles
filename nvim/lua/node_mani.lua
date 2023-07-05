@@ -1,3 +1,13 @@
+-- XXX Try with integrated vim api which vim.treesitter
+local api = vim.api
+
+local parsers = require "nvim-treesitter.parsers"
+local utils = require "nvim-treesitter.utils"
+local ts = vim.treesitter
+
+if "a" == "b" then
+    print("HI:)")
+end
 local ts_utils = require('nvim-treesitter.ts_utils')
 
 
@@ -7,36 +17,143 @@ function delete_simple_conditional_lines()
     -- Delete conditional
 end
 
+
 function conditional_range_surrounding_cursor()
+    possible_block_node = look_for_parent_node("if_statement", ts_utils.get_node_at_cursor())
+    if possible_block_node then
+        return vim.treesitter.get_node_range(possible_block_node)
+    end
+    return nil
+end
+
+
+function conditional_body_range_surrounding_cursor(start_node)
+    if not start_node then
+        start_node = ts_utils.get_node_at_cursor()
+    end
+    possible_block_node = look_for_parent_node("if_statement", start_node)
+    -- print("possible_block_node: ", tostring(possible_block_node))
+    if possible_block_node then
+        node_body = find_node_body(possible_block_node)
+        -- print("node_body", tostring(node_body))
+        if node_body ~= nil then
+            --- use
+            local node_body_range = node_body:range()
+            -- print(node_body:range())
+            -- print(type(node_body:range()))
+            -- print(node_body_range)
+            return node_body_range
+            -- print("node_body:range()", node_body:range())
+            -- print("node_body:range()", node_body:range())
+            -- print("node_range", tostring(vim.treesitter.get_node_range(node_body)))
+            -- return node_body:range()
+        end
+    end
+    return nil
+end
+
+
+function test_conditional_body_range()
+    local test_lines={'',
+        'if "a" == "b" then',
+        '    print("HI:)")',
+        'end',
+        ''
+    }
+-- conditional range: 1,0,3,3
+-- body range: 2,4,2,17
+-- lua: how do I insert a lua multiline lua string into a neovim buffer
+    local buffer_handle_or_0 = vim.api.nvim_create_buf(true, true)
+    if buffer_handle_or_0 == 0 then
+        return nil
+    end
+    local buffer_handle = buffer_handle_or_0
+    local pos = {3, 5}
+    vim.api.nvim_buf_set_option(buffer_handle, 'filetype', 'lua')
+    vim.api.nvim_buf_set_lines(buffer_handle, 0, #test_lines, false, test_lines)
+
+    local node = get_node_at_pos(buffer_handle, pos)
+    if not node then
+        print("No node found at pos")
+        return nil
+    else
+        print("Node found: ", tostring(node))
+        print("Node type: ", tostring(node:type()))
+    end
+    local range = conditional_body_range_surrounding_cursor(node)
+    print("range", tostring(range))
+    assert(range[1] == 2)
+    assert(tableEqualForTest(range, {2,4,2,17}) == true)
+    -- vim.api.nvim_win_get_buf(bufnr)
+    -- vim.api.nvim_buf_delete(buffer_handle)
+end
+
+function tableEqualForTest(a, b)
+    if a == nil then
+        print("first array is empty")
+        return nil
+    end
+    if b == nil then
+        print("second array is empty")
+        return nil
+    end
+    if #a ~= #b then
+        print("Table len do not match")
+        print(string.format("#a: %s. #b: %s", a, b))
+        return false
+    end
+    for index, _ in ipairs(a) do
+        if a[index] ~= b[index] then
+            print(string.format("a[%s] != b[%s]. %s != %s").format(#a, #b, a[index], b[index]))
+            return false
+        end
+    end
+    return true
+end
+
+function find_node_body(node)
+    for i = 0, node:named_child_count() - 1, 1 do
+        -- print("i :" .. tostring(i))
+        local child = node:named_child(i)
+        local type = child:type()
+        -- print("child type: " .. type)
+        if type == "block" then
+            return child
+        end
+    end
+    return nil
+end
+
+
+function _conditional_body_range_surrounding_cursor()
     ts_utils = require('nvim-treesitter.ts_utils')
     local current_node = ts_utils.get_node_at_cursor()
     if not current_node then
         return ""
     end
-    local func = current_node
-    while func do
-        if func:type() == 'conditional' then
+    local node = current_node
+    while node do
+        if node:type() == 'if_statement' then
             break
         end
 
-        func = func:parent()
+        node = node:parent()
     end
 
-    if not func then
-        prev_function_node = nil
-        prev_function_name = ""
-        return "<none>"
+    local find_body
+    find_body = function(node)
+        for i = 0, node:named_child_count() - 1, 1 do
+            -- print("i :" .. tostring(i))
+            local child = node:named_child(i)
+            local type = child:type()
+            -- print("child type: " .. type)
+            if type == "block" then
+                return vim.treesitter.get_node_range(child)
+            end
+        end
+        return nil
     end
-
-    if func == prev_function_node then
-        return prev_function_name
-    end
-
-    print(func:type())
-    return vim.treesitter.get_node_range(func, 0)
-end
-
-function conditional_body_range_surrounding_cursor()
+    return find_body(node)
 end
 
 function delete_function_declaration_lines()
@@ -182,7 +299,7 @@ function function_range_surrounding_cursor()
     end
 
     print(func:type())
-    return vim.treesitter.get_node_range(func, 0)
+    return vim.treesitter.get_node_range(func)
     -- return func:range()
 end
 
@@ -260,16 +377,6 @@ function function_body_range_surrounding_cursor()
         func = func:parent()
     end
 
-    -- if not func then
-    --     prev_function_node = nil
-    --     prev_function_name = ""
-    --     return "<none>"
-    -- end
-    --
-    -- if func == prev_function_node then
-    --     return prev_function_name
-    -- end
-    --
     local find_body
     find_body = function(node)
         for i = 0, node:named_child_count() - 1, 1 do
@@ -278,10 +385,39 @@ function function_body_range_surrounding_cursor()
             local type = child:type()
             -- print("child type: " .. type)
             if type == "block" then
-                return vim.treesitter.get_node_range(child, 0)
+                return vim.treesitter.get_node_range(child)
             end
         end
         return nil
     end
     return find_body(func)
+end
+
+
+function get_node_at_pos(buf, pos, ignore_injected_langs)
+  winnr = winnr or 0
+  local pos_range_0 = { pos[1] - 1, pos[2] }
+  local root_lang_tree = parsers.get_parser(buf)
+  if not root_lang_tree then
+    return
+  end
+
+  local root ---@type TSNode|nil
+  if ignore_injected_langs then
+    for _, tree in ipairs(root_lang_tree:trees()) do
+      local tree_root = tree:root()
+      if tree_root and ts.is_in_node_range(tree_root, pos_range_0[1], pos_range_0[2]) then
+        root = tree_root
+        break
+      end
+    end
+  else
+    root = ts_utils.get_root_for_position(pos_range_0[1], pos_range_0[2], root_lang_tree)
+  end
+
+  if not root then
+    return
+  end
+
+  return root:named_descendant_for_range(pos_range_0[1], pos_range_0[2], pos_range_0[1], pos_range_0[2])
 end
