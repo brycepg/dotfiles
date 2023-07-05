@@ -1,0 +1,4 @@
+# Install NerdFont from https://www.nerdfonts.com/font-downloads
+# Copy .ttf files to /rw/usr/local/share/fonts or ~/.local/share/fonts/
+# I am using Gohu Font 14 Nerd font
+# At the time of wriiting I have to to manually install lua-language-server
