@@ -56,352 +56,361 @@ end
 vim.opt.rtp:prepend(lazypath)
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 plugins = {
-    -- Foundational stuff
-    {
-        'goolord/alpha-nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
+
+-- Foundational stuff
+{
+    'goolord/alpha-nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+},
+{
+  'nvim-lualine/lualine.nvim',
+  dependencies={'nvim-tree/nvim-web-devicons'}
+},
+{'ntpeters/vim-better-whitespace'},  -- Highlight trailing whitespace
+{ 'anuvyklack/pretty-fold.nvim'},
+{'nvim-treesitter/nvim-treesitter', build= ':TSUpdate'},
+
+-- Colorschemes
+{"EdenEast/nightfox.nvim"},
+{"projekt0n/github-nvim-theme"},
+{"navarasu/onedark.nvim"},
+
+-- LSP stuff
+{
+    "williamboman/mason.nvim",
+    config = function()
+        vim.cmd[[normal :MasonUpdate]] -- :MasonUpdate updates registry contents
+    end
+},
+{"williamboman/mason-lspconfig.nvim"},
+{
+    'neovim/nvim-lspconfig',
+    -- neovim inlay_hint feature: wait for 0.10
+    -- opts = {
+    --     inlay_hints = { enabled = true },
+    -- },
+    dependencies={"SmiteshP/nvim-navbuddy",
+        dependencies={"SmiteshP/nvim-navic",
+        "MunifTanjim/nui.nvim",
+        "numToStr/Comment.nvim",        -- Optional
+        "nvim-telescope/telescope.nvim" -- Optional
+        }
+    }
+},
+{"jose-elias-alvarez/null-ls.nvim"},
+
+-- Autocompletion stuff
+{'m4xshen/autoclose.nvim'},          -- Autoclose functions
+
+--- XXX: bigger heading
+------------- Useful tools
+{'mbbill/undotree'},                 -- :UndotreeShow
+{'qpkorr/vim-bufkill'},              -- :BD option to close buffer
+{'ctrlpvim/ctrlp.vim'},              -- Fuzzy search <Space>f <Space>b <Ctrl-p>
+{'junegunn/vim-easy-align'},         -- Align on word
+{'tpope/vim-abolish'},               -- Case smart replace/change: via Subvert/cr[smcu]
+{'brycepg/nvim-eunuch'},             -- :Delete :Move :Rename :SudoWrite :SudoEdit
+{'godlygeek/tabular'},               -- :Tab /{Pattern}
+{'mhinz/vim-signify'},
+{"numToStr/Comment.nvim", -- gcc or <visual>gc
+dependencies="nvim-treesitter/nvim-treesitter"},
+
+-- 'ds' is not working for some reason
+-- {"kylechui/nvim-surround", dependencies='nvim-treesitter/nvim-treesitter'},
+{
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+        require("nvim-surround").setup({
+            -- Configuration here, or leave empty to use defaults
+        })
+    end
+},
+-- {'tpope/vim-surround'},        -- Surround motions replacing with nvim surround
+
+-- maybe try ale instead of neomake sometime
+-- dense-analysis/ale
+{'neomake/neomake'},                 -- Static analysis tools :Neomake
+{'kopischke/vim-fetch'},             -- Opening specific line using colon number ex :3
+
+-- Both of these trees for now
+{'preservim/nerdtree'},-- :NERDTree :NERDTreeToggle :NERDTd T :Tree
+{"nvim-neo-tree/neo-tree.nvim",  -- :NeoTreeToggle
+    branch = "v2.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
     },
+    cmd="Neotree",
+},
+-- :Telescope file_browser
+{"nvim-telescope/telescope-file-browser.nvim"},
+{
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+},
+
+-- Do I want these?
+{"tpope/vim-scriptease"}, -- Try out :PP :Scriptnames :Time
+
+-- Havent used?
+{'AndrewRadev/sideways.vim'},        -- Rearrange function parameters
+{'Chiel92/vim-autoformat'},          -- Auto format with :Autoformat
+{'vim-scripts/ReplaceWithRegister'}, -- griw - replace section with register value
+{'tell-k/vim-autopep8'},             -- :Autopep8 auto formatting
+{'michaeljsmith/vim-indent-object'}, -- Indention objects ai/ii/aI/iI mainly for python
+{'christoomey/vim-sort-motion'},     -- gs to sort python imports
+{'wellle/targets.vim'},              -- extra text objects - cin) da,
+{'tpope/vim-fugitive'},              -- Git from vim
+{'tpope/vim-repeat'},                -- Extending repeat to macros
+-- <leader>d - generate documentation scaffold for function,etc
+{'kkoomen/vim-doge'},                -- Documentation saffold
+{'arnar/vim-matchopen'},             -- Highlight last opened parenthesis
+{'tmhedberg/SimpylFold'},            -- Better Python folding
+{'nvie/vim-flake8'},                 -- Use flake8 for python linting
+{'editorconfig/editorconfig-vim'},   -- Consistent coding styles between editors
+{'tpope/vim-unimpaired'},            -- Bracket shortcuts
+{'Vimjas/vim-python-pep8-indent'},   -- pep8 Formatting on newline
+{'FooSoft/vim-argwrap'},             -- Change argument wrapping
+{'cespare/vim-toml'},                -- toml syntax for vim
+{'majutsushi/tagbar'},               -- Show ctags info
+{'Glench/Vim-Jinja2-Syntax'},        -- Fix jinja syntax highlighting
+{'solarnz/thrift.vim'},              -- Thrift syntax
+{ -- Run tests inside vim
+'janko-m/vim-test'}, -- :TestNearest :TestFile
+{ -- A framework for interacting with tests within NeoVim.
+  "nvim-neotest/neotest", -- :Neotest <args>
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-treesitter/nvim-treesitter",
+    "antoinemadec/FixCursorHold.nvim"
+    }
+},
+
+    -- {'davidhalter/jedi-vim'},            -- Autocompletion (ctrl + space)
+    {'vim-scripts/ingo-library'},        -- Dependent library for JumpToLastOccurrence
+    {'vim-scripts/JumpToLastOccurrence'},-- Jump to last occurance of a char with ,f motion ,t
+    {'justinmk/vim-sneak'},              -- Two-char search using s motion
+    {'AndrewRadev/bufferize.vim'},       -- :Bufferize to output vim functions into buffer
+    {'ambv/black'}, -- Python code formatting
     {
-      'nvim-lualine/lualine.nvim',
-      dependencies={'nvim-tree/nvim-web-devicons'}
+        "L3MON4D3/LuaSnip",
+        -- follow latest release.
+        version = "1.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        -- install jsregexp (optional!).
+        build = "make install_jsregexp"
     },
-    {'ntpeters/vim-better-whitespace'},  -- Highlight trailing whitespace
-    { 'anuvyklack/pretty-fold.nvim'},
-    {'nvim-treesitter/nvim-treesitter', build= ':TSUpdate'},
+    -- prebuilt snippits - do they work with LuaSnip
+    {'honza/vim-snippets'},
+
+    -- Search cheatsheet for neovim
+    {'sudormrfbin/cheatsheet.nvim'},
+    {'nvim-lua/popup.nvim'},
+    {'nvim-lua/plenary.nvim'},
+
+
+    -- Trying out this linter for ansible make sure to install required linters in
+    -- Gemfile or requirements.txt
+    {'mfussenegger/nvim-lint'},
+
+    -- Doesn't work yet, blocked my Neural config and maybe plug
+    -- Does it work now? :checkhealth is all green on quarth
+    {'dense-analysis/neural'},
+    {'MunifTanjim/nui.nvim'},
+    {'elpiloto/significant.nvim'},
 
     -- Colorschemes
-    {"EdenEast/nightfox.nvim"},
-    {"projekt0n/github-nvim-theme"},
-    {"navarasu/onedark.nvim"},
-
-    -- LSP stuff
+    {'morhetz/gruvbox'},
+    -- {'jackMort/ChatGPT.nvim'}, -- Chatgpt
+    {'MunifTanjim/nui.nvim'},
+    {'nvim-telescope/telescope.nvim', version= '0.1.1'},
+    {'nvim-lua/plenary.nvim'},
+    -- 'vim-denops/denops.vim',
+    -- deno was timing out on fedora for ddc
+    -- {'Shougo/ddc.vim', dependencies='vim-denops/denops.vim'},
+    -- 'Shougo/ddc-ui-native',
+    -- 'Shougo/ddc-source-around',
+    -- 'Shougo/ddc-matcher_head',
+    -- 'Shougo/ddc-sorter_rank',
+    'phaazon/hop.nvim',
     {
-        "williamboman/mason.nvim",
-        config = function()
-            vim.cmd[[normal :MasonUpdate]] -- :MasonUpdate updates registry contents
-        end
+      "folke/edgy.nvim",
+      event = "VeryLazy",
+      opts = {}
     },
-    {"williamboman/mason-lspconfig.nvim"},
+    -- { Getting duplicate output
+    --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    --   config = function()
+    --     require("lsp_lines").setup()
+    --     vim.diagnostic.config({ virtual_lines = true })
+    --   end,
+    -- },
+    "fs111/pydoc.vim",
+    -- Not working on windows due to python path issue
+    -- {'ms-jpq/coq_nvim', branch='coq'}, -- :COQnow
+    -- {{"hrsh7th/nvim-cmp"}},
+    -- {'xolox/vim-lua-ftplugin', dependencies='xolox/vim-misc'},
+    -- alternative to ftplugin
+    -- tbastos/vim-lua
+
+    {'mg979/vim-visual-multi'},
+    {'liuchengxu/vim-which-key'}, -- show keys with
+--    {'tpope/vim-endwise'}, -- automatically end functions
+
+    -- ^^^ How can I get some timed highlightning when the end is inserted?
+    {'tyru/capture.vim', cmd="Capture"}, -- Show Ex command output in a buffer
+    {dir="~/dotfiles/vim-myhelp/"}, -- My help plugin
+    {"nvim-treesitter/playground"}, -- :TSPlaygroundToggle
+    {"RRethy/nvim-treesitter-endwise"},
+
+    -- Does this work?
+    {"xolox/vim-colorscheme-switcher", dependencies="xolox/vim-misc"},
+ -- :Bufferize dump output of command into a buffer
+    {"AndrewRadev/bufferize.vim"},
+    {"justinmk/vim-dirvish"}, -- Create files in netrw using :e %foo.txt
+    {"mattn/emmet-vim"},
+    -- {"Olical/conjure"}, Getting documentation lookup errors
+    {"HiPhish/nvim-ts-rainbow2"},
+    {"mileszs/ack.vim"},
+    {'junegunn/fzf', build=function()
+        vim.cmd[[fzf#install()]]
+    end
+    },
+    {'junegunn/fzf.vim'},
+    {"easymotion/vim-easymotion"}, -- TODO Test
+    {"tzachar/highlight-undo.nvim"}, -- XXX does it work do i like?
+    {"ThePrimeagen/refactoring.nvim"}, -- TODO
     {
-        'neovim/nvim-lspconfig',
-        -- neovim inlay_hint feature: wait for 0.10
-        -- opts = {
-        --     inlay_hints = { enabled = true },
-        -- },
-        dependencies={"SmiteshP/nvim-navbuddy",
-            dependencies={"SmiteshP/nvim-navic",
+        'ckolkey/ts-node-action',
+         dependencies = { 'nvim-treesitter' },
+         opts = {},
+    },
+    {"github/copilot.vim"}, -- :Copilot enable
+    { -- highlight todo comments
+      "folke/todo-comments.nvim",
+      dependencies = {"nvim-lua/plenary.nvim", "folke/trouble.nvim", "nvim-telescope/telescope.nvim"},
+      opts = {
+--          signs = false,
+      }
+    },
+    -- Games
+    {"alec-gibson/nvim-tetris"}, -- :Tetris
+    {"seandewar/killersheep.nvim"}, -- :KillKillKill
+    {'eandrju/cellular-automaton.nvim'}, -- how do I make colorscheme persist?
+    {--  Focus on current  function
+        "koenverburg/peepsight.nvim"}, -- :PeepsightEnable
+    {"folke/twilight.nvim"}, -- :TwilightEnable
+    { -- "A code outline window for skimming and quick navigation"
+      'stevearc/aerial.nvim',
+      opts = {},
+      -- Optional dependencies
+      dependencies = {
+         "nvim-treesitter/nvim-treesitter",
+         "nvim-tree/nvim-web-devicons"
+      },
+    },
+    {'hrsh7th/cmp-nvim-lsp', dependencies="neovim/nvim-lspconfig"},
+    {'hrsh7th/cmp-buffer'},
+    {'hrsh7th/cmp-path'},
+    {'hrsh7th/cmp-cmdline'},
+    {'hrsh7th/nvim-cmp'}, -- uses lspconfig
+    { "folke/neodev.nvim", opts = {} },
+    { -- open ipynb in vim
+        "meatballs/notebook.nvim",
+            dependencies={"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
+    },
+    {
+        "SmiteshP/nvim-navbuddy", -- :NavBuddy
+        dependencies = {
+            "neovim/nvim-lspconfig",
+            "SmiteshP/nvim-navic",
             "MunifTanjim/nui.nvim",
             "numToStr/Comment.nvim",        -- Optional
             "nvim-telescope/telescope.nvim" -- Optional
-            }
         }
     },
-    {"jose-elias-alvarez/null-ls.nvim"},
-
-    -- Autocompletion stuff
-    {'m4xshen/autoclose.nvim'},          -- Autoclose functions
-
-    --- XXX: bigger heading
-    ------------- Useful tools
-    {'mbbill/undotree'},                 -- :UndotreeShow
-    {'qpkorr/vim-bufkill'},              -- :BD option to close buffer
-    {'ctrlpvim/ctrlp.vim'},              -- Fuzzy search <Space>f <Space>b <Ctrl-p>
-    {'junegunn/vim-easy-align'},         -- Align on word
-    {'tpope/vim-abolish'},               -- Case smart replace/change: via Subvert/cr[smcu]
-    {'brycepg/nvim-eunuch'},             -- :Delete :Move :Rename :SudoWrite :SudoEdit
-    {'godlygeek/tabular'},               -- :Tab /{Pattern}
-    {'mhinz/vim-signify'},
-    {"numToStr/Comment.nvim", -- gcc or <visual>gc
-    dependencies="nvim-treesitter/nvim-treesitter"},
-
-    -- 'ds' is not working for some reason
-    -- {"kylechui/nvim-surround", dependencies='nvim-treesitter/nvim-treesitter'},
+     -- {dir="~/myneovimplugin"},
+     -- {dir="~/colo-blankline-indent.nvim"},
+    {"echasnovski/mini.ai"}, -- TODO
+    {'vladdoster/remember.nvim'},
     {
-        "kylechui/nvim-surround",
-        version = "*", -- Use for stability; omit to use `main` branch for the latest features
-        event = "VeryLazy",
-        config = function()
-            require("nvim-surround").setup({
-                -- Configuration here, or leave empty to use defaults
-            })
-        end
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      dependencies = "nvim-treesitter/nvim-treesitter",
     },
-    -- {'tpope/vim-surround'},        -- Surround motions replacing with nvim surround
-
-    -- maybe try ale instead of neomake sometime
-    -- dense-analysis/ale
-    {'neomake/neomake'},                 -- Static analysis tools :Neomake
-    {'kopischke/vim-fetch'},             -- Opening specific line using colon number ex :3
-
-    -- Both of these trees for now
-    {'preservim/nerdtree'},-- :NERDTree :NERDTreeToggle :NERDTd T :Tree
-    {"nvim-neo-tree/neo-tree.nvim",  -- :NeoTreeToggle
-        branch = "v2.x",
-        dependencies = {
-          "nvim-lua/plenary.nvim",
-          "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-          "MunifTanjim/nui.nvim",
-        },
-        cmd="Neotree",
-    },
-    -- :Telescope file_browser
-    {"nvim-telescope/telescope-file-browser.nvim"},
+    -- currently treeclimber is broken
+    -- {"Dkendal/nvim-treeclimber",
+    --  dependencies={
+    --     "rktjmp/lush.nvim",
+    --     "nvim-treesitter/nvim-treesitter",
+    -- }
+    -- },
+{"ziontee113/syntax-tree-surfer", -- vd to swap node
+ dependencies="nvim-treesitter/nvim-treesitter"},
+-- {"rktjmp/lush.nvim"}, -- :LushRunQuickstart
+{ -- modify arguments under cursor
+    'echasnovski/mini.splitjoin', -- gS
+    version = "*" },
+{"RRethy/nvim-treesitter-textsubjects"},
+{
+    "HampusHauffman/block.nvim", -- :Block
+},
+{"crispgm/telescope-heading.nvim"}, -- :Telescope heading
+{ -- quickfix menu
+  'weilbith/nvim-code-action-menu',
+  cmd='CodeActionMenu',
+},
+{"rlane/pounce.nvim"}, -- :Pounce
+{
+  "folke/flash.nvim", -- s/S/gs
+  event = "VeryLazy",
+  ---@type Flash.Config
+  opts = {},
+  keys = {
     {
-        "nvim-telescope/telescope-file-browser.nvim",
-        dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+      "s",
+      mode = { "n", "x", "o" },
+      function()
+        require("flash").jump()
+      end,
+      desc = "Flash",
     },
-
-    -- Do I want these?
-    {"tpope/vim-scriptease"}, -- Try out :PP :Scriptnames :Time
-
-    -- Havent used?
-    {'AndrewRadev/sideways.vim'},        -- Rearrange function parameters
-    {'Chiel92/vim-autoformat'},          -- Auto format with :Autoformat
-    {'vim-scripts/ReplaceWithRegister'}, -- griw - replace section with register value
-    {'tell-k/vim-autopep8'},             -- :Autopep8 auto formatting
-    {'michaeljsmith/vim-indent-object'}, -- Indention objects ai/ii/aI/iI mainly for python
-    {'christoomey/vim-sort-motion'},     -- gs to sort python imports
-    {'wellle/targets.vim'},              -- extra text objects - cin) da,
-    {'tpope/vim-fugitive'},              -- Git from vim
-    {'tpope/vim-repeat'},                -- Extending repeat to macros
-    -- <leader>d - generate documentation scaffold for function,etc
-    {'kkoomen/vim-doge'},                -- Documentation saffold
-    {'arnar/vim-matchopen'},             -- Highlight last opened parenthesis
-    {'tmhedberg/SimpylFold'},            -- Better Python folding
-    {'nvie/vim-flake8'},                 -- Use flake8 for python linting
-    {'editorconfig/editorconfig-vim'},   -- Consistent coding styles between editors
-    {'tpope/vim-unimpaired'},            -- Bracket shortcuts
-    {'Vimjas/vim-python-pep8-indent'},   -- pep8 Formatting on newline
-    {'FooSoft/vim-argwrap'},             -- Change argument wrapping
-    {'cespare/vim-toml'},                -- toml syntax for vim
-    {'majutsushi/tagbar'},               -- Show ctags info
-    {'Glench/Vim-Jinja2-Syntax'},        -- Fix jinja syntax highlighting
-    {'solarnz/thrift.vim'},              -- Thrift syntax
-    { -- Run tests inside vim
-    'janko-m/vim-test'}, -- :TestNearest :TestFile
-    { -- A framework for interacting with tests within NeoVim.
-      "nvim-neotest/neotest", -- :Neotest <args>
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
-        "antoinemadec/FixCursorHold.nvim"
-        }
-    },
-
-        -- {'davidhalter/jedi-vim'},            -- Autocompletion (ctrl + space)
-        {'vim-scripts/ingo-library'},        -- Dependent library for JumpToLastOccurrence
-        {'vim-scripts/JumpToLastOccurrence'},-- Jump to last occurance of a char with ,f motion ,t
-        {'justinmk/vim-sneak'},              -- Two-char search using s motion
-        {'AndrewRadev/bufferize.vim'},       -- :Bufferize to output vim functions into buffer
-        {'ambv/black'}, -- Python code formatting
-        {
-            "L3MON4D3/LuaSnip",
-            -- follow latest release.
-            version = "1.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-            -- install jsregexp (optional!).
-            build = "make install_jsregexp"
-        },
-        -- prebuilt snippits - do they work with LuaSnip
-        {'honza/vim-snippets'},
-
-        -- Search cheatsheet for neovim
-        {'sudormrfbin/cheatsheet.nvim'},
-        {'nvim-lua/popup.nvim'},
-        {'nvim-lua/plenary.nvim'},
-
-
-        -- Trying out this linter for ansible make sure to install required linters in
-        -- Gemfile or requirements.txt
-        {'mfussenegger/nvim-lint'},
-
-        -- Doesn't work yet, blocked my Neural config and maybe plug
-        -- Does it work now? :checkhealth is all green on quarth
-        {'dense-analysis/neural'},
-        {'MunifTanjim/nui.nvim'},
-        {'elpiloto/significant.nvim'},
-
-        -- Colorschemes
-        {'morhetz/gruvbox'},
-        -- {'jackMort/ChatGPT.nvim'}, -- Chatgpt
-        {'MunifTanjim/nui.nvim'},
-        {'nvim-telescope/telescope.nvim', version= '0.1.1'},
-        {'nvim-lua/plenary.nvim'},
-        'phaazon/hop.nvim',
-        {
-          "folke/edgy.nvim",
-          event = "VeryLazy",
-          opts = {}
-        },
-        -- { Getting duplicate output
-        --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        --   config = function()
-        --     require("lsp_lines").setup()
-        --     vim.diagnostic.config({ virtual_lines = true })
-        --   end,
-        -- },
-        "fs111/pydoc.vim",
-        -- Not working on windows due to python path issue
-        -- {'ms-jpq/coq_nvim', branch='coq'}, -- :COQnow
-        -- {{"hrsh7th/nvim-cmp"}},
-        -- {'xolox/vim-lua-ftplugin', dependencies='xolox/vim-misc'},
-        -- alternative to ftplugin
-        -- tbastos/vim-lua
-
-        {'mg979/vim-visual-multi'},
-        {'liuchengxu/vim-which-key'}, -- show keys with
-    --    {'tpope/vim-endwise'}, -- automatically end functions
-
-        -- ^^^ How can I get some timed highlightning when the end is inserted?
-        {'tyru/capture.vim', cmd="Capture"}, -- Show Ex command output in a buffer
-        {dir="~/dotfiles/vim-myhelp/"}, -- My help plugin
-        {"nvim-treesitter/playground"}, -- :TSPlaygroundToggle
-        {"RRethy/nvim-treesitter-endwise"},
-
-        -- Does this work?
-        {"xolox/vim-colorscheme-switcher", dependencies="xolox/vim-misc"},
-     -- :Bufferize dump output of command into a buffer
-        {"AndrewRadev/bufferize.vim"},
-        {"justinmk/vim-dirvish"}, -- Create files in netrw using :e %foo.txt
-        {"mattn/emmet-vim"},
-        -- {"Olical/conjure"}, Getting documentation lookup errors
-        {"HiPhish/nvim-ts-rainbow2"},
-        {"mileszs/ack.vim"},
-        {'junegunn/fzf', build=function()
-            vim.cmd[[fzf#install()]]
-        end
-        },
-        {'junegunn/fzf.vim'},
-        {"easymotion/vim-easymotion"}, -- TODO Test
-        {"tzachar/highlight-undo.nvim"}, -- XXX does it work do i like?
-        {"ThePrimeagen/refactoring.nvim"}, -- TODO
-        {
-            'ckolkey/ts-node-action',
-             dependencies = { 'nvim-treesitter' },
-             opts = {},
-        },
-        {"github/copilot.vim"}, -- :Copilot enable
-        { -- highlight todo comments
-          "folke/todo-comments.nvim",
-          dependencies = {"nvim-lua/plenary.nvim", "folke/trouble.nvim", "nvim-telescope/telescope.nvim"},
-          opts = {
-    --          signs = false,
-          }
-        },
-        -- Games
-        {"alec-gibson/nvim-tetris"}, -- :Tetris
-        {"seandewar/killersheep.nvim"}, -- :KillKillKill
-        {'eandrju/cellular-automaton.nvim'}, -- how do I make colorscheme persist?
-        {--  Focus on current  function
-            "koenverburg/peepsight.nvim"}, -- :PeepsightEnable
-        {"folke/twilight.nvim"}, -- :TwilightEnable
-        { -- "A code outline window for skimming and quick navigation"
-          'stevearc/aerial.nvim',
-          opts = {},
-          -- Optional dependencies
-          dependencies = {
-             "nvim-treesitter/nvim-treesitter",
-             "nvim-tree/nvim-web-devicons"
-          },
-        },
-        {'hrsh7th/cmp-nvim-lsp', dependencies="neovim/nvim-lspconfig"},
-        {'hrsh7th/cmp-buffer'},
-        {'hrsh7th/cmp-path'},
-        {'hrsh7th/cmp-cmdline'},
-        {'hrsh7th/nvim-cmp'}, -- uses lspconfig
-        { "folke/neodev.nvim", opts = {} },
-        { -- open ipynb in vim
-            "meatballs/notebook.nvim",
-                dependencies={"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
-        },
-        {
-            "SmiteshP/nvim-navbuddy", -- :NavBuddy
-            dependencies = {
-                "neovim/nvim-lspconfig",
-                "SmiteshP/nvim-navic",
-                "MunifTanjim/nui.nvim",
-                "numToStr/Comment.nvim",        -- Optional
-                "nvim-telescope/telescope.nvim" -- Optional
-            }
-        },
-         -- {dir="~/myneovimplugin"},
-         -- {dir="~/colo-blankline-indent.nvim"},
-        {"echasnovski/mini.ai"}, -- TODO
-        {'vladdoster/remember.nvim'},
-        {
-          "nvim-treesitter/nvim-treesitter-textobjects",
-          dependencies = "nvim-treesitter/nvim-treesitter",
-        },
-        -- currently treeclimber is broken
-        -- {"Dkendal/nvim-treeclimber",
-        --  dependencies={
-        --     "rktjmp/lush.nvim",
-        --     "nvim-treesitter/nvim-treesitter",
-        -- }
-        -- },
-	{"ziontee113/syntax-tree-surfer", -- vd to swap node
-	 dependencies="nvim-treesitter/nvim-treesitter"},
-	-- {"rktjmp/lush.nvim"}, -- :LushRunQuickstart
-    { -- modify arguments under cursor
-        'echasnovski/mini.splitjoin', -- gS
-        version = "*" },
-    {"RRethy/nvim-treesitter-textsubjects"},
     {
-        "HampusHauffman/block.nvim", -- :Block
+      "S",
+      mode = { "n", "o", "x" },
+  function()
+          require("flash").treesitter()
+      end,
+      desc = "Flash Treesitter",
     },
-    {"crispgm/telescope-heading.nvim"}, -- :Telescope heading
-    { -- quickfix menu
-      'weilbith/nvim-code-action-menu',
-      cmd='CodeActionMenu',
-    },
-    {"rlane/pounce.nvim"}, -- :Pounce
     {
-      "folke/flash.nvim", -- s/S/gs
-      event = "VeryLazy",
-      ---@type Flash.Config
-      opts = {},
-      keys = {
-        {
-          "s",
-          mode = { "n", "x", "o" },
-          function()
-            require("flash").jump()
-          end,
-          desc = "Flash",
-        },
-        {
-          "S",
-          mode = { "n", "o", "x" },
-	  function()
-              require("flash").treesitter()
-          end,
-          desc = "Flash Treesitter",
-        },
-        {
-          "r",
-          mode = "o",
-          function()
-            require("flash").remote()
-          end,
-          desc = "Remote Flash",
-        },
-        {
-          "R",
-          mode = { "o", "x" },
-          function()
-            require("flash").treesitter_search()
-          end,
-          desc = "Flash Treesitter Search",
-        },
-        {
-          "<c-s>",
-          mode = { "c" },
-          function()
-            require("flash").toggle()
-          end,
-          desc = "Toggle Flash Search",
-        },
-      },
+      "r",
+      mode = "o",
+      function()
+        require("flash").remote()
+      end,
+      desc = "Remote Flash",
     },
+    {
+      "R",
+      mode = { "o", "x" },
+      function()
+        require("flash").treesitter_search()
+      end,
+      desc = "Flash Treesitter Search",
+    },
+    {
+      "<c-s>",
+      mode = { "c" },
+      function()
+        require("flash").toggle()
+      end,
+      desc = "Toggle Flash Search",
+    },
+  },
+},
+
 }
 require("lazy").setup(plugins, {})
 require("neodev").setup{
