@@ -643,7 +643,7 @@ null_ls.setup({
         -- `luarocks install luacheck`
         -- null_ls.builtins.diagnostics.luacheck,
         -- `npm install markdownlint --save-dev`
-        null_ls.builtins.diagnostics.markdownlint,
+        -- null_ls.builtins.diagnostics.markdownlint,
         -- Does neomake do the same thing?
         -- null_ls.builtins.diagnostics.flake8
         -- null_ls.builtins.diagnostics.pydocstyle
