@@ -225,13 +225,6 @@ plugins = {
         {'MunifTanjim/nui.nvim'},
         {'nvim-telescope/telescope.nvim', version= '0.1.1'},
         {'nvim-lua/plenary.nvim'},
-        -- 'vim-denops/denops.vim',
-        -- deno was timing out on fedora for ddc
-        -- {'Shougo/ddc.vim', dependencies='vim-denops/denops.vim'},
-        -- 'Shougo/ddc-ui-native',
-        -- 'Shougo/ddc-source-around',
-        -- 'Shougo/ddc-matcher_head',
-        -- 'Shougo/ddc-sorter_rank',
         'phaazon/hop.nvim',
         {
           "folke/edgy.nvim",
