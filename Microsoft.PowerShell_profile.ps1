@@ -27,3 +27,5 @@ Set-Alias ctc ConvertTo-Csv
 #   winget install JanDeDobbeleer.OhMyPosh -s winget
 #   for some reason its not working
 # oh-my-posh.exe init pwsh | Invoke-Expression
+
+Set-PSReadLineOption -EditMode Emacs
