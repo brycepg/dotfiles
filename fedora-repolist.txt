@@ -1,0 +1,10 @@
+fedora                           Fedora 37 - x86_64
+fedora-cisco-openh264            Fedora 37 openh264 (From Cisco) - x86_64
+fedora-modular                   Fedora Modular 37 - x86_64
+qubes-vm-r4.1-current            Qubes OS Repository for VM (updates)
+rpmfusion-free                   RPM Fusion for Fedora 37 - Free
+rpmfusion-nonfree                RPM Fusion for Fedora 37 - Nonfree
+rpmfusion-nonfree-updates        RPM Fusion for Fedora 37 - Nonfree - Updates
+rpmsphere                        RPM Sphere - Basearch
+updates                          Fedora 37 - x86_64 - Updates
+updates-modular-debuginfo        Fedora Modular 37 - x86_64 - Updates - Debug
