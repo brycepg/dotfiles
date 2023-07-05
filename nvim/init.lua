@@ -23,9 +23,9 @@
 -- XXX I don't like the lsp server autocompletion for lua
 -- delta=3 delta=5, delta=10?
 -- for wombat256mod, nightfox,
---
--- Currently working on neodev completion for lua
--- : https://github.com/folke/neodev.nvim
+
+-- custom node manipulation:
+-- ~/dotfiles/nvim/lua/node_mani.lua
 
 require "utils"
 -- Where do I put this horseshit?:

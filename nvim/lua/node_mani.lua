@@ -7,6 +7,38 @@ function delete_simple_conditional_lines()
     -- Delete conditional
 end
 
+function conditional_range_surrounding_cursor()
+    ts_utils = require('nvim-treesitter.ts_utils')
+    local current_node = ts_utils.get_node_at_cursor()
+    if not current_node then
+        return ""
+    end
+    local func = current_node
+    while func do
+        if func:type() == 'conditional' then
+            break
+        end
+
+        func = func:parent()
+    end
+
+    if not func then
+        prev_function_node = nil
+        prev_function_name = ""
+        return "<none>"
+    end
+
+    if func == prev_function_node then
+        return prev_function_name
+    end
+
+    print(func:type())
+    return vim.treesitter.get_node_range(func, 0)
+end
+
+function conditional_body_range_surrounding_cursor()
+end
+
 function delete_function_declaration_lines()
     funcrowStart, funccolStart, funcrowEnd, funccolEnd = function_range_surrounding_cursor()
     bodyrowStart, bodycolStart, bodyrowEnd, bodycolEnd = function_body_range_surrounding_cursor()
@@ -200,6 +232,18 @@ function deindent_lines(startRow, endRow)
     vim.api.nvim_buf_set_text(buf, 0, 0, -1, 0, lines)
 end
 
+function print_all_parent_node_types()
+    ts_utils = require('nvim-treesitter.ts_utils')
+    local current_node = ts_utils.get_node_at_cursor()
+    if not current_node then
+        return ""
+    end
+    local func = current_node
+    while func do
+        print(func:type())
+        func = func:parent()
+    end
+end
 
 function function_body_range_surrounding_cursor()
     ts_utils = require('nvim-treesitter.ts_utils')
