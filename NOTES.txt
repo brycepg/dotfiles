@@ -1,3 +1,10 @@
+Download and extract indside of folder named lua-language-server
+https://github.com/LuaLS/lua-language-server/releases/
+moved to /rw/usrlocal/
+sudo bash -c 'cd /rw/usrlocal/bin/ && ln -s /rw/usrlocal/lua-language-server/bin/lua-language-server'
+
+---
+
 install pydoc flake8
 
 How is easy align working? Try another one?
