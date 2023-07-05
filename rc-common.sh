@@ -1,3 +1,5 @@
+# Binaries from rust package manager including bob-nvim
+export PATH="$PATH:$HOME/.cargo/bin"
 
 # Auto jump
 if [[ $- = *i* ]]; then
