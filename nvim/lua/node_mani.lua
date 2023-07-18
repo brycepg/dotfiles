@@ -1,10 +1,6 @@
 -- XXX Try with integrated vim api which vim.treesitter
 local api = vim.api
 
-local parsers = require "nvim-treesitter.parsers"
-local utils = require "nvim-treesitter.utils"
-local ts = vim.treesitter
-
 if "a" == "b" then
     print("HI:)")
 end
@@ -19,7 +15,7 @@ end
 
 
 function conditional_range_surrounding_cursor()
-    possible_block_node = look_for_parent_node("if_statement", ts_utils.get_node_at_cursor())
+    possible_block_node = look_for_parent_node("if_statement", vim.treesitter.get_node())
     if possible_block_node then
         return vim.treesitter.get_node_range(possible_block_node)
     end
@@ -29,7 +25,7 @@ end
 
 function conditional_body_range_surrounding_cursor(start_node)
     if not start_node then
-        start_node = ts_utils.get_node_at_cursor()
+        start_node = vim.treesitter.get_node()
     end
     possible_block_node = look_for_parent_node("if_statement", start_node)
     -- print("possible_block_node: ", tostring(possible_block_node))
@@ -63,14 +59,14 @@ function test_conditional_body_range()
 -- conditional range: 1,0,3,3
 -- body range: 2,4,2,17
 -- lua: how do I insert a lua multiline lua string into a neovim buffer
-    local buffer_handle_or_0 = vim.api.nvim_create_buf(true, true)
+    local buffer_handle_or_0 = api.nvim_create_buf(true, true)
     if buffer_handle_or_0 == 0 then
         return nil
     end
     local buffer_handle = buffer_handle_or_0
     local pos = {3, 5}
-    vim.api.nvim_buf_set_option(buffer_handle, 'filetype', 'lua')
-    vim.api.nvim_buf_set_lines(buffer_handle, 0, #test_lines, false, test_lines)
+    api.nvim_buf_set_option(buffer_handle, 'filetype', 'lua')
+    api.nvim_buf_set_lines(buffer_handle, 0, #test_lines, false, test_lines)
 
     local node = get_node_at_pos(buffer_handle, pos)
     if not node then
@@ -84,8 +80,8 @@ function test_conditional_body_range()
     print("range", tostring(range))
     assert(range[1] == 2)
     assert(tableEqualForTest(range, {2,4,2,17}) == true)
-    -- vim.api.nvim_win_get_buf(bufnr)
-    -- vim.api.nvim_buf_delete(buffer_handle)
+    -- api.nvim_win_get_buf(bufnr)
+    -- api.nvim_buf_delete(buffer_handle)
 end
 
 function tableEqualForTest(a, b)
@@ -126,8 +122,7 @@ end
 
 
 function _conditional_body_range_surrounding_cursor()
-    ts_utils = require('nvim-treesitter.ts_utils')
-    local current_node = ts_utils.get_node_at_cursor()
+    local current_node = vim.treesitter.get_node()
     if not current_node then
         return ""
     end
@@ -168,17 +163,17 @@ function delete_function_declaration_lines()
     end
     if funcrowEnd == bodyrowEnd then
         -- Then go into column mode
-        -- vim.api.nvim_buf_set_text(buf, startLine - 1, startColumn - 1, endLine, endColumn, lines)
+        -- api.nvim_buf_set_text(buf, startLine - 1, startColumn - 1, endLine, endColumn, lines)
         -- XXX probably can handle brace syntax here
         print("WARN: function end and body end are on the same line. Unable to do interpolation")
         return nil
     end
     -- Delete the end first to preverse the line numbers
-    vim.api.nvim_buf_set_lines(0, bodyrowEnd+1, bodyrowEnd+functionEndDelta+1, false, {})
+    api.nvim_buf_set_lines(0, bodyrowEnd+1, bodyrowEnd+functionEndDelta+1, false, {})
     -- Deindent - convert from index to line number
     deindent_lines(bodyrowStart+1, bodyrowEnd+1)
     -- delete the beginning second
-    vim.api.nvim_buf_set_lines(0, funcrowStart, funcrowStart+functionStartDelta, false, {})
+    api.nvim_buf_set_lines(0, funcrowStart, funcrowStart+functionStartDelta, false, {})
 end
 
 
@@ -187,7 +182,7 @@ function function_surrounding_cursor()
     if not ts_utils then
         return "<tsutils>"
     end
-    local current_node = ts_utils.get_node_at_cursor()
+    local current_node = vim.treesitter.get_node()
 
     if not current_node then
         return "<none1>"
@@ -248,7 +243,7 @@ end
 -- if current_node is not supplied, the node at cursor will be used
 function look_for_parent_node(node_name, current_node)
     if not current_node then
-        local current_node = ts_utils.get_node_at_cursor()
+        local current_node = vim.treesitter.get_node()
     end
     if not current_node then
         return nil
@@ -273,18 +268,19 @@ function function_range_surrounding_cursor()
     -- The retured range is inccorect from
     -- using ts_utils
 
-    -- require "nvim-treesitter.parsers"
     ts_utils = require('nvim-treesitter.ts_utils')
-    local current_node = ts_utils.get_node_at_cursor()
+    local current_node = vim.treesitter.get_node()
     if not current_node then
         return ""
     end
     local func = current_node
+    print(current_node)
+    print(type(current_node))
     while func do
+        print("Checking type")
         if func:type() == 'function_declaration' then
             break
         end
-
         func = func:parent()
     end
 
@@ -329,13 +325,13 @@ function deindent_lines(startRow, endRow)
 
     -- startRow and endRow are inclusive
     -- Get the current buffer handle
-    local buf = vim.api.nvim_get_current_buf()
+    local buf = api.nvim_get_current_buf()
 
     -- Get the shiftwidth value (number of spaces per tabstop)
-    local shiftwidth = vim.api.nvim_buf_get_option(buf, 'shiftwidth')
+    local shiftwidth = api.nvim_buf_get_option(buf, 'shiftwidth')
 
     -- Get the lines to be deindented
-    local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+    local lines = api.nvim_buf_get_lines(buf, 0, -1, false)
 
     -- Deindent the specified lines by the tabstop value
     local range = generateRange(startRow, endRow)
@@ -346,12 +342,12 @@ function deindent_lines(startRow, endRow)
     end
 
     -- Update the buffer with the modified lines
-    vim.api.nvim_buf_set_text(buf, 0, 0, -1, 0, lines)
+    api.nvim_buf_set_text(buf, 0, 0, -1, 0, lines)
 end
 
 function print_all_parent_node_types()
     ts_utils = require('nvim-treesitter.ts_utils')
-    local current_node = ts_utils.get_node_at_cursor()
+    local current_node = vim.treesitter.get_node()
     if not current_node then
         return ""
     end
@@ -364,7 +360,7 @@ end
 
 function function_body_range_surrounding_cursor()
     ts_utils = require('nvim-treesitter.ts_utils')
-    local current_node = ts_utils.get_node_at_cursor()
+    local current_node = vim.treesitter.get_node()
     if not current_node then
         return ""
     end
@@ -375,6 +371,9 @@ function function_body_range_surrounding_cursor()
         end
 
         func = func:parent()
+    end
+    if not func then
+        return nil
     end
 
     local find_body
@@ -397,7 +396,7 @@ end
 function get_node_at_pos(buf, pos, ignore_injected_langs)
   winnr = winnr or 0
   local pos_range_0 = { pos[1] - 1, pos[2] }
-  local root_lang_tree = parsers.get_parser(buf)
+  local root_lang_tree = vim.treesitter.get_parser(buf)
   if not root_lang_tree then
     return
   end
@@ -406,7 +405,7 @@ function get_node_at_pos(buf, pos, ignore_injected_langs)
   if ignore_injected_langs then
     for _, tree in ipairs(root_lang_tree:trees()) do
       local tree_root = tree:root()
-      if tree_root and ts.is_in_node_range(tree_root, pos_range_0[1], pos_range_0[2]) then
+      if tree_root and vim.treesitter.is_in_node_range(tree_root, pos_range_0[1], pos_range_0[2]) then
         root = tree_root
         break
       end

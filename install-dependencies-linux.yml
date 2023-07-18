@@ -16,6 +16,8 @@
       package: name=python3-pip
     - name: Install fzf for neovim search
       package: name=fzf
+    - name: Install sed for nvim-spectre
+      package: name=sed
     - name: Install flake8 for neovim / linting
       pip: name=flake8
 

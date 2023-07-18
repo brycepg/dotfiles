@@ -365,7 +365,6 @@ dependencies="nvim-treesitter/nvim-treesitter"},
 {
   "folke/flash.nvim", -- s/S/gs
   event = "VeryLazy",
-  ---@type Flash.Config
   opts = {},
   keys = {
     {
@@ -411,6 +410,12 @@ dependencies="nvim-treesitter/nvim-treesitter"},
   },
 },
 
+{ -- IDE like search and replace with
+    'nvim-pack/nvim-spectre', -- :Spectre
+    dependencies={"nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons"}
+},
+{"romainchapou/nostalgic-term.nvim"}, -- better :term defaults
+
 }
 require("lazy").setup(plugins, {})
 require("neodev").setup{
@@ -419,7 +424,6 @@ require("neodev").setup{
     -- these settings will be used for your Neovim config directory
     runtime = true, -- runtime path
     types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
-    plugins = true, -- installed opt or start plugins in packpath
     -- you can also specify the list of plugins to make available as a workspace library
     plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
   },
@@ -443,7 +447,19 @@ require("block").setup{}
 require('pretty-fold').setup{
   fill_char = ' ',
 }
+require('spectre').setup()
 require('telescope').load_extension('heading')
+
+require('nostalgic-term').setup({
+  mappings = {
+    {'<c-h>', 'h'},
+    {'<c-j>', 'j'},
+    {'<c-k>', 'k'},
+    {'<c-l>', 'l'},
+  },
+  add_normal_mode_mappings = true,
+  add_vim_ctrl_w = false,
+})
 
 -- Lualine configuration
 require('lualine').setup {
@@ -702,8 +718,8 @@ cmp.setup({
 snippet = {
   -- REQUIRED - you must specify a snippet engine
   expand = function(args)
-    vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-    -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+    -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+    require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
     -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
     -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
   end,
@@ -717,7 +733,7 @@ mapping = cmp.mapping.preset.insert({
   ['<C-u>'] = cmp.mapping.scroll_docs(4),
   ['<C-Space>'] = cmp.mapping.complete(),
   ['<C-a>'] = cmp.mapping.abort(),
-  ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 }),
 sources = cmp.config.sources({
   { name = 'nvim_lsp' },
@@ -812,3 +828,31 @@ vim.keymap.set("x", "L", '<cmd>STSSelectChildNode<cr>', surfer_opts)
 -- Swapping Nodes in Visual Mode
 vim.keymap.set("x", "<A-j>", '<cmd>STSSwapNextVisual<cr>', surfer_opts)
 vim.keymap.set("x", "<A-k>", '<cmd>STSSwapPrevVisual<cr>', surfer_opts)
+
+
+-- Remaps for the refactoring operations currently offered by the plugin
+vim.api.nvim_set_keymap("v", "<leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], {noremap = true, silent = true, expr = false})
+vim.api.nvim_set_keymap("v", "<leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], {noremap = true, silent = true, expr = false})
+vim.api.nvim_set_keymap("v", "<leader>rv", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]], {noremap = true, silent = true, expr = false})
+vim.api.nvim_set_keymap("v", "<leader>ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], {noremap = true, silent = true, expr = false})
+
+-- Extract block doesn't need visual mode
+vim.api.nvim_set_keymap("n", "<leader>rb", [[ <Cmd>lua require('refactoring').refactor('Extract Block')<CR>]], {noremap = true, silent = true, expr = false})
+vim.api.nvim_set_keymap("n", "<leader>rbf", [[ <Cmd>lua require('refactoring').refactor('Extract Block To File')<CR>]], {noremap = true, silent = true, expr = false})
+
+-- Inline variable can also pick up the identifier currently under the cursor without visual mode
+vim.api.nvim_set_keymap("n", "<leader>ri", [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], {noremap = true, silent = true, expr = false})
+
+
+vim.api.nvim_create_user_command(
+    "DisableAutoComplete",
+    function(opts)
+        require('cmp').setup.buffer { enabled = false }
+    end, {}
+)
+vim.api.nvim_create_user_command(
+    "EnableAutoComplete",
+    function(opts)
+        require('cmp').setup.buffer { enabled = true }
+    end, {}
+)

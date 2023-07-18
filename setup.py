@@ -117,7 +117,7 @@ def identical_symlink_exists(dst, src):
     src_path = os.path.realpath(src)
     if link_path == src_path:
         print(f"Found established symlink for {dst}")
-    return ret
+        return True
 
 
 def create_parent_destination_directory(path):

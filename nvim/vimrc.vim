@@ -94,7 +94,7 @@ map <F4> :UndotreeToggle<CR>
 map <F5> :Neomake<CR>
 
 " Insert `char` `count` times
-function InsertMultipleCharacters(char, count)
+function! InsertMultipleCharacters(char, count)
     call append(line("."), repeat(a:char, a:count))
 endfunction
 
@@ -384,6 +384,20 @@ call neomake#configure#automake('nrwi', 500)
 let g:pydoc_cmd = 'python -m pydoc'
 
 set formatoptions-=cro
+
+" " Fix terminal stuff for :term
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-[> <C-\><C-n>
+tnoremap <C-w>w <C-\><C-n><C-w>w
+if has("win32")
+    set shell=powershell
+    set shellcmdflag=-command
+    set shellquote=\"
+    set shellxquote=
+endif
+
+" Shorten wait time for mappings
+set timeoutlen=250
 
 lua <<EOF
 function _G.ReloadConfig()
