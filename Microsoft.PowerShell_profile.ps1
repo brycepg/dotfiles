@@ -7,6 +7,26 @@ function nvimrc()
 {
     vim $HOME\dotfiles\nvim\init.lua
 }
+function zomboidmodsloc()
+{
+    Write-Output "C:\Program Files (x86)\Steam\steamapps\workshop\content\108600"
+}
+function cdzomboidmods()
+{
+    $directory = zomboidmodsloc
+    Set-Location -Path $directory
+}
+
+function gpt()
+{
+    param(
+        [Parameter(ValueFromRemainingArguments=$true)]
+        $RemainingArgs
+    )
+    $concatenatedString = $RemainingArgs -join ' '
+    npx chatgpt@latest -m gpt-4 "$concatenatedString"
+}
+
 
 # Import the Chocolatey Profile that contains the necessary code to enable
 # tab-completions to function for `choco`.
