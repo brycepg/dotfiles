@@ -108,3 +108,7 @@ pdroid() {
 sb() {
     source ~/.bashrc
 }
+
+if [ -e /home/bryce/.cargo/bin ]; then
+    export PATH="$PATH:/home/bryce/.cargo/bin"
+fi
