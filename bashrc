@@ -109,6 +109,16 @@ sb() {
     source ~/.bashrc
 }
 
+dockerlastid() {
+    ret="$(sudo docker ps | awk '{ print $1 }' | tail -n 1)"
+    if [[ "$ret" == "CONTAINER" ]]; then
+        echo NO CONTAINERS
+        return 1
+    fi
+    echo "$ret"
+}
+
+
 if [ -e /home/bryce/.cargo/bin ]; then
     export PATH="$PATH:/home/bryce/.cargo/bin"
 fi
