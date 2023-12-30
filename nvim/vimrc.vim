@@ -142,7 +142,9 @@ nnoremap <silent> ]c :bn<CR>
 nnoremap <silent> [c :bp<CR>
 
 nnoremap <silent> ]T :tabnext<CR>
+nnoremap <silent> ,nn :tabnext<CR>
 nnoremap <silent> [T :tabprevious<CR>
+nnoremap <silent> ,pp :tabprevious<CR>
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -396,8 +398,9 @@ if has("win32")
     set shellxquote=
 endif
 
-" Shorten wait time for mappings
-set timeoutlen=250
+" timeoutlen - leader key delay
+" ttimeoutlen - for key codes
+set timeoutlen=1000 ttimeoutlen=0
 
 lua <<EOF
 function _G.ReloadConfig()

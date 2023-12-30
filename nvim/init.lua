@@ -97,7 +97,7 @@ plugins = {
         }
     }
 },
-{"jose-elias-alvarez/null-ls.nvim"},
+{"nvimtools/none-ls.nvim"},
 
 -- Autocompletion stuff
 {'m4xshen/autoclose.nvim'},          -- Autoclose functions
@@ -281,7 +281,6 @@ dependencies="nvim-treesitter/nvim-treesitter"},
     {'junegunn/fzf.vim'},
     {"easymotion/vim-easymotion"}, -- TODO Test
     {"tzachar/highlight-undo.nvim"}, -- XXX does it work do i like?
-    {"ThePrimeagen/refactoring.nvim"}, -- TODO
     {
         'ckolkey/ts-node-action',
          dependencies = { 'nvim-treesitter' },
@@ -415,9 +414,43 @@ dependencies="nvim-treesitter/nvim-treesitter"},
     dependencies={"nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons"}
 },
 {"romainchapou/nostalgic-term.nvim"}, -- better :term defaults
-
-}
+{"glts/vim-textobj-comment", dependencies={"kana/vim-textobj-user"}},
+{"kana/vim-textobj-entire", dependencies={"kana/vim-textobj-user"}},
+{"julian/vim-textobj-variable-segment", dependencies={"kana/vim-textobj-user"}},
+'nacro90/numb.nvim',
+'nvim-treesitter/nvim-treesitter-refactor',
+{"ThePrimeagen/refactoring.nvim", -- :Refactor
+    dependencies = {
+        {"nvim-lua/plenary.nvim"},
+        {"nvim-treesitter/nvim-treesitter"}
+    }
+},
+'dyng/ctrlsf.vim', -- :CtrlSF
+} -- END
 require("lazy").setup(plugins, {})
+require'nvim-treesitter.configs'.setup {
+  refactor = {
+    navigation = {
+      enable = true,
+      -- Assign keymaps to false to disable them, e.g. `goto_definition = false`.
+      keymaps = {
+        goto_definition = "gnd",
+        list_definitions = "gnD",
+        list_definitions_toc = "gO",
+        goto_next_usage = "<a-*>",
+        goto_previous_usage = "<a-#>",
+      },
+    },
+    smart_rename = {
+      enable = true,
+      -- Assign keymaps to false to disable them, e.g. `smart_rename = false`.
+      keymaps = {
+        smart_rename = "grr",
+
+      },
+    },
+  },
+}
 require("neodev").setup{
   library = {
     enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
@@ -444,10 +477,10 @@ require "node_mani" -- custom
 require'alpha'.setup(require'alpha.themes.startify'.config)
 require('mini.splitjoin').setup{}
 require("block").setup{}
+require('refactoring').setup{}
 require('pretty-fold').setup{
   fill_char = ' ',
 }
-require('spectre').setup()
 require('telescope').load_extension('heading')
 
 require('nostalgic-term').setup({
@@ -525,7 +558,7 @@ require('aerial').setup({
   end
 })
 -- You probably also want to set a keymap to toggle aerial
-vim.keymap.set("n", "<cr>", "ciw")
+-- vim.keymap.set("n", "<cr>", "ciw")
 vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>')
 vim.keymap.set('n', '<leader>nb', require("nvim-navbuddy").open)
 
@@ -856,3 +889,22 @@ vim.api.nvim_create_user_command(
         require('cmp').setup.buffer { enabled = true }
     end, {}
 )
+
+local bufopts = { noremap = true, silent = true}
+vim.keymap.set("n", "gr", function()
+  require("telescope.builtin").lsp_references()
+end, bufopts)
+
+require('spectre').setup()
+vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
+    desc = "Toggle Spectre"
+})
+vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+    desc = "Search current word"
+})
+vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+    desc = "Search current word"
+})
+vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+    desc = "Search on current file"
+})
