@@ -49,3 +49,6 @@ Set-Alias ctc ConvertTo-Csv
 # oh-my-posh.exe init pwsh | Invoke-Expression
 
 Set-PSReadLineOption -EditMode Emacs
+
+
+. "$PSScriptRoot\Powershell.Local.ps1"
