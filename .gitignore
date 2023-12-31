@@ -12,3 +12,5 @@ swapfiles
 lazy-lock.json
 tags
 .luarc.json
+bin/llamafile.exe
+bin/wsl-notify-send.exe
