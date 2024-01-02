@@ -274,6 +274,11 @@ command! -nargs=? Hrst call HeaderCreate(<args>)
 command! -nargs=? Mkdir call Mkdir(<f-args>)
 " command! GH
 
+" Strip linefeed characters due to an issue on WSL
+command! MS :%s/\r//
+command! RS :%s/\r//
+command! Slinefeed :%s/\r//
+
 function! OpenGithubUrlFromLine(line)
     let plugin_name = substitute(
         line, '\zs[^/]\+\(\/[^"]\+\)\?$', '', ''
