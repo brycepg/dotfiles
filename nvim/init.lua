@@ -426,6 +426,8 @@ dependencies="nvim-treesitter/nvim-treesitter"},
     }
 },
 'dyng/ctrlsf.vim', -- :CtrlSF
+-- 'mfussenegger/nvim-ansible',
+'pearofducks/ansible-vim',
 } -- END
 require("lazy").setup(plugins, {})
 require'nvim-treesitter.configs'.setup {
