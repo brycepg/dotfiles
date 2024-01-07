@@ -566,6 +566,7 @@ vim.keymap.set('n', '<leader>nb', require("nvim-navbuddy").open)
 
 -- Treesitter configuration
 require('nvim-treesitter.configs').setup {
+    ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
     endwise = {
         enable = true,
     },
