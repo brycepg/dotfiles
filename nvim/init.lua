@@ -274,10 +274,10 @@ dependencies="nvim-treesitter/nvim-treesitter"},
     -- {"Olical/conjure"}, Getting documentation lookup errors
     {"HiPhish/nvim-ts-rainbow2"},
     {"mileszs/ack.vim"},
-    {'junegunn/fzf', build=function()
-        vim.cmd[[fzf#install()]]
-    end
-    },
+    -- {'junegunn/fzf', build=function()
+    --     vim.cmd[[fzf#install()]]
+    -- end
+    -- },
     {'junegunn/fzf.vim'},
     {"easymotion/vim-easymotion"}, -- TODO Test
     {"tzachar/highlight-undo.nvim"}, -- XXX does it work do i like?
