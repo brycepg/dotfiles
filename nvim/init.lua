@@ -433,6 +433,7 @@ dependencies="nvim-treesitter/nvim-treesitter"},
 'dyng/ctrlsf.vim', -- :CtrlSF
 -- 'mfussenegger/nvim-ansible',
 'pearofducks/ansible-vim',
+'jghauser/mkdir.nvim', -- Automatically create directories with :e /foo/bar.txt
 } -- END
 require("lazy").setup(plugins, {})
 require'nvim-treesitter.configs'.setup {
