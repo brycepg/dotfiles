@@ -122,3 +122,8 @@ dockerlastid() {
 if [ -e /home/bryce/.cargo/bin ]; then
     export PATH="$PATH:/home/bryce/.cargo/bin"
 fi
+
+# Find and replace
+fr() {
+    sd "$1" "$2" $(ag "$1" --files-with-matches)
+}
