@@ -140,8 +140,6 @@ dependencies="nvim-treesitter/nvim-treesitter"},
 {'neomake/neomake'},                 -- Static analysis tools :Neomake
 {'kopischke/vim-fetch'},             -- Opening specific line using colon number ex :3
 
--- Both of these trees for now
-{'preservim/nerdtree'},-- :NERDTree :NERDTreeToggle :NERDTd T :Tree
 {"nvim-neo-tree/neo-tree.nvim",  -- :NeoTreeToggle
     branch = "v2.x",
     dependencies = {
@@ -200,7 +198,6 @@ dependencies="nvim-treesitter/nvim-treesitter"},
     {'vim-scripts/JumpToLastOccurrence'},-- Jump to last occurance of a char with ,f motion ,t
     {'justinmk/vim-sneak'},              -- Two-char search using s motion
     {'AndrewRadev/bufferize.vim'},       -- :Bufferize to output vim functions into buffer
-    {'ambv/black'}, -- Python code formatting
     {
         "L3MON4D3/LuaSnip",
         -- follow latest release.
@@ -279,7 +276,6 @@ dependencies="nvim-treesitter/nvim-treesitter"},
     {"mattn/emmet-vim"},
     -- {"Olical/conjure"}, Getting documentation lookup errors
     {"HiPhish/nvim-ts-rainbow2"},
-    {"mileszs/ack.vim"},
     -- {'junegunn/fzf', build=function()
     --     vim.cmd[[fzf#install()]]
     -- end
