@@ -690,7 +690,7 @@ null_ls.setup({
         -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#ansiblelint
         null_ls.builtins.diagnostics.ansiblelint,
         null_ls.builtins.formatting.stylua,
-        null_ls.builtins.diagnostics.eslint,
+        -- null_ls.builtins.diagnostics.eslint,
         null_ls.builtins.completion.spell,
         -- `luarocks install luacheck`
         -- null_ls.builtins.diagnostics.luacheck,
