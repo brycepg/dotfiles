@@ -97,7 +97,12 @@ plugins = {
         }
     }
 },
-{"nvimtools/none-ls.nvim"},
+{
+    "nvimtools/none-ls.nvim",
+    dependencies = {
+        "nvimtools/none-ls-extras.nvim",
+    },
+},
 
 -- Autocompletion stuff
 {'m4xshen/autoclose.nvim'},          -- Autoclose functions
