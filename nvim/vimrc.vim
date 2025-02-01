@@ -84,14 +84,14 @@ map <Leader>nrc :Nrc<CR>
 map <F1> :h myhelp<bar>set modifiable<CR>
 " File explorer
 " map <F2> :NeoTreeRevealToggle<CR>
-map <F2> :NERDTreeToggle<CR>
+map <F2> :Neotree<CR>
 " Source vimrc
 map <F3> :lua ReloadConfig()<CR>
 " View undo tree shortcut
 " Show edits and deletions
 map <F4> :UndotreeToggle<CR>
 " Auto linting for Vim8+ and Neovim
-map <F5> :Neomake<CR>
+" map <F5> :Neomake<CR>
 
 " Insert `char` `count` times
 function! InsertMultipleCharacters(char, count)
@@ -377,16 +377,6 @@ if ! isdirectory(swapfile_dir)
     call mkdir(swapfile_dir)
 endif
 let &directory=swapfile_dir
-
-" =============================
-" == Neomake configuration ===
-" =============================
-" Auto run lint on write -- good for writing code
-" autocmd BufWritePost * :Neomake
-" When writing a buffer (no delay), and on normal mode changes (after 750ms).
-" Full config: when writing or reading a buffer, and on changes in insert and
-" normal mode (after 500ms; no delay when writing).
-call neomake#configure#automake('nrwi', 500)
 
 let g:pydoc_cmd = 'python -m pydoc'
 

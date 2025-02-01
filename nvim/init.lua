@@ -31,6 +31,9 @@ require "utils"
 -- * `Lua.workspace.library`: add element `"${3rd}/luv/library"` ;
 require "lsp_setup"
 
+-- Disable deprecation messages for plugins
+vim.deprecate = function() end
+
 -- Bootstrap neovim rcfile access in case rcfile loading fails
 
 vim.api.nvim_create_user_command("Nvimrc", ":e ~/dotfiles/nvim/init.lua", {})
@@ -58,7 +61,7 @@ plugins = {
 
 -- Foundational stuff
 {
-    'goolord/alpha-nvim',
+    'goolord/alpha-nvim', -- Greeter for neovim
     dependencies = { 'nvim-tree/nvim-web-devicons' },
 },
 {
@@ -85,10 +88,6 @@ plugins = {
 {"williamboman/mason-lspconfig.nvim"},
 {
     'neovim/nvim-lspconfig',
-    -- neovim inlay_hint feature: wait for 0.10
-    -- opts = {
-    --     inlay_hints = { enabled = true },
-    -- },
     dependencies={"SmiteshP/nvim-navbuddy",
         dependencies={"SmiteshP/nvim-navic",
         "MunifTanjim/nui.nvim",
@@ -118,11 +117,15 @@ plugins = {
 {'brycepg/nvim-eunuch'},             -- :Delete :Move :Rename :SudoWrite :SudoEdit
 {'godlygeek/tabular'},               -- :Tab /{Pattern}
 {'mhinz/vim-signify'},
-{"numToStr/Comment.nvim", -- gcc or <visual>gc
-dependencies="nvim-treesitter/nvim-treesitter"},
+{'vifm/vifm.vim'}, -- Filesystem     -- :Vifm or <F2>
+{
+    "numToStr/Comment.nvim", -- gcc or <visual>gc
+    dependencies="nvim-treesitter/nvim-treesitter",
+    config = function()
+        require('Comment').setup()
+    end
+},
 
--- 'ds' is not working for some reason
--- {"kylechui/nvim-surround", dependencies='nvim-treesitter/nvim-treesitter'},
 {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
@@ -133,11 +136,18 @@ dependencies="nvim-treesitter/nvim-treesitter"},
         })
     end
 },
--- {'tpope/vim-surround'},        -- Surround motions replacing with nvim surround
+{
+    'dense-analysis/ale',
+    config = function()
+        -- Configuration goes here.
+        local g = vim.g
 
--- maybe try ale instead of neomake sometime
--- dense-analysis/ale
-{'neomake/neomake'},                 -- Static analysis tools :Neomake
+        g.ale_linters = {
+            lua = {'lua_language_server'},
+            python = {'flake8', 'mypy', 'ruff', 'vulture', 'bandit'},
+        }
+    end
+},
 {'kopischke/vim-fetch'},             -- Opening specific line using colon number ex :3
 
 {"nvim-neo-tree/neo-tree.nvim",  -- :NeoTreeToggle
@@ -159,11 +169,30 @@ dependencies="nvim-treesitter/nvim-treesitter"},
 -- Do I want these?
 {"tpope/vim-scriptease"}, -- Try out :PP :Scriptnames :Time
 
+-- XXX not working
+{ -- Go to links in browser with ,go
+  "juacker/git-link.nvim",
+  keys = {
+    {
+      "<leader>gu",
+      function() require("git-link.main").copy_line_url() end,
+      desc = "Copy code link to clipboard",
+      mode = { "n", "x" }
+    },
+    {
+      "<leader>go",
+      function() require("git-link.main").open_line_url() end,
+      desc = "Open code link in browser",
+      mode = { "n", "x" }
+    },
+  },
+},
+
 -- Havent used?
 {'AndrewRadev/sideways.vim'},        -- Rearrange function parameters
-{'Chiel92/vim-autoformat'},          -- Auto format with :Autoformat
+-- {'Chiel92/vim-autoformat'},          -- Auto format with :Autoformat
 {'vim-scripts/ReplaceWithRegister'}, -- griw - replace section with register value
-{'tell-k/vim-autopep8'},             -- :Autopep8 auto formatting
+-- {'tell-k/vim-autopep8'},             -- :autopep8 auto formatting
 {'michaeljsmith/vim-indent-object'}, -- Indention objects ai/ii/aI/iI mainly for python
 {'christoomey/vim-sort-motion'},     -- gs to sort python imports
 {'wellle/targets.vim'},              -- extra text objects - cin) da,
@@ -276,11 +305,11 @@ dependencies="nvim-treesitter/nvim-treesitter"},
     {"mattn/emmet-vim"},
     -- {"Olical/conjure"}, Getting documentation lookup errors
     {"HiPhish/nvim-ts-rainbow2"},
-    -- {'junegunn/fzf', build=function()
-    --     vim.cmd[[fzf#install()]]
-    -- end
-    -- },
-    {'junegunn/fzf.vim'},
+    {
+      "ibhagwan/fzf-lua",
+      dependencies = { "nvim-tree/nvim-web-devicons" },
+      opts = {}
+    },
     {"easymotion/vim-easymotion"}, -- TODO Test
     {"tzachar/highlight-undo.nvim"}, -- XXX does it work do i like?
     {
@@ -289,17 +318,6 @@ dependencies="nvim-treesitter/nvim-treesitter"},
          opts = {},
     },
     {"github/copilot.vim"}, -- :Copilot enable
-    { -- highlight todo comments
-      "folke/todo-comments.nvim",
-      dependencies = {"nvim-lua/plenary.nvim", "folke/trouble.nvim", "nvim-telescope/telescope.nvim"},
-      opts = {
---          signs = false,
-      }
-    },
-    -- Games
-    {"alec-gibson/nvim-tetris"}, -- :Tetris
-    {"seandewar/killersheep.nvim"}, -- :KillKillKill
-    {'eandrju/cellular-automaton.nvim'}, -- how do I make colorscheme persist?
     {--  Focus on current  function
         "koenverburg/peepsight.nvim"}, -- :PeepsightEnable
     {"folke/twilight.nvim"}, -- :TwilightEnable
@@ -340,15 +358,27 @@ dependencies="nvim-treesitter/nvim-treesitter"},
       "nvim-treesitter/nvim-treesitter-textobjects",
       dependencies = "nvim-treesitter/nvim-treesitter",
     },
-    -- currently treeclimber is broken
-    -- {"Dkendal/nvim-treeclimber",
-    --  dependencies={
-    --     "rktjmp/lush.nvim",
-    --     "nvim-treesitter/nvim-treesitter",
-    -- }
-    -- },
-{"ziontee113/syntax-tree-surfer", -- vd to swap node
- dependencies="nvim-treesitter/nvim-treesitter"},
+    {
+    'aaronik/treewalker.nvim',
+
+    -- The following options are the defaults.
+    -- Treewalker aims for sane defaults, so these are each individually optional,
+    -- and setup() does not need to be called, so the whole opts block is optional as well.
+    opts = {
+    -- Whether to briefly highlight the node after jumping to it
+    highlight = true,
+
+    -- How long should above highlight last (in ms)
+    highlight_duration = 250,
+
+    -- The color of the above highlight. Must be a valid vim highlight group.
+    -- (see :h highlight-group for options)
+    highlight_group = 'CursorLine',
+    },
+    config = function ()
+-- movement
+    end
+    },
 -- {"rktjmp/lush.nvim"}, -- :LushRunQuickstart
 { -- modify arguments under cursor
     'echasnovski/mini.splitjoin', -- gS
@@ -428,9 +458,21 @@ dependencies="nvim-treesitter/nvim-treesitter"},
     }
 },
 'dyng/ctrlsf.vim', -- :CtrlSF
+{
+'MagicDuck/grug-far.nvim',
+config = function()
+  require('grug-far').setup({
+    -- options, see Configuration section below
+    -- there are no required options atm
+    -- engine = 'ripgrep' is default, but 'astgrep' can be specified
+  });
+end
+},
 -- 'mfussenegger/nvim-ansible',
 'pearofducks/ansible-vim',
 'jghauser/mkdir.nvim', -- Automatically create directories with :e /foo/bar.txt
+-- {'nmac427/guess-indent.nvim'},
+
 } -- END
 require("lazy").setup(plugins, {})
 require'nvim-treesitter.configs'.setup {
@@ -478,6 +520,7 @@ require("neodev").setup{
   -- needs lua-language-server >= 3.6.0
   pathStrict = true,
 }
+-- require('guess-indent').setup {}
 require "node_mani" -- custom
 require'alpha'.setup(require'alpha.themes.startify'.config)
 require('mini.splitjoin').setup{}
@@ -531,25 +574,13 @@ require('lualine').setup {
   }
 }
 
--- Evaluate syntax-tree-surfer, compare to treeclimber
-local status_treeclimber, treeclimber = pcall(require, 'nvim-treeclimber')
-if status_treeclimber then
-    treeclimber.setup()
-end
-
 -- write to swap file immediately
 vim.cmd[[ set updatetime=100 ]]
 
 -- vim.cmd("colorscheme wombat256mod")
 vim.cmd("colorscheme nightfox")
 
-require('Comment').setup()
-require('todo-comments').setup{
-    keywords = {
-        WARN = { icon = " ", color = "#FF0000", alt = { "WARNING", "XXX" } },
-
-    }
-}
+-- require('Comment').setup()
 require("neodev").setup({})
 
 -- then setup your lsp server as usual
@@ -569,7 +600,7 @@ vim.keymap.set('n', '<leader>nb', require("nvim-navbuddy").open)
 
 -- Treesitter configuration
 require('nvim-treesitter.configs').setup {
-    ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
+    ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "python" },
     endwise = {
         enable = true,
     },
@@ -822,53 +853,6 @@ set formatoptions-=cro
 vim.g.lazy_did_setup = false
 
 
--- Syntax Tree Surfer
-local surfer_opts = {noremap = true, silent = true}
-require"syntax-tree-surfer".setup()
-
--- Normal Mode Swapping:
--- Swap The Master Node relative to the cursor with it's siblings, Dot Repeatable
--- Syntax tree surfer
-vim.keymap.set("n", "vU", function()
-	vim.opt.opfunc = "v:lua.STSSwapUpNormal_Dot"
-	return "g@l"
-end, { silent = true, expr = true })
-vim.keymap.set("n", "vD", function()
-	vim.opt.opfunc = "v:lua.STSSwapDownNormal_Dot"
-	return "g@l"
-end, { silent = true, expr = true })
-
--- Swap Current Node at the Cursor with it's siblings, Dot Repeatable
-vim.keymap.set("n", "vd", function()
-	vim.opt.opfunc = "v:lua.STSSwapCurrentNodeNextNormal_Dot"
-	return "g@l"
-end, { silent = true, expr = true })
-vim.keymap.set("n", "vu", function()
-	vim.opt.opfunc = "v:lua.STSSwapCurrentNodePrevNormal_Dot"
-	return "g@l"
-end, { silent = true, expr = true })
-
---> If the mappings above don't work, use these instead (no dot repeatable)
--- vim.keymap.set("n", "vd", '<cmd>STSSwapCurrentNodeNextNormal<cr>', surfer_opts)
--- vim.keymap.set("n", "vu", '<cmd>STSSwapCurrentNodePrevNormal<cr>', surfer_opts)
--- vim.keymap.set("n", "vD", '<cmd>STSSwapDownNormal<cr>', surfer_opts)
--- vim.keymap.set("n", "vU", '<cmd>STSSwapUpNormal<cr>', surfer_opts)
-
--- Visual Selection from Normal Mode
-vim.keymap.set("n", "vx", '<cmd>STSSelectMasterNode<cr>', surfer_opts)
-vim.keymap.set("n", "vn", '<cmd>STSSelectCurrentNode<cr>', surfer_opts)
-
--- Select Nodes in Visual Mode
-vim.keymap.set("x", "J", '<cmd>STSSelectNextSiblingNode<cr>', surfer_opts)
-vim.keymap.set("x", "K", '<cmd>STSSelectPrevSiblingNode<cr>', surfer_opts)
-vim.keymap.set("x", "H", '<cmd>STSSelectParentNode<cr>', surfer_opts)
-vim.keymap.set("x", "L", '<cmd>STSSelectChildNode<cr>', surfer_opts)
-
--- Swapping Nodes in Visual Mode
-vim.keymap.set("x", "<A-j>", '<cmd>STSSwapNextVisual<cr>', surfer_opts)
-vim.keymap.set("x", "<A-k>", '<cmd>STSSwapPrevVisual<cr>', surfer_opts)
-
-
 -- Remaps for the refactoring operations currently offered by the plugin
 vim.api.nvim_set_keymap("v", "<leader>re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], {noremap = true, silent = true, expr = false})
 vim.api.nvim_set_keymap("v", "<leader>rf", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], {noremap = true, silent = true, expr = false})
@@ -927,4 +911,16 @@ vim.keymap.set({"i", "s"}, "<C-E>", function()
 	end
 end, {silent = true})
 
+-- Auto import
 vim.keymap.set("n", "<leader>i", require("lspimport").import, { noremap = true })
+
+vim.keymap.set({ 'n', 'v' }, '<C-k>', '<cmd>Treewalker Up<cr>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<C-j>', '<cmd>Treewalker Down<cr>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<C-h>', '<cmd>Treewalker Left<cr>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<C-l>', '<cmd>Treewalker Right<cr>', { silent = true })
+
+-- swapping
+vim.keymap.set('n', '<C-S-k>', '<cmd>Treewalker SwapUp<cr>', { silent = true })
+vim.keymap.set('n', '<C-S-j>', '<cmd>Treewalker SwapDown<cr>', { silent = true })
+vim.keymap.set('n', '<C-S-h>', '<cmd>Treewalker SwapLeft<cr>', { silent = true })
+vim.keymap.set('n', '<C-S-l>', '<cmd>Treewalker SwapRight<cr>', { silent = true })
