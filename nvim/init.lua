@@ -144,7 +144,7 @@ plugins = {
 
         g.ale_linters = {
             lua = {'lua_language_server'},
-            python = {'flake8', 'mypy', 'ruff', 'vulture', 'bandit'},
+            python = {'flake8', 'mypy', 'ruff'},
         }
     end
 },
