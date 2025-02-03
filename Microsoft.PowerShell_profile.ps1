@@ -51,4 +51,4 @@ Set-Alias ctc ConvertTo-Csv
 Set-PSReadLineOption -EditMode Emacs
 
 
-. "$PSScriptRoot\Powershell.Local.ps1"
+. "$env:HOMEPATH\Documents\PowerShell\Powershell.Local.ps1"
